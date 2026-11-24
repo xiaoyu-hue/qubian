@@ -1,0 +1,36 @@
+趣编 (QuBian)
+Copyright 2026 xiaoyu-hue
+
+This product includes software and content from the following sources,
+each licensed under its own terms:
+
+1. Third-party dependencies and UI components
+   - React, TypeScript, Vite, Tailwind CSS, Lucide React, Zustand,
+     CodeMirror, Pyodide, Motion, shadcn/ui and other npm dependencies
+     retain their respective open-source licenses (mostly MIT).
+   - License texts are available in each package's distribution.
+
+2. Reference projects (ideas and structure only, no code copied)
+   - PyQuest (MIT) - https://github.com/colingng/pyquest
+   - bosens-China/Python-100-Exercises (MIT) - https://github.com/bosens-China/Python-100-Exercises
+   - glasscn (MIT) - https://github.com/TimMikeladze/glasscn
+   - lenscn (MIT) - https://github.com/dushaobindoudou/lenscn
+   - synth_gen (MIT) - https://github.com/facebookresearch/synth_gen
+
+3. Question bank content and documentation
+   - Original/AI-generated documentation and question bank content are
+     licensed under Creative Commons Attribution-ShareAlike 4.0 International
+     (CC BY-SA 4.0). See LICENSE-DOCS.txt for the full legal text.
+   - Any imported external content retains its original license and
+     attribution, recorded in the content's source field.
+
+--------------------------------------------------------------------------
+Licensing summary (layered)
+
+  - Project source code: Apache License, Version 2.0 (see LICENSE).
+  - Project documentation and question bank content: CC BY-SA 4.0
+    (see LICENSE-DOCS.txt).
+  - Third-party components and references: their respective original
+    licenses and copyright notices (listed above and in dependencies).
+
+Copyright 2026 xiaoyu-hue. All rights reserved under the above terms.
