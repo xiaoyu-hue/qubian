@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 export type ButtonSize = 'sm' | 'md' | 'lg'
@@ -30,19 +30,23 @@ const sizeClass: Record<ButtonSize, string> = {
  * 统一按钮：集中处理焦点、禁用、按下、加载四态，避免各页面重复写类名。
  * 焦点框对键盘可见、对鼠标点击不显示（focus-visible）。
  */
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  loading = false,
-  leading,
-  disabled,
-  className = '',
-  children,
-  type = 'button',
-  ...rest
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    variant = 'primary',
+    size = 'md',
+    loading = false,
+    leading,
+    disabled,
+    className = '',
+    children,
+    type = 'button',
+    ...rest
+  },
+  ref,
+) {
   return (
     <button
+      ref={ref}
       type={type}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
@@ -71,4 +75,4 @@ export function Button({
       {children}
     </button>
   )
-}
+})

@@ -1,8 +1,8 @@
+import * as ToastPrimitive from '@radix-ui/react-toast'
 import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -40,11 +40,13 @@ const toneClass: Record<ToastTone, string> = {
 
 const AUTO_DISMISS_MS = 3200
 
-/** Toast 容器：挂在应用根部，统一承载轻提示；自动消失且可手动关闭。 */
+/**
+ * Toast 容器：底层用 Radix Toast 原语，获得计时关闭、滑动关闭与读屏播报；
+ * 对外仍暴露命令式 show()/dismiss()，页面调用方式与阶段 0.5 一致，无需改动。
+ */
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
   const seq = useRef(0)
-  const timers = useRef<number[]>([])
 
   const dismiss = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id))
@@ -54,46 +56,39 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     (message: string, tone: ToastTone = 'info') => {
       const id = ++seq.current
       setToasts((prev) => [...prev, { id, message, tone }])
-      const timer = window.setTimeout(() => dismiss(id), AUTO_DISMISS_MS)
-      timers.current.push(timer)
     },
-    [dismiss],
+    [],
   )
-
-  useEffect(() => {
-    const list = timers.current
-    return () => list.forEach((t) => window.clearTimeout(t))
-  }, [])
 
   const value = useMemo(() => ({ show, dismiss }), [show, dismiss])
 
   return (
-    <ToastContext.Provider value={value}>
-      {children}
-      <div
-        className="pointer-events-none fixed inset-x-0 bottom-20 z-[60] flex flex-col items-center gap-2 px-4 sm:bottom-6"
-        role="status"
-        aria-live="polite"
-      >
+    <ToastPrimitive.Provider duration={AUTO_DISMISS_MS} swipeDirection="right">
+      <ToastContext.Provider value={value}>
+        {children}
         {toasts.map((t) => (
-          <div
+          <ToastPrimitive.Root
             key={t.id}
-            className="glass glass--strong pointer-events-auto flex w-full max-w-sm items-center gap-3 px-4 py-3 text-sm"
+            className="glass glass--strong data-[state=closed]:animate-none flex items-center gap-3 px-4 py-3 text-sm shadow-lg"
+            onOpenChange={(open) => {
+              if (!open) dismiss(t.id)
+            }}
           >
             <Icon name={toneIcon[t.tone]} size={18} className={toneClass[t.tone]} />
-            <span className="flex-1 text-ink">{t.message}</span>
-            <button
-              type="button"
-              onClick={() => dismiss(t.id)}
+            <ToastPrimitive.Title className="flex-1 text-ink">
+              {t.message}
+            </ToastPrimitive.Title>
+            <ToastPrimitive.Close
               aria-label="关闭提示"
               className="rounded text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <Icon name="close" size={16} />
-            </button>
-          </div>
+            </ToastPrimitive.Close>
+          </ToastPrimitive.Root>
         ))}
-      </div>
-    </ToastContext.Provider>
+        <ToastPrimitive.Viewport className="fixed inset-x-0 bottom-20 z-[60] flex max-w-[100vw] flex-col gap-2 px-4 outline-none sm:bottom-6" />
+      </ToastContext.Provider>
+    </ToastPrimitive.Provider>
   )
 }
 
