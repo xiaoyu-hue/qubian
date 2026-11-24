@@ -22,3 +22,6 @@ npm-debug.log*
 
 # 临时预览截图
 preview-*.png
+
+# 开发过程验证截图（非产品资产）
+screenshots/

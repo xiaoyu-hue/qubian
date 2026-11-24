@@ -22,6 +22,12 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --radius-glass: 18px;
+
+  /* 响应式断点令牌（T0.9）：组件只用 sm/lg 语义类，阈值集中在此定义 */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
 }
 
 /* ---------- 浅色（默认） ---------- */
@@ -121,6 +127,11 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* 底部安全区：避开 iOS 手势条 / 安卓导航条（配合 viewport-fit=cover） */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @media (prefers-reduced-motion: reduce) {
