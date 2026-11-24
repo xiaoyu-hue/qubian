@@ -9,6 +9,11 @@ export type IconName =
   | 'settings'
   | 'coin'
   | 'chevron'
+  | 'alert'
+  | 'info'
+  | 'check'
+  | 'close'
+  | 'compass'
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName
@@ -54,6 +59,26 @@ const iconPaths: Record<IconName, ReactNode> = {
     </>
   ),
   chevron: <path d="m9 6 6 6-6 6" />,
+  alert: (
+    <>
+      <path d="M12 4 2.8 20h18.4L12 4Z" />
+      <path d="M12 10v4M12 17h.01" />
+    </>
+  ),
+  info: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8h.01" />
+    </>
+  ),
+  check: <path d="m5 12.5 4.5 4.5L19 7.5" />,
+  close: <path d="M6 6l12 12M18 6 6 18" />,
+  compass: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
+    </>
+  ),
 }
 
 export function Icon({ name, size = 24, ...rest }: IconProps) {

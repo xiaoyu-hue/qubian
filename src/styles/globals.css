@@ -54,6 +54,10 @@
   --glass-border: rgba(255, 255, 255, 0.75);
   --glass-shadow: 0 8px 32px rgba(28, 32, 38, 0.1);
   --glow: rgba(15, 118, 110, 0.14);
+
+  /* 骨架屏底色与微光（状态设计系统） */
+  --skeleton-base: rgba(120, 120, 125, 0.12);
+  --skeleton-sheen: rgba(120, 120, 125, 0.22);
 }
 
 /* ---------- 深色：跟随系统（未手动指定主题时） ---------- */
@@ -96,6 +100,8 @@
   --glass-border: rgba(255, 255, 255, 0.14);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.38);
   --glow: rgba(45, 212, 191, 0.12);
+  --skeleton-base: rgba(255, 255, 255, 0.07);
+  --skeleton-sheen: rgba(255, 255, 255, 0.14);
 }
 
 /* ============================================================
@@ -132,6 +138,29 @@ body {
 /* 底部安全区：避开 iOS 手势条 / 安卓导航条（配合 viewport-fit=cover） */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* 骨架屏微光：prefers-reduced-motion 下由全局规则自动降为静态 */
+.skeleton {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base) 25%,
+    var(--skeleton-sheen) 50%,
+    var(--skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

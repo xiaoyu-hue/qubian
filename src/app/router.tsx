@@ -5,6 +5,8 @@ import LearningPage from '../pages/learning'
 import BookstorePage from '../pages/bookstore'
 import ProfilePage from '../pages/profile'
 import SettingsPage from '../pages/settings'
+import StatesPage from '../pages/states'
+import NotFoundPage from '../pages/not-found'
 
 export function AppRouter() {
   return (
@@ -16,7 +18,9 @@ export function AppRouter() {
           <Route path="/bookstore" element={<BookstorePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<HomePage />} />
+          {/* 状态组件走查页：开发验收入口，不进正式导航 */}
+          <Route path="/states" element={<StatesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </HashRouter>
