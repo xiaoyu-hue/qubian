@@ -11,9 +11,9 @@ import { useProgressStore } from '../../stores/progressStore'
 import { useSettingsStore } from '../../stores/settingsStore'
 import { useToast } from '../../components/ui/toast'
 import { GlassCard } from '../../components/ui/glass-card'
-import { Button } from '../../components/ui/button'
 import { Icon } from '../../components/ui/icon'
 import { QuestionCard } from '../../features/question/QuestionCard'
+import { PracticeCard } from '../../features/question/PracticeCard'
 import { AnswerPanel } from '../../features/question/AnswerPanel'
 
 type Filter = 'all' | QuestionType
@@ -80,12 +80,11 @@ export default function LearningPage() {
             answered={profile.answeredIds.includes(active.id)}
           />
         ) : (
-          <GlassCard className="p-5 sm:p-6">
-            <h2 className="mb-3 text-base font-semibold text-ink">{active.stem}</h2>
-            <pre className="overflow-x-auto rounded-xl bg-accent-soft/60 p-4 text-xs leading-relaxed text-ink">{active.starterCode}</pre>
-            <p className="mt-4 text-sm text-muted">实操题的完整作答将在下一批接入（浏览器内自评）。现在可以先看解析学习。</p>
-            <Button className="mt-4" variant="secondary" onClick={() => handleSubmit(false)}>标记学过</Button>
-          </GlassCard>
+          <PracticeCard
+            question={active}
+            onSubmit={(r) => handleSubmit(r.correct)}
+            answered={profile.answeredIds.includes(active.id)}
+          />
         )}
 
         <section>
