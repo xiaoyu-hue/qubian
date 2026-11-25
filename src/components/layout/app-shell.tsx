@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { BottomTabs } from './bottom-tabs'
 import { SideNav } from './side-nav'
 import { CoinBadge } from '../ui/coin-badge'
+import { useProfileStore } from '../../stores/profileStore'
 
 /**
  * 应用布局外壳（T0.8）：按断点装配三档导航。
@@ -9,6 +10,8 @@ import { CoinBadge } from '../ui/coin-badge'
  * 顶栏收敛为 Logo + 金币/等级，主题入口按 D2 移出顶栏。
  */
 export function AppShell() {
+  const coins = useProfileStore((s) => s.profile.coins)
+  const level = useProfileStore((s) => s.profile.level)
   return (
     <div className="min-h-screen">
       <SideNav />
@@ -22,10 +25,10 @@ export function AppShell() {
                 QuBian
               </span>
             </div>
-            <CoinBadge />
+            <CoinBadge value={coins} />
             <div className="hidden items-center gap-1 rounded-lg bg-accent-soft px-2.5 py-1.5 sm:flex">
               <span className="text-[10px] text-muted">等级</span>
-              <span className="text-xs font-semibold text-accent">Lv.1</span>
+              <span className="text-xs font-semibold text-accent">Lv.{level}</span>
             </div>
           </div>
         </header>
