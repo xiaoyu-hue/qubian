@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qubian.local/schemas/question.json",
+  "title": "趣编题目契约",
+  "description": "对应 05-题库数据规范。所有题目（选择题/实操题）必须满足本契约；由 scripts/validate-questions.mjs 校验。",
+  "type": "array",
+  "items": {
+    "oneOf": [
+      { "$ref": "#/$defs/choiceQuestion" },
+      { "$ref": "#/$defs/practiceQuestion" }
+    ]
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "description": "题目来源与许可，保证版权可追溯（05 规范第 10 节）",
+      "required": ["type", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ai-generated", "mit-import", "community", "original"]
+        },
+        "license": { "type": "string", "minLength": 1 },
+        "origin": { "type": "string" },
+        "generatedAt": { "type": "string" },
+        "author": { "type": "string" }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "description": "双答案：专业版 + 大白话版，均不可为空（核心差异化）",
+      "required": ["professional", "plain"],
+      "additionalProperties": false,
+      "properties": {
+        "professional": { "type": "string", "minLength": 1 },
+        "plain": { "type": "string", "minLength": 1 }
+      }
+    },
+    "base": {
+      "type": "object",
+      "required": ["id", "language", "chapter", "type", "difficulty", "title", "stem", "answer", "source"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z]+-[a-z]+-\\d{3,}$" },
+        "language": { "type": "string", "minLength": 1 },
+        "chapter": { "type": "string", "minLength": 1 },
+        "difficulty": { "type": "string", "enum": ["beginner", "advanced"] },
+        "title": { "type": "string", "minLength": 1 },
+        "stem": { "type": "string", "minLength": 1 },
+        "answer": { "$ref": "#/$defs/answer" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "source": { "$ref": "#/$defs/source" },
+        "version": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "choiceQuestion": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        {
+          "type": "object",
+          "required": ["type", "options", "correctKey"],
+          "properties": {
+            "type": { "const": "choice" },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["key", "text"],
+                "additionalProperties": false,
+                "properties": {
+                  "key": { "type": "string", "minLength": 1 },
+                  "text": { "type": "string", "minLength": 1 }
+                }
+              }
+            },
+            "correctKey": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "practiceQuestion": {
+      "allOf": [
+        { "$ref": "#/$defs/base" },
+        {
+          "type": "object",
+          "required": ["type", "referenceCode", "tests"],
+          "properties": {
+            "type": { "const": "practice" },
+            "starterCode": { "type": "string" },
+            "referenceCode": { "type": "string", "minLength": 1 },
+            "tests": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["input", "expectedOutput"],
+                "additionalProperties": false,
+                "properties": {
+                  "input": { "type": "string" },
+                  "expectedOutput": { "type": "string" },
+                  "hidden": { "type": "boolean" }
+                }
+              }
+            },
+            "hints": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    }
+  }
+}
