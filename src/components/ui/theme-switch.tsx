@@ -23,7 +23,7 @@ export function ThemeSwitch() {
           aria-pressed={theme === option.value}
           onClick={() => setTheme(option.value)}
           className={[
-            'rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
+            'whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
             theme === option.value
               ? 'bg-accent text-accent-ink'
