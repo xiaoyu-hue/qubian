@@ -34,7 +34,8 @@ const HEADERS = {
 }
 
 function git(...args) {
-  return execFileSync('git', args, { cwd: ROOT, encoding: 'utf-8' }).replace(/\n$/, '')
+  // core.quotepath=false：避免中文路径被转义成带引号的八进制形式（如 "docs/06-..."）
+  return execFileSync('git', ['-c', 'core.quotepath=false', ...args], { cwd: ROOT, encoding: 'utf-8' }).replace(/\n$/, '')
 }
 
 async function api(method, path, data) {
