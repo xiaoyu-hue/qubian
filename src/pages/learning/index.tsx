@@ -28,12 +28,11 @@ const DIFFICULTY_LABEL: Record<Difficulty, string> = { beginner: '入门', advan
 export default function LearningPage() {
   const [filter, setFilter] = useState<Filter>('all')
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [helpUsed, setHelpUsed] = useState(false)
   const toast = useToast()
 
   const profile = useProfileStore((s) => s.profile)
   const awardCorrect = useProfileStore((s) => s.awardCorrect)
-  const markAnswered = useProfileStore((s) => s.markAnswered)
+  const revealAnswer = useProfileStore((s) => s.revealAnswer)
   const advanceTask = useProgressStore((s) => s.advanceTask)
   const intensity = useSettingsStore((s) => s.settings.taskIntensity)
 
@@ -45,14 +44,28 @@ export default function LearningPage() {
   )
   const active = activeId ? getQuestionById(activeId) : undefined
 
+  /**
+   * 提交答案（PRD F04）。
+   * - 答对且首次掌握：发金币/积分、记录题号、推进每日任务
+   * - 答对但已掌握过：不重复发奖、不重复计任务（防刷）
+   * - 答错：不发奖、不记掌握、不推进任务，但解锁解析供学习，并保留「再试一次」
+   */
   const handleSubmit = (correct: boolean) => {
-    advanceTask(intensity)
-    if (correct) {
-      awardCorrect(activeId!)
-      toast.show('答对了！金币 +5、积分 +10', 'success')
-    } else {
-      markAnswered(activeId!)
+    if (!activeId) return
+    if (!correct) {
+      // 答错要看得到解析才谈得上「再试一次」，否则重试只能盲猜（PRD F04 要求答错即展示解析）
+      revealAnswer(activeId)
+      toast.show('再想想，看看解析再试一次', 'info')
+      return
     }
+    const alreadyMastered = profile.answeredIds.includes(activeId)
+    if (alreadyMastered) {
+      toast.show('这题你已经掌握了，换个新题继续吧', 'info')
+      return
+    }
+    awardCorrect(activeId)
+    advanceTask(intensity)
+    toast.show('答对了！金币 +5、积分 +10', 'success')
   }
 
   // 答题详情视图
@@ -61,7 +74,7 @@ export default function LearningPage() {
       <div className="flex flex-col gap-5">
         <button
           type="button"
-          onClick={() => { setActiveId(null); setHelpUsed(false) }}
+          onClick={() => setActiveId(null)}
           className="flex items-center gap-1.5 self-start text-sm text-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <Icon name="chevron" size={14} className="rotate-180" />
@@ -91,12 +104,16 @@ export default function LearningPage() {
           <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-ink">
             <Icon name="info" size={16} className="text-accent" />
             答案解析
-            {helpUsed && <span className="text-xs font-normal text-muted">（主动求助）</span>}
+            {profile.revealedIds.includes(active.id) && !profile.answeredIds.includes(active.id) && (
+              <span className="text-xs font-normal text-muted">（已看解析，未计入掌握）</span>
+            )}
           </h3>
           <AnswerPanel
             answer={active.answer}
-            unlocked={profile.answeredIds.includes(active.id) || helpUsed}
-            onAskHelp={() => { setHelpUsed(true); markAnswered(active.id) }}
+            unlocked={
+              profile.answeredIds.includes(active.id) || profile.revealedIds.includes(active.id)
+            }
+            onAskHelp={() => revealAnswer(active.id)}
           />
         </section>
       </div>
@@ -172,7 +189,7 @@ export default function LearningPage() {
                   <button
                     key={q.id}
                     type="button"
-                    onClick={() => { setActiveId(q.id); setHelpUsed(false) }}
+                    onClick={() => setActiveId(q.id)}
                     className="flex items-center gap-3 rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <GlassCard tone="subtle" className="flex w-full items-center gap-3 p-4 hover:bg-accent-soft/60">

@@ -41,6 +41,13 @@ export function QuestionCard({ question, onSubmit, answered = false }: QuestionC
     onSubmit(graded)
   }
 
+  /** 答错后重试：清空选择与判定结果，回到可作答状态（PRD F04「可重试」） */
+  const retry = () => {
+    setResult(null)
+    setSelected(null)
+    refs.current[0]?.focus()
+  }
+
   const feedback = result?.feedback
 
   return (
@@ -114,11 +121,19 @@ export function QuestionCard({ question, onSubmit, answered = false }: QuestionC
         </p>
       )}
 
-      <div className="mt-5 flex items-center gap-3">
-        <Button onClick={submit} disabled={!selected || !!result || answered}>
-          {result ? '已作答' : '提交答案'}
-        </Button>
-        {answered && !result && <span className="text-xs text-muted">这道题已经答过啦</span>}
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        {answered ? (
+          <span className="text-xs text-muted">已掌握这道题（金币与积分已发放）</span>
+        ) : result && !result.correct ? (
+          <>
+            <Button onClick={retry}>再试一次</Button>
+            <span className="text-xs text-muted">答错不扣金币，可以重新作答</span>
+          </>
+        ) : (
+          <Button onClick={submit} disabled={!selected || !!result}>
+            {result ? '已作答' : '提交答案'}
+          </Button>
+        )}
       </div>
     </GlassCard>
   )

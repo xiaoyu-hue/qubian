@@ -28,6 +28,11 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
     onSubmit(graded)
   }
 
+  /** 自评「还需练习」后重试：回到可编辑状态（PRD F04「可重试」） */
+  const retry = () => {
+    setResult(null)
+  }
+
   return (
     <GlassCard className="p-5 sm:p-6">
       <div className="mb-1 flex items-center gap-2">
@@ -43,7 +48,7 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
         id="practice-code"
         value={code}
         onChange={(e) => setCode(e.target.value)}
-        disabled={answered || !!result}
+        disabled={answered || (!!result && result.correct)}
         spellCheck={false}
         rows={8}
         className="w-full resize-y rounded-xl border border-line bg-accent-soft/40 p-4 font-mono text-sm leading-relaxed text-ink outline-none transition-colors focus:border-accent focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-default"
@@ -67,10 +72,20 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
       </div>
 
       {result ? (
-        <p className={`mt-4 flex items-center gap-2 text-sm font-medium ${result.correct ? 'text-success' : 'text-muted'}`} role="status">
-          <Icon name={result.correct ? 'check' : 'info'} size={16} />
-          {result.correct ? '已标记为掌握，金币 +5' : '已记录，继续练习'}
-        </p>
+        result.correct ? (
+          <p className="mt-4 flex items-center gap-2 text-sm font-medium text-success" role="status">
+            <Icon name="check" size={16} />
+            已标记为掌握，金币 +5
+          </p>
+        ) : (
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Button onClick={retry} variant="secondary" size="sm">再练一次</Button>
+            <span className="flex items-center gap-2 text-sm text-muted" role="status">
+              <Icon name="info" size={16} />
+              已记录，继续练习
+            </span>
+          </div>
+        )
       ) : (
         !answered && (
           <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -80,7 +95,7 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
           </div>
         )
       )}
-      {answered && !result && <p className="mt-4 text-xs text-muted">这道题已经答过啦</p>}
+      {answered && !result && <p className="mt-4 text-xs text-muted">已掌握这道题（金币与积分已发放）</p>}
     </GlassCard>
   )
 }

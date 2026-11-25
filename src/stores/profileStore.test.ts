@@ -37,14 +37,45 @@ describe('profileStore', () => {
     expect(p.answeredIds).toContain('py-basics-001')
   })
 
-  it('同一题重复答对只记一次题号，但金币积分按次累加（可重复练习）', async () => {
+  it('同一题重复答对不重复发奖（防刷金币）', async () => {
     const { useProfileStore } = await import('./profileStore')
     useProfileStore.getState().awardCorrect('py-basics-001')
     useProfileStore.getState().awardCorrect('py-basics-001')
     const p = useProfileStore.getState().profile
     expect(p.answeredIds).toEqual(['py-basics-001'])
-    expect(p.coins).toBe(10)
-    expect(p.points).toBe(20)
+    expect(p.coins).toBe(5)
+    expect(p.points).toBe(10)
+  })
+
+  it('主动求助只解锁解析，不计入掌握、不发奖励', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().revealAnswer('py-basics-002')
+    const p = useProfileStore.getState().profile
+    expect(p.revealedIds).toContain('py-basics-002')
+    expect(p.answeredIds).toEqual([])
+    expect(p.coins).toBe(0)
+    expect(p.points).toBe(0)
+  })
+
+  it('求助后答对仍正常发奖', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().revealAnswer('py-basics-002')
+    useProfileStore.getState().awardCorrect('py-basics-002')
+    const p = useProfileStore.getState().profile
+    expect(p.answeredIds).toContain('py-basics-002')
+    expect(p.coins).toBe(5)
+  })
+
+  it('缺少 revealedIds 的旧数据能正常加载', async () => {
+    localStorage.setItem(
+      'qubian:v1:profile',
+      JSON.stringify({ version: 1, data: { coins: 5, points: 10, level: 1, answeredIds: ['py-basics-001'], purchasedBookIds: [] } }),
+    )
+    vi.resetModules()
+    const reloaded = await import('./profileStore')
+    const p = reloaded.useProfileStore.getState().profile
+    expect(p.revealedIds).toEqual([])
+    expect(p.coins).toBe(5)
   })
 
   it('购买小册子：余额足够扣币并记录，不足返回 false', async () => {

@@ -91,7 +91,10 @@ export interface UserProfile {
   coins: number
   points: number
   level: number
+  /** 已答对的题号（掌握）：只有答对才计入，用于统计与发奖励 */
   answeredIds: string[]
+  /** 主动求助查看过解析的题号：仅解锁解析，不计入掌握、不发奖励 */
+  revealedIds: string[]
   purchasedBookIds: string[]
 }
 

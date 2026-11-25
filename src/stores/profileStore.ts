@@ -18,6 +18,7 @@ const DEFAULT_PROFILE: UserProfile = {
   points: 0,
   level: 1,
   answeredIds: [],
+  revealedIds: [],
   purchasedBookIds: [],
 }
 
@@ -26,6 +27,9 @@ function loadProfile(): UserProfile {
   const stored = readStored<Partial<UserProfile>>(PROFILE_KEY, {})
   const answeredIds = Array.isArray(stored.answeredIds)
     ? stored.answeredIds.filter((id): id is string => typeof id === 'string')
+    : []
+  const revealedIds = Array.isArray(stored.revealedIds)
+    ? stored.revealedIds.filter((id): id is string => typeof id === 'string')
     : []
   const purchasedBookIds = Array.isArray(stored.purchasedBookIds)
     ? stored.purchasedBookIds.filter((id): id is string => typeof id === 'string')
@@ -43,16 +47,20 @@ function loadProfile(): UserProfile {
     // 等级由积分推导，避免存储值与积分不一致
     level: calcLevel(points, LEVEL_THRESHOLDS),
     answeredIds,
+    revealedIds,
     purchasedBookIds,
   }
 }
 
 interface ProfileState {
   profile: UserProfile
-  /** 答对一题：发金币、加积分、记录题号，返回是否新解锁成就 */
+  /**
+   * 答对一题：发金币、加积分、记录题号，返回是否新解锁成就。
+   * 幂等：同一题重复答对不再重复发奖（防止无限刷金币），只返回空数组。
+   */
   awardCorrect: (questionId: string) => Achievement[]
-  /** 标记答过（无论对错），用于进度统计，不重复计入 */
-  markAnswered: (questionId: string) => void
+  /** 记录主动求助（提前看解析）：只解锁解析，不计入掌握、不发奖励 */
+  revealAnswer: (questionId: string) => void
   /** 购买小册子：余额足够则扣币并记录；不足返回 false */
   purchaseBook: (bookId: string, price: number) => boolean
   /** 判断金币是否足够支付某价格 */
@@ -70,11 +78,11 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
 
   awardCorrect: (questionId) => {
     const current = get().profile
+    // 幂等：已答对的题不再重复发奖，避免反复提交同一题刷金币
+    if (current.answeredIds.includes(questionId)) return []
     const coins = awardCoins(current.coins, COIN_REWARDS['answer-correct'])
     const points = current.points + POINTS_PER_CORRECT
-    const answeredIds = current.answeredIds.includes(questionId)
-      ? current.answeredIds
-      : [...current.answeredIds, questionId]
+    const answeredIds = [...current.answeredIds, questionId]
     const next: UserProfile = {
       ...current,
       coins,
@@ -92,10 +100,13 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
     return ACHIEVEMENTS.filter((a) => unlockedIds.includes(a.id))
   },
 
-  markAnswered: (questionId) => {
+  revealAnswer: (questionId) => {
     const current = get().profile
-    if (current.answeredIds.includes(questionId)) return
-    const next: UserProfile = { ...current, answeredIds: [...current.answeredIds, questionId] }
+    if (current.revealedIds.includes(questionId)) return
+    const next: UserProfile = {
+      ...current,
+      revealedIds: [...current.revealedIds, questionId],
+    }
     persist(next)
     set({ profile: next })
   },
