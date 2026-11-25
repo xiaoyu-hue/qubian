@@ -11,7 +11,8 @@ export type Difficulty = 'beginner' | 'advanced'
 
 /** 题目来源与许可（对应 05 规范第 10 节） */
 export interface QuestionSource {
-  type: 'ai-generated' | 'community' | 'original'
+  /** ai-generated=AI 原创；mit-import=MIT 题库导入；其余为历史兼容值 */
+  type: 'ai-generated' | 'mit-import' | 'community' | 'original'
   license: string
   generatedAt?: string
   author?: string

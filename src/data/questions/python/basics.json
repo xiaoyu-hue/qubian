@@ -1,0 +1,1078 @@
+[
+  {
+    "id": "py-basics-001",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "什么是变量？",
+    "stem": "在 Python 中，下列关于「变量」的说法，正确的是？",
+    "answer": {
+      "professional": "变量是内存中一个带名称的引用，指向某个对象。Python 是动态类型语言，变量无需声明类型，赋值即创建或绑定，且可重新绑定到不同类型的对象。因此 B、C、D 均错误。",
+      "plain": "把变量想成一个贴了标签的储物盒：你往盒子里放东西（数据），贴上「名字」标签。今天放苹果，明天想换成橘子也行——盒子还是那个盒子，装的东西可以换。所以它「能随时换值」，选 A。"
+    },
+    "tags": [
+      "变量",
+      "基础概念"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "变量是一块用来存数据的「盒子」，可以随时换成别的值"
+      },
+      {
+        "key": "B",
+        "text": "变量一旦赋值就不能再改变"
+      },
+      {
+        "key": "C",
+        "text": "变量只能存储数字"
+      },
+      {
+        "key": "D",
+        "text": "变量必须先声明类型才能使用"
+      }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-basics-002",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "给变量起名",
+    "stem": "下列哪个变量名在 Python 中是合法的？",
+    "answer": {
+      "professional": "Python 标识符只能由字母、数字、下划线组成，且不能以数字开头，也不能使用保留关键字。2name 以数字开头、my-name 含连字符、class 是关键字，均非法；my_name 合法。",
+      "plain": "给变量起名像给孩子起名，有几个规矩：不能以数字开头，不能用横杠（那是减号），也不能抢系统的关键字（比如 class）。带下划线的 my_name 规规矩矩，所以选 C。"
+    },
+    "tags": [
+      "变量",
+      "命名规则"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "2name"
+      },
+      {
+        "key": "B",
+        "text": "my-name"
+      },
+      {
+        "key": "C",
+        "text": "my_name"
+      },
+      {
+        "key": "D",
+        "text": "class"
+      }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-basics-003",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字符串长什么样",
+    "stem": "下列哪一项是 Python 的字符串字面量？",
+    "answer": {
+      "professional": "字符串是用单引号或双引号包裹的文本。A 会被当作未定义的标识符，C 是列表语法，D 是集合或字典语法。只有 B 用引号正确表示字符串。",
+      "plain": "字符串就是「一段文字」，在 Python 里得用引号把它包起来，像给文字穿件外套。没穿外套的 hello 会被当成变量名去找，找不到就报错。所以带引号的 B 才是字符串。"
+    },
+    "tags": [
+      "字符串",
+      "字面量"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "hello"
+      },
+      {
+        "key": "B",
+        "text": "'hello'"
+      },
+      {
+        "key": "C",
+        "text": "[hello]"
+      },
+      {
+        "key": "D",
+        "text": "{hello}"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-004",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "整数与小数",
+    "stem": "在 Python 中，数字 3 和 3.0 的类型分别是？",
+    "answer": {
+      "professional": "不带小数点的整数是 int 类型，带小数点的数是 float 类型。可用内置函数 type() 查看。因此 3 是 int，3.0 是 float。",
+      "plain": "整数和小数在 Python 里是两种东西：3 是「整数」（int），3.0 因为带了小数点，是「浮点数」（float）。别看数值一样，身份证不一样。所以选 C。"
+    },
+    "tags": [
+      "数字",
+      "数据类型"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "都是 int"
+      },
+      {
+        "key": "B",
+        "text": "都是 float"
+      },
+      {
+        "key": "C",
+        "text": "3 是 int，3.0 是 float"
+      },
+      {
+        "key": "D",
+        "text": "3 是 float，3.0 是 int"
+      }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-basics-005",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字符串相加",
+    "stem": "表达式 'Py' + 'thon' 的结果是？",
+    "answer": {
+      "professional": "对字符串使用 + 运算符会做拼接，返回一个新字符串，因此结果为 'Python'。字符串相加不是数值加法。",
+      "plain": "字符串的加号不是「算数」，而是「接龙」：'Py' 后面接上 'thon'，就拼成了 'Python'。就像两块积木咔哒一下拼在一起。选 B。"
+    },
+    "tags": [
+      "字符串",
+      "运算符"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "报错"
+      },
+      {
+        "key": "B",
+        "text": "'Python'"
+      },
+      {
+        "key": "C",
+        "text": "'Py' 'thon'"
+      },
+      {
+        "key": "D",
+        "text": "5"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-006",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "列表是什么",
+    "stem": "下列关于 Python 列表（list）的说法，正确的是？",
+    "answer": {
+      "professional": "列表用方括号表示，是有序、可变的序列，可以存放任意类型且类型可不同。因此 A、C、D 均错误。",
+      "plain": "列表就像一列购物车，用方括号 [ ] 表示，能装好多东西，而且随时能往里加、往外拿。牛奶和苹果能放一起，数字和文字也能混着装。所以选 B。"
+    },
+    "tags": [
+      "列表",
+      "基础概念"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "列表一旦创建就不能修改"
+      },
+      {
+        "key": "B",
+        "text": "列表用方括号 [] 表示，可以存放多个元素"
+      },
+      {
+        "key": "C",
+        "text": "列表只能存数字"
+      },
+      {
+        "key": "D",
+        "text": "列表里的元素必须类型相同"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-007",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "列表的第一个元素",
+    "stem": "有列表 nums = [10, 20, 30]，要取出第一个元素 10，应该用？",
+    "answer": {
+      "professional": "Python 的序列索引从 0 开始，第一个元素索引为 0。nums[1] 是第二个元素 20，nums[3] 越界。故取第一个元素用 nums[0]。",
+      "plain": "编程里数数是从 0 开始的，这点跟平时不一样。列表的第一个位置贴的标签是「0号」，第二个才是「1号」。想要第一个元素 10，就得喊 nums[0]。选 A。"
+    },
+    "tags": [
+      "列表",
+      "索引"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "nums[0]"
+      },
+      {
+        "key": "B",
+        "text": "nums[1]"
+      },
+      {
+        "key": "C",
+        "text": "nums[3]"
+      },
+      {
+        "key": "D",
+        "text": "nums[10]"
+      }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-basics-008",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字典的键与值",
+    "stem": "有字典 person = {'name': '小明', 'age': 18}，要取出名字「小明」，应该用？",
+    "answer": {
+      "professional": "字典通过键（key）访问对应的值（value）。'name' 是键，'小明' 是值，因此取名字应写 person['name']。字典没有从 0 开始的数字索引。",
+      "plain": "字典像一本通讯录：你不是翻「第几页」，而是按「名字」去查。这里 'name' 是那条记录的标签，标签下面写着 '小明'。所以要按标签查 person['name']，选 B。"
+    },
+    "tags": [
+      "字典",
+      "键值"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "person[0]"
+      },
+      {
+        "key": "B",
+        "text": "person['name']"
+      },
+      {
+        "key": "C",
+        "text": "person['小明']"
+      },
+      {
+        "key": "D",
+        "text": "person[1]"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-009",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "注释的写法",
+    "stem": "在 Python 中，单行注释应该以哪个符号开头？",
+    "answer": {
+      "professional": "Python 用 # 表示单行注释，解释器会忽略 # 到行尾的内容。//、--、/* 分别是其他语言的注释或运算符写法，不适用于 Python。",
+      "plain": "注释是写给人看、电脑会自动跳过的「小纸条」。在 Python 里，只要一行开头（或代码中）出现 #，后面这串字电脑就当没看见。所以选 B。"
+    },
+    "tags": [
+      "注释",
+      "语法"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "//"
+      },
+      {
+        "key": "B",
+        "text": "#"
+      },
+      {
+        "key": "C",
+        "text": "--"
+      },
+      {
+        "key": "D",
+        "text": "/*"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-010",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "输出内容",
+    "stem": "要把文字 '你好' 显示在屏幕上，应该使用哪个函数？",
+    "answer": {
+      "professional": "print() 用于把内容输出到标准输出（屏幕）。input() 用于接收输入，len() 求长度，type() 查看类型。",
+      "plain": "想让程序「开口说话」把字显示在屏幕上，就用 print()，你可以记成「打印出来」。input 是听你说话，len 是数长度，type 是查身份。选 B。"
+    },
+    "tags": [
+      "函数",
+      "输入输出"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "input()"
+      },
+      {
+        "key": "B",
+        "text": "print()"
+      },
+      {
+        "key": "C",
+        "text": "len()"
+      },
+      {
+        "key": "D",
+        "text": "type()"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-011",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "接收用户输入",
+    "stem": "input() 函数接收到的用户输入，默认是什么类型？",
+    "answer": {
+      "professional": "input() 无论用户输入什么，都统一以字符串（str）返回。若要当作数字参与运算，需用 int() 或 float() 显式转换。",
+      "plain": "不管你输入的是 123 还是 abc，input() 一律当成「一段文字」交回来。所以哪怕你输入数字，它也是字符串。想拿它算数，得先用 int() 把它变成真数字。选 C。"
+    },
+    "tags": [
+      "函数",
+      "输入输出",
+      "类型"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "int 整数"
+      },
+      {
+        "key": "B",
+        "text": "float 小数"
+      },
+      {
+        "key": "C",
+        "text": "str 字符串"
+      },
+      {
+        "key": "D",
+        "text": "bool 布尔"
+      }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-basics-012",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "求字符串长度",
+    "stem": "len('hello') 的结果是？",
+    "answer": {
+      "professional": "len() 返回对象包含的元素个数，对字符串而言是字符数。'hello' 有 5 个字符，故结果为 5。",
+      "plain": "len() 就是「数一数有几个」。'hello' 里面有 h、e、l、l、o 五个字母，所以数出来是 5。选 B。"
+    },
+    "tags": [
+      "函数",
+      "字符串"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "4"
+      },
+      {
+        "key": "B",
+        "text": "5"
+      },
+      {
+        "key": "C",
+        "text": "6"
+      },
+      {
+        "key": "D",
+        "text": "'hello'"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-013",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "加法运算",
+    "stem": "表达式 2 + 3 * 4 的结果是？（提示：先乘除后加减）",
+    "answer": {
+      "professional": "Python 遵循标准运算符优先级，乘法先于加法。先算 3 * 4 = 12，再加 2 得 14。",
+      "plain": "算术题的规矩是「先乘除、后加减」。所以别从左往右傻算，先算 3×4=12，再加上 2，得到 14。选 B。"
+    },
+    "tags": [
+      "运算符",
+      "优先级"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "20"
+      },
+      {
+        "key": "B",
+        "text": "14"
+      },
+      {
+        "key": "C",
+        "text": "11"
+      },
+      {
+        "key": "D",
+        "text": "24"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-014",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "比较两个值",
+    "stem": "表达式 5 == 3 的结果是？",
+    "answer": {
+      "professional": "== 是比较运算符，用于判断两边是否相等，返回布尔值。5 不等于 3，故结果为 False。注意 == 与赋值符 = 不同。",
+      "plain": "两个等号 == 是在问「它俩一样吗？」，答案只有「对（True）」或「错（False）」。5 当然不等于 3，所以回答「错」，也就是 False。选 B。"
+    },
+    "tags": [
+      "运算符",
+      "布尔"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "True"
+      },
+      {
+        "key": "B",
+        "text": "False"
+      },
+      {
+        "key": "C",
+        "text": "5"
+      },
+      {
+        "key": "D",
+        "text": "报错"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-015",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "布尔值",
+    "stem": "Python 中表示「真」的布尔字面量是？",
+    "answer": {
+      "professional": "Python 的布尔字面量是 True 和 False，首字母必须大写。小写 true、TRUE、yes 都不是合法的布尔字面量。",
+      "plain": "Python 里的「真」和「假」写成 True 和 False，头一个字母必须大写，这是它的死规矩。小写的 true 它不认。所以选 C。"
+    },
+    "tags": [
+      "布尔",
+      "字面量"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "true"
+      },
+      {
+        "key": "B",
+        "text": "TRUE"
+      },
+      {
+        "key": "C",
+        "text": "True"
+      },
+      {
+        "key": "D",
+        "text": "yes"
+      }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-basics-016",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "代码缩进",
+    "stem": "Python 中缩进的主要作用是？",
+    "answer": {
+      "professional": "Python 用缩进来标识代码块（如 if、for、函数体），缩进不一致会导致 IndentationError。缩进是语法的一部分，不只是美化。",
+      "plain": "别的语言常用大括号 {} 圈出「这一段属于谁」，Python 偏用缩进来表达：哪几行往里缩了，就属于上面那一句。缩进错了程序直接罢工。所以它是在划分代码块的层级，选 B。"
+    },
+    "tags": [
+      "语法",
+      "缩进"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "让代码更好看，没有实际作用"
+      },
+      {
+        "key": "B",
+        "text": "表示代码块的层级结构"
+      },
+      {
+        "key": "C",
+        "text": "加快程序运行速度"
+      },
+      {
+        "key": "D",
+        "text": "分隔不同的文件"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-017",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "负数索引",
+    "stem": "有列表 nums = [10, 20, 30]，nums[-1] 的结果是？",
+    "answer": {
+      "professional": "Python 支持负数索引，-1 表示最后一个元素，-2 表示倒数第二个。因此 nums[-1] 是 30。",
+      "plain": "列表的索引还能倒着数：-1 就是「倒数第一个」。nums 里最后一个是 30，所以 nums[-1] 拿到 30。这招在不知道列表多长时特别好用。选 C。"
+    },
+    "tags": [
+      "列表",
+      "索引"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "10"
+      },
+      {
+        "key": "B",
+        "text": "20"
+      },
+      {
+        "key": "C",
+        "text": "30"
+      },
+      {
+        "key": "D",
+        "text": "报错"
+      }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-basics-018",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "定义函数",
+    "stem": "在 Python 中，定义函数使用的关键字是？",
+    "answer": {
+      "professional": "Python 用 def 关键字定义函数，后跟函数名、参数和冒号。function、func、define 都不是 Python 关键字。",
+      "plain": "在 Python 里造一个函数，开头要喊一个暗号：def，意思是「我要定义一个函数」。别的语言可能用 function，但 Python 只认 def。选 B。"
+    },
+    "tags": [
+      "函数",
+      "关键字"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "function"
+      },
+      {
+        "key": "B",
+        "text": "def"
+      },
+      {
+        "key": "C",
+        "text": "func"
+      },
+      {
+        "key": "D",
+        "text": "define"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-019",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "函数返回值",
+    "stem": "函数中 return 语句的作用是？",
+    "answer": {
+      "professional": "return 用于把表达式的值返回给调用者，并立即结束当前函数的执行。它不负责打印（那是 print 的职责），也不会结束整个程序。",
+      "plain": "函数像一台小机器，return 就是「把做好的东西从出口递出来」：递给调用它的人，同时这台机器这次的工作就结束了。它不是用来显示屏幕的（那是 print）。选 B。"
+    },
+    "tags": [
+      "函数",
+      "return"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "结束整个程序"
+      },
+      {
+        "key": "B",
+        "text": "把结果交回给调用者，并结束当前函数"
+      },
+      {
+        "key": "C",
+        "text": "打印结果到屏幕"
+      },
+      {
+        "key": "D",
+        "text": "定义一个变量"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-020",
+    "language": "python",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "列表添加元素",
+    "stem": "有列表 nums = [1, 2]，执行 nums.append(3) 后，nums 的内容是？",
+    "answer": {
+      "professional": "append() 方法把一个元素添加到列表末尾，原地修改列表，因此 nums 变为 [1, 2, 3]。它是加在末尾而不是开头。",
+      "plain": "append 就像排队时来了个新人，规规矩矩站到队伍最后。原来的 1、2 不动，3 加到最后，变成 [1, 2, 3]。选 B。"
+    },
+    "tags": [
+      "列表",
+      "方法"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "options": [
+      {
+        "key": "A",
+        "text": "[1, 2]"
+      },
+      {
+        "key": "B",
+        "text": "[1, 2, 3]"
+      },
+      {
+        "key": "C",
+        "text": "[3, 1, 2]"
+      },
+      {
+        "key": "D",
+        "text": "[1, 2, [3]]"
+      }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-basics-021",
+    "language": "python",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "两数相加",
+    "stem": "定义函数 add(a, b)，返回两个数的和。",
+    "answer": {
+      "professional": "使用 def 定义函数，函数体用 return 返回两数之和。Python 的 + 运算符对数值类型执行加法，时间复杂度 O(1)。",
+      "plain": "函数就像一台小机器：你从左边塞进去两个数（a 和 b），机器内部做「加起来」这个动作，然后从右边把结果递出来。「递出来」这个动作在 Python 里叫 return，所以写 return a + b 就行。"
+    },
+    "tags": [
+      "函数",
+      "return",
+      "加法"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "starterCode": "def add(a, b):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def add(a, b):\n    return a + b\n",
+    "tests": [
+      {
+        "input": "add(1, 2)",
+        "expectedOutput": "3",
+        "hidden": false
+      },
+      {
+        "input": "add(-1, 1)",
+        "expectedOutput": "0",
+        "hidden": false
+      },
+      {
+        "input": "add(100, 250)",
+        "expectedOutput": "350",
+        "hidden": true
+      }
+    ],
+    "hints": [
+      "想想函数需要用哪个关键字把结果「交出去」？",
+      "用 return a + b 试试。"
+    ]
+  },
+  {
+    "id": "py-basics-022",
+    "language": "python",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "判断偶数",
+    "stem": "定义函数 is_even(n)，如果 n 是偶数返回 True，否则返回 False。",
+    "answer": {
+      "professional": "用取模运算符 % 求 n 除以 2 的余数，偶数余数为 0。表达式 n % 2 == 0 的结果本身就是布尔值，可直接 return。",
+      "plain": "怎么判断一个数是不是偶数？看它除以 2 有没有「剩下」。% 这个符号就是算「剩下的」：偶数除以 2 正好分完、剩 0，所以 n % 2 == 0 成立就说明是偶数，直接把它交出去（return）就好。"
+    },
+    "tags": [
+      "函数",
+      "取余",
+      "布尔"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "starterCode": "def is_even(n):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def is_even(n):\n    return n % 2 == 0\n",
+    "tests": [
+      {
+        "input": "is_even(4)",
+        "expectedOutput": "True",
+        "hidden": false
+      },
+      {
+        "input": "is_even(7)",
+        "expectedOutput": "False",
+        "hidden": false
+      },
+      {
+        "input": "is_even(0)",
+        "expectedOutput": "True",
+        "hidden": true
+      }
+    ],
+    "hints": [
+      "% 是取余运算符，n 除以 2 的余数会是多少？",
+      "偶数除以 2 余 0，用 n % 2 == 0 判断即可。"
+    ]
+  },
+  {
+    "id": "py-basics-023",
+    "language": "python",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "拼接问候语",
+    "stem": "定义函数 greet(name)，返回字符串「你好，」加上 name，例如 greet('小明') 返回 '你好，小明'。",
+    "answer": {
+      "professional": "字符串可用 + 运算符拼接，返回新字符串。此处把固定前缀 '你好，' 与参数 name 拼接后返回。",
+      "plain": "字符串相加就是「接龙」：'你好，' 是一段文字，name 是另一段，用 + 把它们接成一句完整的话，再用 return 递出去。比如 name 是「小明」，接出来就是「你好，小明」。"
+    },
+    "tags": [
+      "函数",
+      "字符串",
+      "拼接"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "starterCode": "def greet(name):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def greet(name):\n    return '你好，' + name\n",
+    "tests": [
+      {
+        "input": "greet('小明')",
+        "expectedOutput": "你好，小明",
+        "hidden": false
+      },
+      {
+        "input": "greet('Ana')",
+        "expectedOutput": "你好，Ana",
+        "hidden": false
+      },
+      {
+        "input": "greet('')",
+        "expectedOutput": "你好，",
+        "hidden": true
+      }
+    ],
+    "hints": [
+      "字符串之间可以用哪个运算符接在一起？",
+      "用 + 把 '你好，' 和 name 拼起来再 return。"
+    ]
+  },
+  {
+    "id": "py-basics-024",
+    "language": "python",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "返回较大值",
+    "stem": "定义函数 max_of(a, b)，返回 a 和 b 中较大的那个数。",
+    "answer": {
+      "professional": "用 if 条件判断比较两个数的大小：若 a >= b 返回 a，否则返回 b。也可用内置 max(a, b)，但此处练习条件分支。",
+      "plain": "两台机器比大小：先问一句「a 是不是大于等于 b？」（这就是 if），如果是，就把 a 交出去；不是，那就把 b 交出去。用 >= 是因为两数相等时随便交哪个都对。"
+    },
+    "tags": [
+      "函数",
+      "条件判断",
+      "比较"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "starterCode": "def max_of(a, b):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def max_of(a, b):\n    if a >= b:\n        return a\n    return b\n",
+    "tests": [
+      {
+        "input": "max_of(3, 5)",
+        "expectedOutput": "5",
+        "hidden": false
+      },
+      {
+        "input": "max_of(9, 2)",
+        "expectedOutput": "9",
+        "hidden": false
+      },
+      {
+        "input": "max_of(-1, -1)",
+        "expectedOutput": "-1",
+        "hidden": true
+      }
+    ],
+    "hints": [
+      "可以用 if 判断 a 和 b 谁更大。",
+      "如果 a >= b 就返回 a，否则返回 b。"
+    ]
+  },
+  {
+    "id": "py-basics-025",
+    "language": "python",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "重复字符串",
+    "stem": "定义函数 repeat(s, n)，把字符串 s 重复 n 次后返回，例如 repeat('ab', 3) 返回 'ababab'。",
+    "answer": {
+      "professional": "字符串与整数相乘是重复运算，s * n 返回 s 重复 n 次的新字符串。这是 Python 序列类型的特有运算符。",
+      "plain": "字符串也能「乘」一个数，不过不是算数，而是「复印」：'ab' * 3 就是把 'ab' 连着印 3 遍，得到 'ababab'。所以只要写 s * n，机器就帮你复印 n 次再递出来。"
+    },
+    "tags": [
+      "函数",
+      "字符串",
+      "乘法"
+    ],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-25"
+    },
+    "version": 1,
+    "starterCode": "def repeat(s, n):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def repeat(s, n):\n    return s * n\n",
+    "tests": [
+      {
+        "input": "repeat('ab', 3)",
+        "expectedOutput": "ababab",
+        "hidden": false
+      },
+      {
+        "input": "repeat('x', 5)",
+        "expectedOutput": "xxxxx",
+        "hidden": false
+      },
+      {
+        "input": "repeat('hi', 1)",
+        "expectedOutput": "hi",
+        "hidden": true
+      }
+    ],
+    "hints": [
+      "Python 里字符串乘以一个整数会怎样？",
+      "用 s * n 就能把字符串重复 n 次。"
+    ]
+  }
+]
