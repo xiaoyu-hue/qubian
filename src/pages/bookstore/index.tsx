@@ -2,18 +2,34 @@
  * 书城页（PRD F09 / T1.18）：两个板块——我的小册子（金币解锁内嵌阅读）、外部书籍导航（免费）。
  * 三端布局复用阶段 0.5 外壳，本页只做装配，不自定义导航。
  */
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { GlassCard } from '../../components/ui/glass-card'
 import { Icon } from '../../components/ui/icon'
 import { EmptyState } from '../../components/ui/empty-state'
 import { BookletReader } from '../../features/book/BookletReader'
 import { ExternalBookCard } from '../../features/book/ExternalBookCard'
 import { listBooklets, loadBookletContent } from '../../data/booklets/index'
-import { EXTERNAL_BOOKS } from '../../data/config/external-books'
+import { EXTERNAL_BOOK_CATEGORY_LABEL, EXTERNAL_BOOKS } from '../../data/config/external-books'
+import type { ExternalBookCategory } from '../../data/types'
+
+type CategoryFilter = 'all' | ExternalBookCategory
 
 export default function BookstorePage() {
+  const [category, setCategory] = useState<CategoryFilter>('all')
   const booklets = useMemo(() => listBooklets(), [])
   const contents = useMemo(() => booklets.map((b) => loadBookletContent(b.id)).filter((c) => c !== undefined), [booklets])
+
+  // 分类筛选：从数据动态生成标签与计数，新增书籍自动纳入，无需手改筛选条
+  const categories = useMemo(
+    () => Object.keys(EXTERNAL_BOOK_CATEGORY_LABEL) as ExternalBookCategory[],
+    [],
+  )
+  const visibleBooks = useMemo(
+    () => category === 'all' ? EXTERNAL_BOOKS : EXTERNAL_BOOKS.filter((b) => b.category === category),
+    [category],
+  )
+  const countBy = (c: CategoryFilter) =>
+    c === 'all' ? EXTERNAL_BOOKS.length : EXTERNAL_BOOKS.filter((b) => b.category === c).length
 
   return (
     <div className="flex flex-col gap-8">
@@ -50,8 +66,28 @@ export default function BookstorePage() {
           外部书籍导航
           <span className="text-xs font-normal text-muted">· 免费开放</span>
         </h2>
+        {/* 学习方向筛选 */}
+        <div role="group" aria-label="外部书籍分类筛选" className="mb-4 flex flex-wrap gap-2">
+          {(['all', ...categories] as CategoryFilter[]).map((c) => (
+            <button
+              key={c}
+              type="button"
+              aria-pressed={category === c}
+              onClick={() => setCategory(c)}
+              className={[
+                'rounded-lg px-3 py-1.5 text-sm transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                category === c ? 'bg-accent text-accent-ink font-medium' : 'bg-accent-soft text-muted hover:text-ink',
+              ].join(' ')}
+            >
+              {c === 'all' ? '全部' : EXTERNAL_BOOK_CATEGORY_LABEL[c]}
+              <span className="ml-1.5 opacity-70">{countBy(c)}</span>
+            </button>
+          ))}
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
-          {EXTERNAL_BOOKS.map((book) => (
+          {visibleBooks.map((book) => (
             <ExternalBookCard key={book.id} book={book} />
           ))}
         </div>

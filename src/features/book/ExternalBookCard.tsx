@@ -4,6 +4,7 @@
  * 版权分级：amber（CC BY-SA / CC BY-NC-SA）只做导航，避免 SA 条款绑定产品许可。
  */
 import type { ExternalBook } from '../../data/types'
+import { EXTERNAL_BOOK_CATEGORY_LABEL } from '../../data/config/external-books'
 import { GlassCard } from '../../components/ui/glass-card'
 import { Icon } from '../../components/ui/icon'
 
@@ -29,7 +30,8 @@ export function ExternalBookCard({ book }: ExternalBookCardProps) {
         </span>
       </div>
       <p className="text-xs text-muted">{book.author}</p>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-ink/80">{book.description}</p>
+      <p className="mt-2 text-[11px] text-accent">{EXTERNAL_BOOK_CATEGORY_LABEL[book.category]}</p>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-ink/80">{book.description}</p>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <a
           href={book.licenseUrl}

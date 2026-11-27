@@ -7,7 +7,15 @@
  *   在 GitHub 仓库中无明确 LICENSE 声明，虽是好书仍不收录）。
  * 许可信息于 2026-11-27 逐条核实，来源见各条 licenseUrl 指向的 LICENSE / README。
  */
-import type { ExternalBook } from '../types'
+import type { ExternalBook, ExternalBookCategory } from '../types'
+
+/** 学习方向分类标签（书城筛选条与卡片展示共用） */
+export const EXTERNAL_BOOK_CATEGORY_LABEL: Record<ExternalBookCategory, string> = {
+  language: '编程语言',
+  algorithm: '算法数学',
+  ai: 'AI 机器学习',
+  resource: '资源索引',
+}
 
 export const EXTERNAL_BOOKS: ExternalBook[] = [
   /* ---------- 中文 ---------- */
@@ -20,6 +28,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'CC BY-NC-SA 4.0',
     licenseUrl: 'https://github.com/krahets/hello-algo/blob/master/LICENSE',
     tier: 'amber',
+    category: 'algorithm',
   },
   {
     id: 'byte-of-python',
@@ -30,6 +39,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'CC BY-SA 4.0',
     licenseUrl: 'https://github.com/swaroopch/byte-of-python',
     tier: 'amber',
+    category: 'language',
   },
   {
     id: 'typescript-book-zh',
@@ -40,6 +50,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'MIT',
     licenseUrl: 'https://github.com/jkchao/typescript-book-chinese/blob/master/LICENSE',
     tier: 'green',
+    category: 'language',
   },
   {
     id: 'dive-into-deep-learning-zh',
@@ -50,6 +61,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'Apache-2.0',
     licenseUrl: 'https://github.com/d2l-ai/d2l-zh/blob/master/LICENSE',
     tier: 'green',
+    category: 'ai',
   },
   {
     id: 'pumpkin-book',
@@ -60,6 +72,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'CC BY-NC-SA 4.0',
     licenseUrl: 'https://github.com/datawhalechina/pumpkin-book/blob/master/LICENSE',
     tier: 'amber',
+    category: 'ai',
   },
   {
     id: 'happy-llm',
@@ -70,6 +83,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'CC BY-NC-SA 4.0',
     licenseUrl: 'https://github.com/datawhalechina/happy-llm/blob/main/README.md',
     tier: 'amber',
+    category: 'ai',
   },
   /* ---------- 英文 / 索引 ---------- */
   {
@@ -81,6 +95,7 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'CC BY 4.0',
     licenseUrl: 'https://github.com/EbookFoundation/free-programming-books/blob/main/LICENSE',
     tier: 'amber',
+    category: 'resource',
   },
   {
     id: 'advanced-go-programming-book',
@@ -91,5 +106,6 @@ export const EXTERNAL_BOOKS: ExternalBook[] = [
     license: 'BSD-2-Clause',
     licenseUrl: 'https://github.com/chai2010/advanced-go-programming-book/blob/master/LICENSE',
     tier: 'green',
+    category: 'language',
   },
 ]

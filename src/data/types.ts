@@ -112,6 +112,9 @@ export interface BookletContent {
 /** 版权分级：green 可内嵌正文；amber 只做导航（避免 SA 条款绑定产品） */
 export type ExternalBookTier = 'green' | 'amber'
 
+/** 外部书籍学习方向分类（书城筛选维度） */
+export type ExternalBookCategory = 'language' | 'algorithm' | 'ai' | 'resource'
+
 /** 外部书籍导航条目（只放链接卡片，不复制正文） */
 export interface ExternalBook {
   id: string
@@ -122,6 +125,7 @@ export interface ExternalBook {
   license: string
   licenseUrl: string
   tier: ExternalBookTier
+  category: ExternalBookCategory
 }
 
 /* ---------- 主题 ---------- */
