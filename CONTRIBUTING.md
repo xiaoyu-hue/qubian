@@ -1,0 +1,60 @@
+# 参与贡献
+
+感谢你考虑为趣编（QuBian）做贡献。本文说明开发环境、提交规范与两类内容的贡献方式。
+
+## 开始之前
+
+- 先读 [README.md](README.md) 了解产品定位，[01-PRD](docs/01-PRD.md) 了解功能边界，[06-实施计划](docs/06-实施计划.md) 了解当前进度。
+- 不确定某件事是否在做，先看实施计划的「当前进度」与「下一启动任务」，或直接开 Issue 询问，避免重复劳动。
+- 大改动请先用 Issue 说明思路与取舍，确认方向后再动手。
+
+## 开发环境
+
+要求 Node.js 22 LTS 与现代浏览器。
+
+```bash
+git clone https://github.com/xiaoyu-hue/qubian.git
+cd qubian
+npm ci
+npm run dev      # 访问 http://localhost:5173/qubian/
+```
+
+## 提交前必须通过的检查
+
+```bash
+npm run test     # 单元测试
+npm run build    # 类型检查 + 生产构建
+npm run lint     # 分层边界 + 题库结构校验
+```
+
+三项全绿再提交。若新增了领域逻辑或 Store 行为，请同时补单元测试。
+
+## 代码约定
+
+- 依赖方向自上而下：`pages / features / components → stores → domain → data`。下层禁止 import 上层，`domain` 禁止读写存储。`npm run lint` 会强制检查。
+- 领域逻辑写成纯函数，数值走 `src/data/config/` 配置，不在逻辑里写魔数。
+- 页面层只做装配，不自定义导航；三端布局复用 `components/layout/` 外壳。
+- 组件优先用自研玻璃样式；有键盘 / 读屏要求的复杂交互用 Radix 原语，不引入成套组件库。
+- 单个文件若持续膨胀，按 `docs/02-架构设计.md` 的规则拆分。
+
+## 贡献题库
+
+题库位于 `src/data/questions/python/`，契约见 `schema.json`（JSON Schema Draft 2020-12）与 [05-题库数据规范](docs/05-题库数据规范.md)。新增题目须满足：
+
+- 字段齐全，`id` 全局唯一；
+- `answer.professional` 与 `answer.plain` 均非空，两种深度都要写清楚；
+- 标注 `source`（类型、许可、生成时间）；
+- 实操题的参考实现能通过自己的 `tests`，并至少有 1 条隐藏测试；
+- 通过 `npm run lint` 的结构校验。
+
+题目须为原创或许可明确的内容；不要复制许可不明或未授权的材料。
+
+## 提交与 Pull Request
+
+- 一个提交只做一件事，提交信息说明「做了什么、为什么」。
+- 代码与对应文档同步更新（尤其是 `docs/06-实施计划.md` 的进度）。
+- PR 描述里写清改动内容、验证方式与取舍；涉及技术选型时说明理由。
+
+## 许可
+
+贡献即表示同意：代码以 Apache-2.0、文档与题库以 CC BY-SA 4.0 授权，与项目整体许可一致。详见 [LICENSE](LICENSE)、[LICENSE-DOCS.txt](LICENSE-DOCS.txt) 与 [NOTICE](NOTICE)。
