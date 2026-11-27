@@ -35,7 +35,11 @@ const HEADERS = {
 
 function git(...args) {
   // core.quotepath=false：避免中文路径被转义成带引号的八进制形式（如 "docs/06-..."）
-  return execFileSync('git', ['-c', 'core.quotepath=false', ...args], { cwd: ROOT, encoding: 'utf-8' }).replace(/\n$/, '')
+  return execFileSync('git', ['-c', 'core.quotepath=false', ...args], {
+    cwd: ROOT,
+    encoding: 'utf-8',
+    maxBuffer: 60 * 1024 * 1024,
+  }).replace(/\n$/, '')
 }
 
 async function api(method, path, data) {
@@ -64,11 +68,17 @@ function changedFiles(commit) {
   return git('diff', '--name-only', parent, commit).split('\n').filter(Boolean)
 }
 
-/** 从 git 对象取某个 commit 中某文件的内容（base64） */
+/** 从 git 对象取某个 commit 中某文件的内容（base64）及真实文件模式 */
 function blobFromCommit(commit, path) {
-  const sha = git('rev-parse', `${commit}:${path}`)
-  const raw = execFileSync('git', ['cat-file', 'blob', sha], { cwd: ROOT })
-  return { sha, base64: raw.toString('base64') }
+  // ls-tree 同时给出 mode 与 blob sha；-z 避免中文/特殊路径被转义
+  const line = execFileSync('git', ['ls-tree', commit, '--', path], { cwd: ROOT, encoding: 'utf-8' }).trim()
+  const [mode, , sha] = line.split(/\s+/)
+  // 二进制资源（如 WASM 约 10MB）需放大缓冲区，否则 spawnSync ENOBUFS
+  const raw = execFileSync('git', ['cat-file', 'blob', sha], {
+    cwd: ROOT,
+    maxBuffer: 60 * 1024 * 1024,
+  })
+  return { sha, mode: mode === '100755' ? '100755' : '100644', base64: raw.toString('base64') }
 }
 
 /** 提交对象里的 author/committer 行信息 */
@@ -127,9 +137,9 @@ async function main() {
 
     const entries = []
     for (const path of changedFiles(commit)) {
-      const { base64 } = blobFromCommit(commit, path)
+      const { base64, mode } = blobFromCommit(commit, path)
       const blob = await api('POST', `/repos/${REPO}/git/blobs`, { content: base64, encoding: 'base64' })
-      entries.push({ mode: '100644', type: 'blob', path, sha: blob.sha })
+      entries.push({ mode, type: 'blob', path, sha: blob.sha })
     }
 
     const tree = await api('POST', `/repos/${REPO}/git/trees`, { base_tree: baseTree, tree: entries })
