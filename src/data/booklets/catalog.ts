@@ -32,4 +32,15 @@ export const BOOKLETS: Booklet[] = [
     price: BOOKLET_PRICE,
     badge: '进阶',
   },
+  {
+    id: 'python-data-structures-vol1',
+    title: '数据结构 · 第一辑',
+    subtitle: '列表、字典、元组与集合，15 道双答案精讲',
+    description:
+      '把数据结构章节的题目按「专业版 / 大白话」双答案汇编成册。从列表下标、切片到字典映射、集合去重，适合系统掌握 Python 常用容器。',
+    chapter: 'data-structures',
+    language: 'python',
+    price: BOOKLET_PRICE,
+    badge: '进阶',
+  },
 ]

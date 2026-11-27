@@ -1,0 +1,367 @@
+[
+  {
+    "id": "py-data-structures-001",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "列表是否有序",
+    "stem": "关于 Python 列表（list），下列说法正确的是？",
+    "answer": {
+      "professional": "列表是有序、可变、允许重复元素的序列容器。元素按插入顺序排列，可通过下标访问；用 append、insert 等可原地修改。与之相对，集合（set）无序且不重复。",
+      "plain": "列表就像一排有编号的抽屉：东西按放进去的顺序摆着，第一个是 0 号、第二个是 1 号，随时能按编号取出来，也能往里加、改。顺序不会乱，同一个东西还能放好几份。"
+    },
+    "tags": ["列表", "基础"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "列表中的元素有固定顺序，可以按下标访问" },
+      { "key": "B", "text": "列表中的元素自动去重" },
+      { "key": "C", "text": "列表一旦创建就不能修改" },
+      { "key": "D", "text": "列表只能存数字" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-002",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "列表下标从几开始",
+    "stem": "列表 nums = [10, 20, 30]，要取出第一个元素 10，应该使用哪个下标？",
+    "answer": {
+      "professional": "Python 的序列下标从 0 开始，nums[0] 是第一个元素，nums[1] 是第二个。负数下标从末尾计数，nums[-1] 是最后一个元素 30。越界（如 nums[3]）会抛出 IndexError。",
+      "plain": "编程里数数是从 0 开始的，不是从 1。所以第一个元素站在「0 号位」，想拿 10 就写 nums[0]。要从后往前数也行，最后一个是 -1，倒着 -2、-3。"
+    },
+    "tags": ["列表", "下标"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "nums[0]" },
+      { "key": "B", "text": "nums[1]" },
+      { "key": "C", "text": "nums[3]" },
+      { "key": "D", "text": "nums[-1]" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-003",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "列表切片",
+    "stem": "列表 nums = [10, 20, 30, 40]，执行 nums[1:3] 的结果是？",
+    "answer": {
+      "professional": "切片 nums[start:end] 返回从 start（含）到 end（不含）的子列表，不改变原列表。nums[1:3] 取下标 1、2 的元素，得到 [20, 30]。end 位置的元素 40 不包含在内。",
+      "plain": "切片就是「切一段出来」：冒号前面是从哪个开始拿，后面是拿到哪个之前停。nums[1:3] 就是从 1 号位开始，拿到 3 号位前面为止——所以是 20 和 30，40 不在里面。记住「含头不含尾」。"
+    },
+    "tags": ["列表", "切片"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "[20, 30]" },
+      { "key": "B", "text": "[20, 30, 40]" },
+      { "key": "C", "text": "[10, 20, 30]" },
+      { "key": "D", "text": "[10, 20]" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-004",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字典的键",
+    "stem": "关于 Python 字典（dict），下列说法正确的是？",
+    "answer": {
+      "professional": "字典是「键 → 值」的映射容器，键必须可哈希（如字符串、数字、元组）且不可重复，值可以是任意类型。Python 3.7+ 保证字典保持键的插入顺序。通过键访问值，如 d['name']。",
+      "plain": "字典就像真正的查字典：你拿着「词」（键）去查，就能找到对应的「解释」（值）。键不能重复——一个字典里不会有两个一模一样的词。键通常是不变的东西（比如名字、编号），值则随便放什么。"
+    },
+    "tags": ["字典", "基础"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "字典通过键来查找对应的值，键不可重复" },
+      { "key": "B", "text": "字典的键必须是整数" },
+      { "key": "C", "text": "字典用下标 0、1、2 访问元素" },
+      { "key": "D", "text": "字典的值只能是数字" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-005",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字典取值方式",
+    "stem": "字典 d = {'name': 'Tom', 'age': 18}，要安全地取出 age（键不存在时不报错，返回默认值），应使用哪个方法？",
+    "answer": {
+      "professional": "d.get('age') 在键存在时返回值，不存在时返回 None 或指定的默认值（如 d.get('age', 0)），不会抛异常。而 d['age'] 在键不存在时会抛出 KeyError。",
+      "plain": "直接写 d['age'] 就像硬要开门——钥匙不对（键不存在）就报错。用 d.get('age') 就温和多了：找得到就给你值，找不到就说「没有」（返回 None），你还能指定找不到时给个默认值，比如 d.get('age', 0)。"
+    },
+    "tags": ["字典", "get"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "d.get('age')" },
+      { "key": "B", "text": "d['age']" },
+      { "key": "C", "text": "d.find('age')" },
+      { "key": "D", "text": "d.pop('age')" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-006",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "元组与列表的区别",
+    "stem": "元组（tuple）和列表（list）最关键的区别是？",
+    "answer": {
+      "professional": "元组用圆括号 () 定义，是不可变的——创建后不能增删改元素；列表用方括号 [] 定义，是可变的。两者都有序、可下标访问、允许重复。不可变使元组可作为字典的键。",
+      "plain": "元组和列表长得像，但元组「写完就定死」了，不能再加、改、删；列表随便改。元组用圆括号，列表用方括号。因为元组不会变，它还能当字典的钥匙用——列表就不行。"
+    },
+    "tags": ["元组", "列表"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "元组不可修改，列表可以修改" },
+      { "key": "B", "text": "元组不能存数字，列表可以" },
+      { "key": "C", "text": "元组没有顺序，列表有顺序" },
+      { "key": "D", "text": "元组自动去重，列表不会" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-007",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "集合去重",
+    "stem": "执行 set([1, 2, 2, 3, 3, 3]) 的结果是？",
+    "answer": {
+      "professional": "集合（set）是无序且不重复元素的容器。set() 会把传入的可迭代对象去重，因此结果是包含 {1, 2, 3} 的集合。集合元素必须可哈希，常用于去重和集合运算（交集、并集等）。",
+      "plain": "集合最擅长「去重」——重复的只留一个。把 [1, 2, 2, 3, 3, 3] 塞进 set，多余的 2 和 3 就被自动丢掉，剩 {1, 2, 3}。注意集合不讲顺序，它只关心「有没有这个东西」。"
+    },
+    "tags": ["集合", "去重"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "{1, 2, 3}" },
+      { "key": "B", "text": "{1, 2, 2, 3, 3, 3}" },
+      { "key": "C", "text": "[1, 2, 3]" },
+      { "key": "D", "text": "{1, 2}" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-008",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "成员判断 in",
+    "stem": "表达式 3 in [1, 2, 3] 的结果是？",
+    "answer": {
+      "professional": "in 是成员运算符，判断元素是否存在于序列/集合中，返回布尔值。3 在列表里，故为 True。对字典，in 判断的是键是否存在。not in 则判断是否不存在。",
+      "plain": "in 就是问「这里面有没有它」。3 在 [1, 2, 3] 里，所以答案是 True（对）。查字典时 in 问的是「有没有这个键」。反过来说 not in 就是问「是不是没有」。"
+    },
+    "tags": ["列表", "运算符"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "True" },
+      { "key": "B", "text": "False" },
+      { "key": "C", "text": "3" },
+      { "key": "D", "text": "报错" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-009",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "列表 append 与 extend",
+    "stem": "列表 a = [1, 2]，执行 a.append([3, 4]) 后，a 是？",
+    "answer": {
+      "professional": "append 把参数作为**单个元素**追加到末尾，因此 a 变成 [1, 2, [3, 4]]，长度从 2 增到 3。若要把两个元素分别加入，应使用 extend([3, 4]) 得到 [1, 2, 3, 4]。这是二者最易混淆之处。",
+      "plain": "append 是「整个塞进去」：你把 [3, 4] 当成一个包裹丢进列表，所以列表里多了一个「包裹」，变成 [1, 2, [3, 4]]。如果想把 3 和 4 拆开一个个放进去，得用 extend。append 不拆包裹，extend 才拆。"
+    },
+    "tags": ["列表", "append", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "[1, 2, [3, 4]]" },
+      { "key": "B", "text": "[1, 2, 3, 4]" },
+      { "key": "C", "text": "[1, 2]" },
+      { "key": "D", "text": "[3, 4]" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-010",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "字典键的可哈希性",
+    "stem": "下列哪个不能作为 Python 字典的键？",
+    "answer": {
+      "professional": "字典的键必须是可哈希对象。列表（list）是不可哈希的可变对象，不能作键，否则抛 TypeError: unhashable type。字符串、数字、元组（元素均可哈希时）可作键。",
+      "plain": "字典的钥匙必须「身份固定不变」。列表内容能改，身份不牢靠，Python 不让它当钥匙；而字符串、数字、元组（只要里面也是固定货）都行。用列表当键会直接报错说「这东西没法当钥匙」。"
+    },
+    "tags": ["字典", "哈希", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "列表 [1, 2]" },
+      { "key": "B", "text": "字符串 'name'" },
+      { "key": "C", "text": "整数 42" },
+      { "key": "D", "text": "元组 (1, 2)" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-data-structures-011",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "列表求和",
+    "stem": "定义函数 total(nums)，返回列表 nums 中所有数字之和。例如 total([1, 2, 3]) 返回 6，空列表返回 0。",
+    "answer": {
+      "professional": "初始化累加器 total = 0，遍历列表把每个元素加上去，最后返回。这是「遍历 + 累加」的基本模式。注意空列表时循环不执行，直接返回初始值 0，符合预期。",
+      "plain": "拿个空的存钱罐（total = 0），挨个把列表里的数投进去，投完看看罐里多少。空列表就是没人投，罐还是 0——正好符合「空列表返回 0」。"
+    },
+    "tags": ["列表", "循环", "累加"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def total(nums):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def total(nums):\n    result = 0\n    for n in nums:\n        result += n\n    return result\n",
+    "tests": [
+      { "input": "total([1, 2, 3])", "expectedOutput": "6", "hidden": false },
+      { "input": "total([])", "expectedOutput": "0", "hidden": false },
+      { "input": "total([10, -3, 5])", "expectedOutput": "12", "hidden": true }
+    ],
+    "hints": [
+      "用一个变量从 0 开始，遍历列表逐个累加。",
+      "for n in nums: result += n，最后 return result。"
+    ]
+  },
+  {
+    "id": "py-data-structures-012",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "统计词频",
+    "stem": "定义函数 count_words(words)，返回字典，统计列表 words 中每个词出现的次数。例如 count_words(['a', 'b', 'a']) 返回 {'a': 2, 'b': 1}。",
+    "answer": {
+      "professional": "用字典作计数器：遍历每个词，若词已在字典中则计数加 1，否则初始化为 1。也可用 d.get(word, 0) + 1 一行完成，避免先判断键是否存在的分支。",
+      "plain": "准备一个记账本（字典）：每碰到一个词，就在它名字下面记一笔。第一次见到就写「1」，再见到就加一笔。d.get(word, 0) 的意思是「之前没记过就当 0 笔」，然后 +1，特别省事。"
+    },
+    "tags": ["字典", "统计", "列表"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def count_words(words):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def count_words(words):\n    result = {}\n    for word in words:\n        result[word] = result.get(word, 0) + 1\n    return result\n",
+    "tests": [
+      { "input": "count_words(['a', 'b', 'a'])", "expectedOutput": "{'a': 2, 'b': 1}", "hidden": false },
+      { "input": "count_words(['x'])", "expectedOutput": "{'x': 1}", "hidden": false },
+      { "input": "count_words([])", "expectedOutput": "{}", "hidden": true }
+    ],
+    "hints": [
+      "用字典记录每个词的次数。",
+      "result[word] = result.get(word, 0) + 1。"
+    ]
+  },
+  {
+    "id": "py-data-structures-013",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "列表去重",
+    "stem": "定义函数 unique(nums)，返回列表 nums 去重后的结果，且保持原有顺序。例如 unique([3, 1, 3, 2]) 返回 [3, 1, 2]。",
+    "answer": {
+      "professional": "集合能去重但会丢失顺序。要保序，可遍历列表，用 seen 集合记录已出现的元素，只把首次出现的加入结果。这样既有 O(1) 的查重，又保留原顺序。",
+      "plain": "直接丢进 set 虽然能去重，但顺序会乱掉——题目要求「保持原来的顺序」。办法是：拿个备忘录（seen 集合）记下见过的数，从头到尾走一遍，第一次见到就留下来并记进备忘录，之后再见到就跳过。"
+    },
+    "tags": ["列表", "集合", "去重", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def unique(nums):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def unique(nums):\n    seen = set()\n    result = []\n    for n in nums:\n        if n not in seen:\n            seen.add(n)\n            result.append(n)\n    return result\n",
+    "tests": [
+      { "input": "unique([3, 1, 3, 2])", "expectedOutput": "[3, 1, 2]", "hidden": false },
+      { "input": "unique([1, 1, 1])", "expectedOutput": "[1]", "hidden": false },
+      { "input": "unique([2, 3, 2, 1, 3])", "expectedOutput": "[2, 3, 1]", "hidden": true }
+    ],
+    "hints": [
+      "用集合记录已经出现过的元素。",
+      "只在第一次遇到时加入结果列表。"
+    ]
+  },
+  {
+    "id": "py-data-structures-014",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "找出出现一次的数",
+    "stem": "定义函数 single(nums)，列表 nums 中除一个数字只出现一次外，其余数字都出现两次。找出那个只出现一次的数。例如 single([2, 3, 2]) 返回 3。",
+    "answer": {
+      "professional": "可用计数字典统计每个数出现次数，再找出次数为 1 的。更优解是利用异或运算：a ^ a = 0、a ^ 0 = a，把所有数异或，成对的数字抵消为 0，剩下的就是只出现一次的数，时间 O(n)、空间 O(1)。",
+      "plain": "笨办法是数每个数出现几次，找出只出现一次的那个。巧办法用「异或」（^）：两个相同的数异或会互相抵消变成 0，0 和任何数异或还是那个数。把所有数一起异或，成对的都抵消光了，剩下的就是那个落单的。"
+    },
+    "tags": ["列表", "字典", "异或", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def single(nums):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def single(nums):\n    result = 0\n    for n in nums:\n        result ^= n\n    return result\n",
+    "tests": [
+      { "input": "single([2, 3, 2])", "expectedOutput": "3", "hidden": false },
+      { "input": "single([4, 1, 4])", "expectedOutput": "1", "hidden": false },
+      { "input": "single([7, 9, 7, 5, 5])", "expectedOutput": "9", "hidden": true }
+    ],
+    "hints": [
+      "可以用字典统计次数，找出次数为 1 的数。",
+      "更巧的办法：异或 ^ 能让成对的数字抵消，result ^= n 从 0 开始。"
+    ]
+  },
+  {
+    "id": "py-data-structures-015",
+    "language": "python",
+    "chapter": "data-structures",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "字典按值排序",
+    "stem": "定义函数 sort_by_value(d)，返回按值从小到大排序后的「键值对列表」（每项为 (键, 值) 元组）。例如 sort_by_value({'a': 3, 'b': 1}) 返回 [('b', 1), ('a', 3)]。",
+    "answer": {
+      "professional": "用 sorted(d.items(), key=lambda kv: kv[1])：d.items() 得到键值对视图，key 函数取每个二元组的第 1 项（即值）作为排序依据。sorted 返回新列表，不修改原字典。若按值降序可加 reverse=True。",
+      "plain": "字典本身不讲「先后」，所以要排成列表。先把字典拆成一对对的（键, 值），再告诉 sorted「按每对里的第二个（值）来排」。lambda 那段就是这句「按值排」的说法。排完得到的是列表，原来的字典没被改动。"
+    },
+    "tags": ["字典", "排序", "lambda", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def sort_by_value(d):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def sort_by_value(d):\n    return sorted(d.items(), key=lambda kv: kv[1])\n",
+    "tests": [
+      { "input": "sort_by_value({'a': 3, 'b': 1})", "expectedOutput": "[('b', 1), ('a', 3)]", "hidden": false },
+      { "input": "sort_by_value({'x': 5})", "expectedOutput": "[('x', 5)]", "hidden": false },
+      { "input": "sort_by_value({'p': 2, 'q': 9, 'r': 1})", "expectedOutput": "[('r', 1), ('p', 2), ('q', 9)]", "hidden": true }
+    ],
+    "hints": [
+      "用 d.items() 得到键值对，再用 sorted 排序。",
+      "key=lambda kv: kv[1] 表示按值排序。"
+    ]
+  }
+]

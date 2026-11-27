@@ -30,6 +30,7 @@ const DIFFICULTY_LABEL: Record<Difficulty, string> = { beginner: '入门', advan
 const CHAPTER_LABEL: Record<string, string> = {
   basics: 'Python 基础',
   'control-flow': '控制流',
+  'data-structures': '数据结构',
 }
 const chapterLabel = (id: string) => CHAPTER_LABEL[id] ?? id
 
