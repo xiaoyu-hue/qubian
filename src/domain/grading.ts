@@ -2,8 +2,19 @@ import type { ChoiceQuestion, PracticeQuestion } from '../data/types'
 
 /**
  * 判分领域层（纯函数，无副作用）。
- * 一期实操题走「对照参考答案自评」，gradeCode 保留接口，二期切换 Pyodide 自动判题时上层不变。
+ * 选择题：直接比对选项 key。
+ * 实操题：接收执行层跑出的测试结果数组，聚合成 GradeResult；不接触 Worker / DOM。
  */
+
+/** 单个测试用例的执行结果（执行层产出，领域层消费） */
+export interface TestRunResult {
+  input: string
+  expectedOutput: string
+  hidden: boolean
+  actualOutput: string
+  passed: boolean
+  error?: string
+}
 
 export type GradeResult = {
   correct: boolean
@@ -11,11 +22,7 @@ export type GradeResult = {
   feedback: 'correct' | 'try-again' | 'invalid'
 }
 
-/**
- * 选择题判分。
- * @param question 选择题
- * @param answerKey 用户选择的 key
- */
+/** 选择题判分。 */
 export function gradeChoice(
   question: ChoiceQuestion,
   answerKey: string,
@@ -29,11 +36,20 @@ export function gradeChoice(
   }
 }
 
+/** 实操题判分（自动判题口径）：全部测试通过才算掌握，含隐藏测试。 */
+export function gradeCodeFromTests(
+  question: PracticeQuestion,
+  results: TestRunResult[],
+): GradeResult {
+  void question
+  if (results.length === 0) return { correct: false, feedback: 'try-again' }
+  const correct = results.every((r) => r.passed)
+  return { correct, feedback: correct ? 'correct' : 'try-again' }
+}
+
 /**
- * 实操题判分占位。
- * 一期：调用方传入自评结果（懂了/需练习）；二期：由 Pyodide 执行 tests 后传入实际结果。
- * @param question 实操题
- * @param passed 是否通过（自评或自动判题结果）
+ * 兼容旧调用：直接传入通过与否。
+ * 一期自评与「上层不动」约定保留此接口；二期由 gradeCodeFromTests 取代实际判分。
  */
 export function gradeCode(
   question: PracticeQuestion,
