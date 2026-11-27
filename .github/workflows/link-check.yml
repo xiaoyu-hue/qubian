@@ -1,0 +1,35 @@
+name: Check External Book Links
+
+# 外部书籍导航只存链接、不复制正文，链接失效即等于内容不可用。
+# 每周一定时巡检 external-books.ts 中的全部链接，发现死链则工作流失败并提醒维护者。
+# 也可在 Actions 页面手动触发（例如批量新增书籍后）。
+on:
+  schedule:
+    # 每周一 03:30 UTC（北京时间 11:30），避开 Pages 部署高峰
+    - cron: '30 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check links in external book catalog
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # 只巡检外部书籍目录文件；--no-progress 适配 CI 日志；
+          # --exclude 忽略 GitHub 站内锚点以外的私有地址（本项目暂无）。
+          args: >-
+            --no-progress
+            --verbose
+            --accept 200,204,301,302,307,308
+            src/data/config/external-books.ts
+          fail: true
+        env:
+          # 用仓库自带 token 校验 GitHub 链接，避免匿名请求被限流误判为死链
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
