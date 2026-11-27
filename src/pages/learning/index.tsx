@@ -16,11 +16,12 @@ import { QuestionCard } from '../../features/question/QuestionCard'
 import { PracticeCard } from '../../features/question/PracticeCard'
 import { AnswerPanel } from '../../features/question/AnswerPanel'
 
-type Filter = 'all' | QuestionType
+type Filter = 'all' | QuestionType | 'wrong'
 const FILTERS: { value: Filter; label: string }[] = [
   { value: 'all', label: '全部' },
   { value: 'choice', label: '选择题' },
   { value: 'practice', label: '实操题' },
+  { value: 'wrong', label: '错题本' },
 ]
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = { beginner: '入门', advanced: '进阶' }
@@ -32,30 +33,35 @@ export default function LearningPage() {
 
   const profile = useProfileStore((s) => s.profile)
   const awardCorrect = useProfileStore((s) => s.awardCorrect)
+  const syncAchievements = useProfileStore((s) => s.syncAchievements)
+  const markWrong = useProfileStore((s) => s.markWrong)
   const revealAnswer = useProfileStore((s) => s.revealAnswer)
   const advanceTask = useProgressStore((s) => s.advanceTask)
   const intensity = useSettingsStore((s) => s.settings.taskIntensity)
 
   const allQuestions = useMemo(() => loadQuestions(), [])
   const chapters = useMemo(() => listChapters(), [])
-  const visible = useMemo(
-    () => loadQuestions(filter === 'all' ? {} : { type: filter }),
-    [filter],
-  )
+  const visible = useMemo(() => {
+    if (filter === 'wrong') {
+      return allQuestions.filter((q) => profile.wrongIds.includes(q.id))
+    }
+    return loadQuestions(filter === 'all' ? {} : { type: filter })
+  }, [allQuestions, filter, profile.wrongIds])
   const active = activeId ? getQuestionById(activeId) : undefined
 
   /**
-   * 提交答案（PRD F04）。
-   * - 答对且首次掌握：发金币/积分、记录题号、推进每日任务
+   * 提交答案（PRD F04 + T2.6/T2.8）。
+   * - 答对且首次掌握：发金币/积分、记录题号、移出错题队列、推进任务、判定成就
    * - 答对但已掌握过：不重复发奖、不重复计任务（防刷）
-   * - 答错：不发奖、不记掌握、不推进任务，但解锁解析供学习，并保留「再试一次」
+   * - 答错：加入错题队列、不发奖、不记掌握、不推进任务，解锁解析供学习
    */
   const handleSubmit = (correct: boolean) => {
     if (!activeId) return
     if (!correct) {
       // 答错要看得到解析才谈得上「再试一次」，否则重试只能盲猜（PRD F04 要求答错即展示解析）
+      markWrong(activeId)
       revealAnswer(activeId)
-      toast.show('再想想，看看解析再试一次', 'info')
+      toast.show('已加入错题本，看看解析再试一次', 'info')
       return
     }
     const alreadyMastered = profile.answeredIds.includes(activeId)
@@ -64,8 +70,19 @@ export default function LearningPage() {
       return
     }
     awardCorrect(activeId)
-    advanceTask(intensity)
+    // 先推进任务与连续天数，再取最新统计快照判定成就（避免用上一轮渲染的旧值）
+    const updatedTask = advanceTask(intensity)
+    const latestStreak = useProgressStore.getState().streak
+    const latestAnswered = useProfileStore.getState().profile.answeredIds.length
+    const unlocked = syncAchievements({
+      answeredCount: latestAnswered,
+      dailyTaskDone: updatedTask.completed >= updatedTask.target,
+      streak: latestStreak,
+    })
     toast.show('答对了！金币 +5、积分 +10', 'success')
+    for (const achievement of unlocked) {
+      toast.show(`成就解锁：${achievement.title} · 金币 +15`, 'success')
+    }
   }
 
   // 答题详情视图
@@ -163,13 +180,20 @@ export default function LearningPage() {
             ].join(' ')}
           >
             {f.label}
+            {f.value === 'wrong' && profile.wrongIds.length > 0 && (
+              <span className="ml-1.5 rounded-full bg-error px-1.5 py-0.5 text-[10px] text-accent-ink">
+                {profile.wrongIds.length}
+              </span>
+            )}
           </button>
         ))}
       </div>
 
       {/* 难度分区 */}
       {groups.length === 0 ? (
-        <GlassCard tone="subtle" className="p-8 text-center text-sm text-muted">该题型暂无题目</GlassCard>
+        <GlassCard tone="subtle" className="p-8 text-center text-sm text-muted">
+          {filter === 'wrong' ? '错题本是空的，答错的题会自动收进这里' : '该题型暂无题目'}
+        </GlassCard>
       ) : (
         groups.map((group) => (
           <section key={group.difficulty}>

@@ -19,6 +19,7 @@ export default function HomePage() {
   const profile = useProfileStore((s) => s.profile)
   const intensity = useSettingsStore((s) => s.settings.taskIntensity)
   const ensureToday = useProgressStore((s) => s.ensureToday)
+  const streak = useProgressStore((s) => s.streak)
   const task = useMemo(() => ensureToday(intensity, localDate()), [ensureToday, intensity])
 
   const total = loadQuestions().length
@@ -37,7 +38,7 @@ export default function HomePage() {
       </div>
 
       {/* 关键数据概览 */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <GlassCard tone="subtle" className="p-4">
           <p className="text-xs text-muted">金币</p>
           <div className="mt-1"><CoinBadge value={profile.coins} /></div>
@@ -45,6 +46,10 @@ export default function HomePage() {
         <GlassCard tone="subtle" className="p-4">
           <p className="text-xs text-muted">等级</p>
           <p className="mt-1 text-xl font-bold text-accent">Lv.{profile.level}</p>
+        </GlassCard>
+        <GlassCard tone="subtle" className="p-4">
+          <p className="text-xs text-muted">连续天数</p>
+          <p className="mt-1 text-xl font-bold text-ink">{streak}<span className="text-sm font-normal text-muted"> 天</span></p>
         </GlassCard>
         <GlassCard tone="subtle" className="col-span-2 p-4 sm:col-span-1">
           <p className="text-xs text-muted">已掌握题目</p>

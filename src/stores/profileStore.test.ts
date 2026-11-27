@@ -156,4 +156,86 @@ describe('profileStore', () => {
     expect(useProfileStore.getState().profile.coins).toBe(0)
     expect(useProfileStore.getState().profile.answeredIds).toEqual([])
   })
+
+  // ---- T2.8 错题队列 ----
+  it('答错入队，重复答错幂等', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().markWrong('q-wrong')
+    useProfileStore.getState().markWrong('q-wrong')
+    expect(useProfileStore.getState().profile.wrongIds).toEqual(['q-wrong'])
+    // 入队不发奖、不记掌握
+    expect(useProfileStore.getState().profile.coins).toBe(0)
+    expect(useProfileStore.getState().profile.answeredIds).toEqual([])
+  })
+
+  it('答对后移出错题队列', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().markWrong('q-wrong')
+    useProfileStore.getState().awardCorrect('q-wrong')
+    expect(useProfileStore.getState().profile.wrongIds).toEqual([])
+    expect(useProfileStore.getState().profile.answeredIds).toContain('q-wrong')
+  })
+
+  it('缺少 wrongIds 的旧数据能正常加载', async () => {
+    localStorage.setItem(
+      'qubian:v1:profile',
+      JSON.stringify({ version: 1, data: { coins: 5, points: 10, level: 1, answeredIds: [], purchasedBookIds: [] } }),
+    )
+    vi.resetModules()
+    const reloaded = await import('./profileStore')
+    expect(reloaded.useProfileStore.getState().profile.wrongIds).toEqual([])
+  })
+
+  // ---- T2.6 成就系统 ----
+  it('条件满足时解锁成就并发放金币', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    const unlocked = useProfileStore.getState().syncAchievements({
+      answeredCount: 1,
+      dailyTaskDone: false,
+      streak: 1,
+    })
+    const ids = unlocked.map((a) => a.id)
+    expect(ids).toContain('first-answer')
+    expect(useProfileStore.getState().profile.coins).toBe(15)
+    const record = useProfileStore.getState().profile.unlockedAchievements.find((a) => a.id === 'first-answer')
+    expect(record?.unlockedAt).toBeTruthy()
+  })
+
+  it('成就重复同步不再发币（幂等）', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().syncAchievements({ answeredCount: 1, dailyTaskDone: false, streak: 1 })
+    const again = useProfileStore.getState().syncAchievements({ answeredCount: 1, dailyTaskDone: false, streak: 1 })
+    expect(again).toEqual([])
+    expect(useProfileStore.getState().profile.coins).toBe(15)
+    expect(useProfileStore.getState().profile.unlockedAchievements).toHaveLength(1)
+  })
+
+  it('一次可解锁多个成就，按数量发币', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().syncAchievements({
+      answeredCount: 10,
+      dailyTaskDone: true,
+      streak: 3,
+    })
+    // first-answer / ten-correct / daily-done / streak-3 共 4 个
+    expect(useProfileStore.getState().profile.unlockedAchievements).toHaveLength(4)
+    expect(useProfileStore.getState().profile.coins).toBe(60)
+  })
+
+  it('条件未满足不解锁', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    useProfileStore.getState().syncAchievements({ answeredCount: 0, dailyTaskDone: false, streak: 0 })
+    expect(useProfileStore.getState().profile.unlockedAchievements).toEqual([])
+    expect(useProfileStore.getState().profile.coins).toBe(0)
+  })
+
+  it('缺少 unlockedAchievements 的旧数据能正常加载', async () => {
+    localStorage.setItem(
+      'qubian:v1:profile',
+      JSON.stringify({ version: 1, data: { coins: 5, points: 10, level: 1, answeredIds: [], purchasedBookIds: [] } }),
+    )
+    vi.resetModules()
+    const reloaded = await import('./profileStore')
+    expect(reloaded.useProfileStore.getState().profile.unlockedAchievements).toEqual([])
+  })
 })

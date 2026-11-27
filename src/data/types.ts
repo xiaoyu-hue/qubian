@@ -151,6 +151,10 @@ export interface UserProfile {
   purchasedBookIds: string[]
   /** 已读完并领取过返币的小册子 id：幂等，防止重复点击重复返币 */
   readBookIds: string[]
+  /** 错题复习队列：答错入队、答对移出，用于针对性重练（T2.8） */
+  wrongIds: string[]
+  /** 已解锁成就及解锁时间：unlockedAt 既是展示信息，也是发奖幂等依据（T2.6） */
+  unlockedAchievements: Achievement[]
 }
 
 /** 每日任务 */
@@ -167,6 +171,20 @@ export interface Achievement {
   title: string
   description: string
   unlockedAt?: string
+}
+
+/** 成就触发方式：累计答对数 / 完成每日任务 / 连续天数 */
+export type AchievementTrigger =
+  | { kind: 'answers'; count: number }
+  | { kind: 'daily-task' }
+  | { kind: 'streak'; days: number }
+
+/** 成就定义（配置层数据，带触发条件；解锁后写入档案时补 unlockedAt） */
+export interface AchievementDefinition {
+  id: string
+  title: string
+  description: string
+  trigger: AchievementTrigger
 }
 
 /* ---------- 设置 ---------- */
