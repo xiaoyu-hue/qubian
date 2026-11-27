@@ -33,7 +33,8 @@
 ![HashRouter](https://img.shields.io/badge/routing-HashRouter-4B5563)
 ![localStorage](https://img.shields.io/badge/storage-localStorage-4B5563)
 ![ESLint-free](https://img.shields.io/badge/boundaries-checked-2E7D32)
-![Tests](https://img.shields.io/badge/tests-68%20passed-2E7D32)
+![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)
+![Tests](https://img.shields.io/badge/tests-87%20passed-2E7D32)
 ![Platform](https://img.shields.io/badge/platform-Web%20%2F%20PWA-6B7280)
 ![Responsive](https://img.shields.io/badge/responsive-phone%20%7C%20tablet%20%7C%20desktop-6B7280)
 ![Theme](https://img.shields.io/badge/theme-light%20%7C%20dark%20%7C%20system-6B7280)
@@ -148,7 +149,7 @@ npm run dev
 | `npm run dev` | 启动开发服务器，热更新 |
 | `npm run build` | 类型检查 + 生产构建，产物在 `dist/` |
 | `npm run preview` | 本地预览生产构建 |
-| `npm run test` | 运行全部单元测试（当前 68 项） |
+| `npm run test` | 运行全部单元测试（当前 87 项） |
 | `npm run lint` | 架构分层边界检查 + 题库结构校验 |
 
 ## 技术栈
@@ -217,10 +218,10 @@ src/
 |---|---|---|
 | 阶段 0 / 0.5 | 工程骨架、三端自适应布局外壳、状态设计系统 | 已完成 |
 | 阶段 1 | MVP 闭环：引导 → 答题 → 双答案 → 金币 → 书城 → 本地存储 → 深浅主题 | 已完成，M3 达成 |
-| 阶段 2 | Pyodide 自动判题（已完成）；题库工具链、成就、打卡、错题复习（进行中） | 部分完成 |
+| 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库工具链待启动 | 部分完成 |
 | 阶段 3 | 第二语言、多语言判题评估、后端可行性评审 | 规划中，需重新评审 |
 
-当前测试 68 项全通过，生产构建与 lint 通过；书城消费闭环已通过浏览器端到端验证（购买 → 解锁 → 阅读 → 返币 → 刷新保持 → 幂等），详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。
+当前为 **v1.0.0** 正式版本，87 项测试全通过，生产构建与 lint 通过；书城消费闭环与游戏化玩法均已通过浏览器端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
 
 ## 许可证
 
