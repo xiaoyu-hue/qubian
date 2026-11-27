@@ -9,7 +9,7 @@
 [![Deploy](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml/badge.svg)](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml)
 [![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)](https://github.com/xiaoyu-hue/qubian/releases)
 [![Stars](https://img.shields.io/github/stars/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/stargazers)
-[![Tests](https://img.shields.io/badge/tests-92%20passed-2E7D32?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/actions)
+[![Tests](https://img.shields.io/badge/tests-110%20passed-2E7D32?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/actions)
 [![License: Code](https://img.shields.io/badge/code-Apache--2.0-blue?style=for-the-badge)](LICENSE)
 [![License: Docs](https://img.shields.io/badge/docs-CC%20BY--SA%204.0-green?style=for-the-badge)](LICENSE-DOCS.txt)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
@@ -52,9 +52,9 @@
 | 题型 | 用途 | 判题方式 | 答案形式 |
 |---|---|---|---|
 | 选择题 | 测概念理解 | 前端比对选项，答完即显示解析 | 选项 + 正确答案 + 双版本解析 |
-| 实操题 | 练写代码 | Pyodide 在浏览器内跑测试自动判定 | 参考代码 + 双版本讲解 + 隐藏测试 |
+| 实操题 | 练写代码 | 按语言在浏览器内跑测试自动判定 | 参考代码 + 双版本讲解 + 隐藏测试 |
 
-实操题的代码**不上传服务器**：Python 运行时（Pyodide）以本地资源方式随站点分发，在 Web Worker 中隔离执行，并带超时强杀防止死循环。答错可重试；主动看解析只解锁阅读，不计入「已掌握」、不发奖励。
+实操题的代码**不上传服务器**：Python 由本地 Pyodide 运行时执行，JavaScript 由浏览器原生引擎执行，两者都在 Web Worker 中隔离，并带超时强杀防止死循环。答错可重试；主动看解析只解锁阅读，不计入「已掌握」、不发奖励。
 
 ### 金币经济闭环
 
@@ -121,7 +121,7 @@ npm run dev
 | `npm run dev` | 启动开发服务器，热更新 |
 | `npm run build` | 类型检查 + 生产构建，产物在 `dist/` |
 | `npm run preview` | 本地预览生产构建 |
-| `npm run test` | 运行全部单元测试（当前 92 项） |
+| `npm run test` | 运行全部单元测试（当前 110 项） |
 | `npm run lint` | 架构分层边界检查 + 题库结构校验 |
 
 ## 技术栈
@@ -134,8 +134,8 @@ npm run dev
 | 图标 | 自研内联 SVG | 零额外依赖，线性风格统一 |
 | 状态 | Zustand 5 | 管理金币、进度、主题等全局状态，动作经 Store |
 | 路由 | React Router 7（HashRouter） | 静态托管无需服务端 rewrite，刷新不 404 |
-| 代码编辑器 | CodeMirror 6（Python 语言包） | 比 Monaco 轻，`React.lazy` 按需加载不进首屏 |
-| 浏览器内判题 | Pyodide 314（Web Worker） | Python 本地运行、代码不出设备，超时可强杀 |
+| 代码编辑器 | CodeMirror 6（Python / JavaScript 语言包） | 比 Monaco 轻，`React.lazy` 按需加载不进首屏 |
+| 浏览器内判题 | Pyodide 314 + 原生 JS 引擎（Web Worker） | 两语言均在本地运行、代码不出设备，共用超时强杀 |
 | 测试 | Vitest 5 | 领域逻辑与 Store 单测 |
 | 存储 | localStorage（带版本与命名空间封装） | 无后端阶段的持久化，损坏数据回退默认值 |
 | 部署 | GitHub Actions + GitHub Pages | 免费静态托管，推送即发布 |
@@ -155,11 +155,11 @@ src/
 ├── domain/           # 纯领域逻辑：grading / economy / progression / tasks / theme
 ├── stores/           # Zustand：profileStore / progressStore / settingsStore
 ├── data/
-│   ├── questions/    # 题库 JSON + schema + 加载聚合
+│   ├── questions/    # 题库 JSON（按语言分目录）+ schema + 加载聚合
 │   ├── booklets/     # 小册子目录 + 从题库汇编正文
 │   ├── config/       # 经济 / 等级 / 外部书单配置
 │   └── repositories/ # localStorage 持久化封装
-└── lib/              # Pyodide 封装与 Worker
+└── lib/              # 多语言执行层：runtime / runner / Pyodide 与 JS Worker
 ```
 
 依赖方向自上而下：`pages / features / components → stores → domain → data`。领域层是纯函数，不感知 UI、Store 与存储细节。`npm run lint` 中的边界脚本强制检查这条约束，违规 import 直接报错退出。
@@ -168,9 +168,18 @@ src/
 
 ## 题库与内容
 
-题库按章节分文件存放于 `src/data/questions/python/`，共 **40 题**：`basics.json`（Python 基础 25 题）与 `control-flow.json`（控制流 15 题，10 选择 + 5 实操），全部 AI 原创并标注来源与许可，双答案非空。学习页可切换章节、按章节显示掌握进度。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行零依赖校验脚本，检查结构、ID 唯一、答案非空、correctKey 合法与来源许可。
+题库按「语言 → 章节」分文件存放，共 **70 题**：
 
-题库加载入口 `src/data/questions/python/index.ts` 提供 `loadQuestions(filter)` / `getQuestionById(id)` / `listChapters()`，支持按章节、难度、题型、标签筛选；数据损坏时抛 `QuestionBankError`，由上层显示错误态。
+| 语言 | 章节文件 | 题数 |
+|---|---|---|
+| Python | `python/basics.json`（基础） | 25 |
+| Python | `python/control-flow.json`（控制流） | 15 |
+| Python | `python/data-structures.json`（数据结构） | 15 |
+| JavaScript | `javascript/basics.json`（基础） | 15 |
+
+全部 AI 原创并标注来源与许可，双答案非空；实操题附参考实现与隐藏测试。学习页可切换语言与章节、按章节显示掌握进度。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行零依赖校验脚本，检查结构、ID 唯一、答案非空、correctKey 合法、来源许可，并核对题目目录语言、`language` 字段与 id 前缀一致。
+
+统一加载入口 `src/data/questions/index.ts` 提供 `loadQuestions(filter)` / `getQuestionById(id)` / `listChapters(language?)` / `listLanguages()`，支持按语言、章节、难度、题型、标签筛选；数据损坏时抛 `QuestionBankError`，由上层显示错误态。`python/index.ts` 保留为「只看 Python」的兼容入口。
 
 ## 文档索引
 
@@ -191,9 +200,9 @@ src/
 | 阶段 0 / 0.5 | 工程骨架、三端自适应布局外壳、状态设计系统 | 已完成 |
 | 阶段 1 | MVP 闭环：引导 → 答题 → 双答案 → 金币 → 书城 → 本地存储 → 深浅主题 | 已完成，M3 达成 |
 | 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库工具链待启动 | 部分完成 |
-| 阶段 3 | 第二语言、多语言判题评估、后端可行性评审 | 规划中，需重新评审 |
+| 阶段 3 | 第二语言 JavaScript + 多语言执行层（已实施）；后端可行性评审待评估 | 部分完成 |
 
-当前为 **v1.0.0** 正式版本，92 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法与章节切换均已通过浏览器端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
+当前为 **v1.1.0** 正式版本，110 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法、章节切换与双语言判题均已通过自动化与端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
 
 ## 许可证
 

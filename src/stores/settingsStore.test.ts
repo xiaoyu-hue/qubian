@@ -70,6 +70,7 @@ describe('settingsStore', () => {
       theme: 'system',
       taskIntensity: 5,
       onboardingDone: false,
+      language: 'python',
     })
   })
 

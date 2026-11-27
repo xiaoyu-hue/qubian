@@ -11,7 +11,7 @@ import { CoinBadge } from '../../components/ui/coin-badge'
 import { useProfileStore } from '../../stores/profileStore'
 import { useProgressStore, localDate } from '../../stores/progressStore'
 import { useSettingsStore } from '../../stores/settingsStore'
-import { loadQuestions } from '../../data/questions/python/index'
+import { loadQuestions } from '../../data/questions/index'
 import { LEVEL_THRESHOLDS } from '../../data/config/progression'
 
 export default function HomePage() {

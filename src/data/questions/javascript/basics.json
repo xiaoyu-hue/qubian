@@ -1,0 +1,412 @@
+[
+  {
+    "id": "js-basics-001",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "用什么声明一个不会重新赋值的变量",
+    "stem": "JavaScript 中，声明一个「绑定后不能再重新赋值」的变量，应该使用哪个关键字？",
+    "answer": {
+      "professional": "const 用于声明常量绑定：一旦赋值，不能再用 = 赋予新值。注意 const 限制的是「绑定指向」不可变；若绑定的是对象或数组，其内部内容仍可修改。let 声明可重新赋值的块级变量，var 是函数作用域的旧写法。",
+      "plain": "const 就像给盒子贴了封条：这个盒子不能再装进另一样东西（不能重新赋值）。但如果盒子里是个收纳箱（对象/数组），你仍然能往收纳箱里塞东西。想以后还能换内容的，用 let。"
+    },
+    "tags": ["变量", "const", "let"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "var" },
+      { "key": "B", "text": "let" },
+      { "key": "C", "text": "const" },
+      { "key": "D", "text": "define" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "js-basics-002",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "字符串拼接的结果",
+    "stem": "在 JavaScript 中，表达式 \"3\" + 4 的结果是什么？",
+    "answer": {
+      "professional": "当 + 的任一操作数是字符串时，+ 执行字符串拼接而非数值相加。数字 4 会被转换为字符串 \"4\"，与 \"3\" 拼接得到字符串 \"34\"。若想得到数值 7，需先 Number(\"3\") + 4。",
+      "plain": "只要加号两边有一个是文字（字符串），加号就变成「粘起来」而不是「算数」。所以 \"3\" 粘上 4，得到的是文字 \"34\"，不是数字 7。想算 7 的话，得先把 \"3\" 变成数字。"
+    },
+    "tags": ["数据类型", "字符串", "运算符"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "数字 7" },
+      { "key": "B", "text": "字符串 \"34\"" },
+      { "key": "C", "text": "字符串 \"3+4\"" },
+      { "key": "D", "text": "报错" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "js-basics-003",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "判断相等的推荐写法",
+    "stem": "JavaScript 中，要比较两个值是否「类型相同且值相等」，应使用哪个运算符？",
+    "answer": {
+      "professional": "=== 是严格相等：先比较类型，再比较值，不做隐式类型转换。== 只比较值，会进行类型转换，容易产生意外结果（如 0 == '' 为 true）。实践中推荐始终用 === 与 !==。",
+      "plain": "三个等号 === 才是「真的相等」：类型和值都得一样。两个等号 == 会自作主张把类型先转换一下，经常闹出『0 居然等于空字符串』这种怪事。所以平时都用三个等号最省心。"
+    },
+    "tags": ["运算符", "相等", "类型转换"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "=" },
+      { "key": "B", "text": "==" },
+      { "key": "C", "text": "===" },
+      { "key": "D", "text": "<>" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "js-basics-004",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "数组的 length 属性",
+    "stem": "已知 const arr = [10, 20, 30]; 那么 arr.length 的值是多少？",
+    "answer": {
+      "professional": "数组（array）的 length 属性返回元素个数。arr 有 3 个元素，故 arr.length 为 3。注意 length 比最大下标大 1，因为下标从 0 开始。",
+      "plain": "length 就是「这个数组里装了几个东西」。[10,20,30] 里装了 3 个数，所以 length 是 3。它比最后一个位置编号大 1，因为编号是从 0 开始数的。"
+    },
+    "tags": ["数组", "length"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "2" },
+      { "key": "B", "text": "3" },
+      { "key": "C", "text": "30" },
+      { "key": "D", "text": "undefined" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "js-basics-005",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "函数返回值的规则",
+    "stem": "JavaScript 函数中如果没有写 return 语句，调用它会得到什么？",
+    "answer": {
+      "professional": "所有 JS 函数都有返回值。若未显式 return，函数默认返回 undefined。undefined 是 JS 的「未定义」值，表示没有有效结果。",
+      "plain": "就算你没写 return，函数也会偷偷给你返回一个东西，叫 undefined（意思是『没有值』）。不像有些语言会报错，JS 很宽容地塞给你一个『空』。"
+    },
+    "tags": ["函数", "return", "undefined"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "null" },
+      { "key": "B", "text": "0" },
+      { "key": "C", "text": "undefined" },
+      { "key": "D", "text": "报错" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "js-basics-006",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "对象属性的访问",
+    "stem": "已知 const user = { name: '小明', age: 18 }; 要取出名字，下面哪种写法正确？",
+    "answer": {
+      "professional": "对象属性可用点号（user.name）或方括号（user['name']）访问。点号要求属性名是合法标识符；方括号支持动态属性名。两种方式都可读取到 '小明'。",
+      "plain": "对象就像一张登记表，『name』是其中一个格子。你可以用 user.name 直接拿，也可以用 user['name'] 通过格子名字拿，两种都对。"
+    },
+    "tags": ["对象", "属性"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "user->name" },
+      { "key": "B", "text": "user.name" },
+      { "key": "C", "text": "user(name)" },
+      { "key": "D", "text": "user[name]" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "js-basics-007",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "箭头函数 this 的特点",
+    "stem": "关于箭头函数（=>）中的 this，下列说法正确的是？",
+    "answer": {
+      "professional": "箭头函数没有自己的 this绑定；它会捕获定义时所在词法作用域的 this（词法绑定）。这与普通函数不同，普通函数的 this 由调用方式决定。因此在回调中常用箭头函数保留外层 this。",
+      "plain": "普通函数的 this 看『谁调用它』，经常变来变去；箭头函数不管谁调用，它的 this 都认『写它时所在的地方』，不会乱跑。所以在回调函数里用箭头函数，this 不容易丢。"
+    },
+    "tags": ["函数", "箭头函数", "this"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "箭头函数有自己独立的 this" },
+      { "key": "B", "text": "箭头函数的 this 由调用它的对象决定" },
+      { "key": "C", "text": "箭头函数捕获定义时外层的 this" },
+      { "key": "D", "text": "箭头函数里不能使用 this" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "js-basics-008",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "map 方法的作用",
+    "stem": "对数组调用 arr.map(fn) 会怎样？",
+    "answer": {
+      "professional": "map() 遍历数组，对每个元素调用 fn，并把每次返回值组成一个新数组返回。它不改变原数组（纯函数式变换）。若只想遍历做副作用，用 forEach；若筛选元素，用 filter。",
+      "plain": "map 就像流水线：把数组里每个元素送进函数加工一遍，加工后的结果收集成一个新数组。原来的数组不会被动。比如把每个数都乘 2，就用 map。"
+    },
+    "tags": ["数组", "map", "高阶函数"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "直接修改原数组的元素" },
+      { "key": "B", "text": "返回一个由 fn 返回值组成的新数组" },
+      { "key": "C", "text": "只遍历数组，不返回任何东西" },
+      { "key": "D", "text": "把数组排序" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "js-basics-009",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "真值与假值",
+    "stem": "在 if (x) 判断中，下列哪个值会被当作「假」（falsy）？",
+    "answer": {
+      "professional": "JS 中 falsy 值共有：false、0、-0、0n、\"\"、null、undefined、NaN。其余（包括空数组 [] 和空对象 {}）都是 truthy。因此 if ([]) 会成立，这是常见坑点。",
+      "plain": "JS 里被当成『假』的值就那么几个：false、0、空字符串、null、undefined、NaN。特别注意：空数组 [] 和空对象 {} 反而是『真』的！所以 if([]) 会执行，别被直觉骗了。"
+    },
+    "tags": ["类型转换", "条件", "truthy"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "[]" },
+      { "key": "B", "text": "{}" },
+      { "key": "C", "text": "\"\"" },
+      { "key": "D", "text": "\"0\"" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "js-basics-010",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "let 与 var 的作用域差异",
+    "stem": "关于 let 和 var 的作用域，下列说法正确的是？",
+    "answer": {
+      "professional": "let 声明的是块级作用域（{} 内有效），var 声明的是函数作用域（整个函数内有效，可越过块）。在循环中用 var 声明计数器配合闭包，常导致所有回调拿到同一个最终值，用 let 则每次迭代有独立绑定。",
+      "plain": "let 的花括号 {} 就是它的地盘，出了这个括号就找不到；var 不看花括号，只看整个函数，容易『越界』。经典坑：循环里用 var 配回调，结果回调里全是最后一轮的值；换成 let 就正常了。"
+    },
+    "tags": ["作用域", "let", "var"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "两者都是块级作用域" },
+      { "key": "B", "text": "let 是块级作用域，var 是函数作用域" },
+      { "key": "C", "text": "var 是块级作用域，let 是函数作用域" },
+      { "key": "D", "text": "两者都没有作用域" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "js-basics-011",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "两数相加",
+    "stem": "定义函数 add(a, b)，返回两个数的和。",
+    "answer": {
+      "professional": "函数接收两个参数 a、b，用 return a + b 返回它们的和。注意：当参数都是数字时 + 执行加法；若有字符串参数则会拼接，本题测试用例均传入数字。",
+      "plain": "写一个函数，给它两个数，它把两数加起来还给你。就用 return a + b 一句话搞定。"
+    },
+    "tags": ["函数", "运算符", "return"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "starterCode": "function add(a, b) {\n  // 在这里写代码\n}\n",
+    "referenceCode": "function add(a, b) {\n  return a + b;\n}\n",
+    "tests": [
+      { "input": "add(1, 2)", "expectedOutput": "3", "hidden": false },
+      { "input": "add(-5, 5)", "expectedOutput": "0", "hidden": false },
+      { "input": "add(100, 250)", "expectedOutput": "350", "hidden": true }
+    ],
+    "hints": ["用 return 把结果返回出去。", "加号 + 可以直接把两个数相加。"]
+  },
+  {
+    "id": "js-basics-012",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "数组求和",
+    "stem": "定义函数 sum(arr)，返回数组中所有数字的和；空数组返回 0。",
+    "answer": {
+      "professional": "可用 for...of 遍历累加：初始化 total=0，遍历每个元素累加后返回。空数组不会进入循环，直接返回 0，天然符合要求。也可用 arr.reduce((a, b) => a + b, 0)。",
+      "plain": "准备一个计数器从 0 开始，把数组里每个数都加到它上面，最后把计数器还回去。空数组一个数都没有，那计数器还是 0，正好符合要求。"
+    },
+    "tags": ["数组", "循环", "累加"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "starterCode": "function sum(arr) {\n  // 在这里写代码\n}\n",
+    "referenceCode": "function sum(arr) {\n  let total = 0;\n  for (const n of arr) {\n    total += n;\n  }\n  return total;\n}\n",
+    "tests": [
+      { "input": "sum([1, 2, 3])", "expectedOutput": "6", "hidden": false },
+      { "input": "sum([])", "expectedOutput": "0", "hidden": false },
+      { "input": "sum([10, -3, 5])", "expectedOutput": "12", "hidden": true }
+    ],
+    "hints": ["先设一个 total = 0。", "用 for (const n of arr) 遍历每个元素累加。"]
+  },
+  {
+    "id": "js-basics-013",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "返回最大值",
+    "stem": "定义函数 maxOf(a, b)，返回两个数中较大的那个。",
+    "answer": {
+      "professional": "用三元运算符或 if 判断：a > b ? a : b。两数相等时返回 b（值与 a 相同，不影响结果）。注意用 > 而非 >= 均可，因为相等时两者值一样。",
+      "plain": "比较两个数，谁大就还谁。可以用 a > b ? a : b 这种『三目运算符』：问号前面是条件，冒号前是成立时的结果，冒号后是不成立时的结果。"
+    },
+    "tags": ["函数", "条件", "三元运算符"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "starterCode": "function maxOf(a, b) {\n  // 在这里写代码\n}\n",
+    "referenceCode": "function maxOf(a, b) {\n  return a > b ? a : b;\n}\n",
+    "tests": [
+      { "input": "maxOf(3, 7)", "expectedOutput": "7", "hidden": false },
+      { "input": "maxOf(10, 2)", "expectedOutput": "10", "hidden": false },
+      { "input": "maxOf(-1, -5)", "expectedOutput": "-1", "hidden": true }
+    ],
+    "hints": ["可以用 a > b ? a : b。", "也可以用 if 判断后分别 return。"]
+  },
+  {
+    "id": "js-basics-014",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "统计偶数个数",
+    "stem": "定义函数 countEven(arr)，返回数组中偶数的个数；空数组返回 0。",
+    "answer": {
+      "professional": "遍历数组，用 n % 2 === 0 判断偶数并计数；最后返回计数。% 是取余运算符，偶数除以 2 余数为 0。用严格相等 === 避免类型隐式转换。",
+      "plain": "一个一个数过去，判断它是不是偶数——也就是除以 2 能不能整除（余数是不是 0）。是的话就给计数器加 1，最后把计数器还回去。% 这个符号就是算余数的。"
+    },
+    "tags": ["数组", "循环", "取余"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "starterCode": "function countEven(arr) {\n  // 在这里写代码\n}\n",
+    "referenceCode": "function countEven(arr) {\n  let count = 0;\n  for (const n of arr) {\n    if (n % 2 === 0) count++;\n  }\n  return count;\n}\n",
+    "tests": [
+      { "input": "countEven([1, 2, 3, 4])", "expectedOutput": "2", "hidden": false },
+      { "input": "countEven([1, 3, 5])", "expectedOutput": "0", "hidden": false },
+      { "input": "countEven([0, 2, 7, 8, 10])", "expectedOutput": "4", "hidden": true }
+    ],
+    "hints": ["用 n % 2 === 0 判断偶数。", "准备一个 count 计数器，遇到偶数就加 1。"]
+  },
+  {
+    "id": "js-basics-015",
+    "language": "javascript",
+    "chapter": "basics",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "字符串翻转",
+    "stem": "定义函数 reverse(str)，返回字符串的翻转结果；空字符串返回空字符串。",
+    "answer": {
+      "professional": "字符串本身不可变。常用写法：str.split('') 拆成字符数组，reverse() 反转数组，再 join('') 拼回字符串。split('') 用空串作分隔符得到单个字符（对含 emoji 的代理对有局限，本题测试用例为普通 ASCII 字符）。",
+      "plain": "字符串不能直接倒过来，得三步走：先用 split('') 把它拆成一个个字符，再用 reverse() 把顺序调过来，最后用 join('') 拼回一个字符串。就像把一串珠子拆开、倒序、再串回去。"
+    },
+    "tags": ["字符串", "数组方法", "split"],
+    "source": {
+      "type": "ai-generated",
+      "license": "project-apache-2.0",
+      "generatedAt": "2026-11-27"
+    },
+    "version": 1,
+    "starterCode": "function reverse(str) {\n  // 在这里写代码\n}\n",
+    "referenceCode": "function reverse(str) {\n  return str.split('').reverse().join('');\n}\n",
+    "tests": [
+      { "input": "reverse('hello')", "expectedOutput": "olleh", "hidden": false },
+      { "input": "reverse('')", "expectedOutput": "", "hidden": false },
+      { "input": "reverse('abc123')", "expectedOutput": "321cba", "hidden": true }
+    ],
+    "hints": ["字符串不能直接用 reverse。", "试试 str.split('').reverse().join('')。"]
+  }
+]

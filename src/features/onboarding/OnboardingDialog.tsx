@@ -1,7 +1,7 @@
 /**
  * 首次引导（PRD F01）：选语言 → 设每日强度 → 完成。
  * - 用 Radix Dialog 承载，不可关闭（必须完成才能进入）；
- * - 语言当前仅 Python 可用，其他标注「二期」禁用；
+ * - 语言列表来自执行层 LANGUAGES，选择后写入 settingsStore 持久化；
  * - 完成后写 settingsStore.onboardingDone，刷新不再出现。
  */
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { Button } from '../../components/ui/button'
 import { SegmentedControl } from '../../components/ui/segmented-control'
 import { useSettingsStore } from '../../stores/settingsStore'
+import { LANGUAGES, type ProgrammingLanguage } from '../../lib/runtime'
 
 const INTENSITY_OPTIONS = [
   { value: 3, label: '轻松 · 3题' },
@@ -18,12 +19,18 @@ const INTENSITY_OPTIONS = [
 
 export function OnboardingDialog() {
   const onboardingDone = useSettingsStore((s) => s.settings.onboardingDone)
+  const savedLanguage = useSettingsStore((s) => s.settings.language)
   const setOnboardingDone = useSettingsStore((s) => s.setOnboardingDone)
   const setTaskIntensity = useSettingsStore((s) => s.setTaskIntensity)
+  const setLanguage = useSettingsStore((s) => s.setLanguage)
   const currentIntensity = useSettingsStore((s) => s.settings.taskIntensity)
   const [intensity, setIntensity] = useState(currentIntensity)
+  const [language, setLanguageLocal] = useState<ProgrammingLanguage>(
+    (savedLanguage as ProgrammingLanguage) ?? 'python',
+  )
 
   const finish = () => {
+    setLanguage(language)
     setTaskIntensity(intensity)
     setOnboardingDone(true)
   }
@@ -44,22 +51,30 @@ export function OnboardingDialog() {
 
           <section className="mt-6">
             <h3 className="mb-2 text-sm font-semibold text-ink">1 · 选择学习语言</h3>
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                aria-pressed="true"
-                className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink"
-              >
-                Python
-              </button>
-              <button
-                type="button"
-                disabled
-                title="二期开放"
-                className="cursor-not-allowed rounded-lg bg-accent-soft px-4 py-2 text-sm text-muted opacity-60"
-              >
-                JavaScript（二期）
-              </button>
+            <div role="group" aria-label="学习语言选择" className="flex flex-wrap gap-2">
+              {LANGUAGES.map((lang) => {
+                const selected = language === lang.value
+                return (
+                  <button
+                    key={lang.value}
+                    type="button"
+                    aria-pressed={selected}
+                    disabled={!lang.available}
+                    onClick={() => setLanguageLocal(lang.value)}
+                    className={[
+                      'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                      !lang.available
+                        ? 'cursor-not-allowed bg-accent-soft text-muted opacity-60'
+                        : selected
+                          ? 'bg-accent text-accent-ink'
+                          : 'bg-accent-soft text-muted hover:text-ink',
+                    ].join(' ')}
+                  >
+                    {lang.label}
+                  </button>
+                )
+              })}
             </div>
           </section>
 

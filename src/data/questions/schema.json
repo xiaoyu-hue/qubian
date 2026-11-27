@@ -42,7 +42,7 @@
       "required": ["id", "language", "chapter", "type", "difficulty", "title", "stem", "answer", "source"],
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z]+(?:-[a-z]+)*-\\d{3,}$" },
-        "language": { "type": "string", "minLength": 1 },
+        "language": { "type": "string", "enum": ["python", "javascript"] },
         "chapter": { "type": "string", "minLength": 1 },
         "difficulty": { "type": "string", "enum": ["beginner", "advanced"] },
         "title": { "type": "string", "minLength": 1 },

@@ -4,7 +4,7 @@
  * 约束（架构 5.1）：数据层只做加载与组装，不碰 UI、不做业务判分、不读写存储。
  */
 import type { Booklet, BookletContent, BookletEntry, BookletSection, Question } from '../types'
-import { loadQuestions } from '../questions/python/index'
+import { loadQuestions } from '../questions/index'
 import { BOOKLETS } from './catalog'
 
 /** 列出全部小册子（返回浅拷贝，避免调用方改动目录源） */
@@ -36,7 +36,7 @@ export function loadBookletContent(bookletId: string): BookletContent | undefine
   const booklet = getBookletById(bookletId)
   if (!booklet) return undefined
 
-  const questions = loadQuestions({ chapter: booklet.chapter })
+  const questions = loadQuestions({ language: booklet.language, chapter: booklet.chapter })
   const choice = questions.filter((q) => q.type === 'choice')
   const practice = questions.filter((q) => q.type === 'practice')
 

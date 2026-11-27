@@ -9,6 +9,7 @@ import { create } from 'zustand'
 import { readStored, writeStored } from '../data/repositories/storage'
 import type { Settings, ThemeMode } from '../data/types'
 import { isThemeMode } from '../domain/theme'
+import { isProgrammingLanguage } from '../lib/runtime'
 
 const SETTINGS_KEY = 'settings'
 
@@ -16,6 +17,7 @@ const DEFAULT_SETTINGS: Settings = {
   theme: 'system',
   taskIntensity: 5,
   onboardingDone: false,
+  language: 'python',
 }
 
 /** 读取设置并对每个字段做合法性校验，损坏值回退默认 */
@@ -33,6 +35,7 @@ function loadSettings(): Settings {
       typeof stored.onboardingDone === 'boolean'
         ? stored.onboardingDone
         : DEFAULT_SETTINGS.onboardingDone,
+    language: isProgrammingLanguage(stored.language) ? stored.language : DEFAULT_SETTINGS.language,
   }
 }
 
@@ -49,6 +52,8 @@ interface SettingsState {
   setTaskIntensity: (intensity: number) => void
   /** 标记引导已完成 */
   setOnboardingDone: (done: boolean) => void
+  /** 设置当前学习语言 */
+  setLanguage: (language: string) => void
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -72,6 +77,14 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setOnboardingDone: (done) =>
     set((state) => {
       const next = { ...state.settings, onboardingDone: done }
+      saveSettings(next)
+      return { settings: next }
+    }),
+
+  setLanguage: (language) =>
+    set((state) => {
+      if (!isProgrammingLanguage(language)) return state
+      const next = { ...state.settings, language }
       saveSettings(next)
       return { settings: next }
     }),

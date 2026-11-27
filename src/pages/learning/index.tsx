@@ -1,11 +1,21 @@
 /**
  * 学习页（PRD F02–F04）：选题列表 + 答题闭环。
- * 列表：章节进度 + 难度分区 + 题型筛选（专业学习平台通行结构）；
+ * 列表：语言切换 + 章节进度 + 难度分区 + 题型筛选（专业学习平台通行结构）；
  * 答题：选择题判分 → 双答案解锁（可主动求助）→ 发金币/积分 → 推进每日任务。
  */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Difficulty, Question, QuestionType } from '../../data/types'
-import { getQuestionById, listChapters, loadQuestions } from '../../data/questions/python/index'
+import {
+  getQuestionById,
+  listChapters,
+  loadQuestions,
+} from '../../data/questions/index'
+import {
+  LANGUAGES,
+  LANGUAGE_LABEL,
+  isProgrammingLanguage,
+  type ProgrammingLanguage,
+} from '../../lib/runtime'
 import { useProfileStore } from '../../stores/profileStore'
 import { useProgressStore } from '../../stores/progressStore'
 import { useSettingsStore } from '../../stores/settingsStore'
@@ -26,15 +36,26 @@ const FILTERS: { value: Filter; label: string }[] = [
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = { beginner: '入门', advanced: '进阶' }
 
-/** 章节标识 → 中文名；未登记的章节回退为原始标识 */
-const CHAPTER_LABEL: Record<string, string> = {
-  basics: 'Python 基础',
-  'control-flow': '控制流',
-  'data-structures': '数据结构',
+/** 章节标识 → 中文名，按语言分组；未登记的章节回退为原始标识 */
+const CHAPTER_LABEL: Record<ProgrammingLanguage, Record<string, string>> = {
+  python: {
+    basics: 'Python 基础',
+    'control-flow': '控制流',
+    'data-structures': '数据结构',
+  },
+  javascript: {
+    basics: 'JavaScript 基础',
+  },
 }
-const chapterLabel = (id: string) => CHAPTER_LABEL[id] ?? id
+const chapterLabel = (language: ProgrammingLanguage, id: string) =>
+  CHAPTER_LABEL[language]?.[id] ?? id
 
 export default function LearningPage() {
+  const settingsLanguage = useSettingsStore((s) => s.settings.language)
+  const initialLanguage: ProgrammingLanguage = isProgrammingLanguage(settingsLanguage)
+    ? settingsLanguage
+    : 'python'
+  const [language, setLanguage] = useState<ProgrammingLanguage>(initialLanguage)
   const [chapter, setChapter] = useState<string>('basics')
   const [filter, setFilter] = useState<Filter>('all')
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -47,22 +68,44 @@ export default function LearningPage() {
   const revealAnswer = useProfileStore((s) => s.revealAnswer)
   const advanceTask = useProgressStore((s) => s.advanceTask)
   const intensity = useSettingsStore((s) => s.settings.taskIntensity)
+  const setSettingsLanguage = useSettingsStore((s) => s.setLanguage)
 
-  const allQuestions = useMemo(() => loadQuestions(), [])
-  const chapters = useMemo(() => listChapters(), [])
-  const chapterQuestions = useMemo(() => loadQuestions({ chapter }), [chapter])
+  const allQuestions = useMemo(() => loadQuestions({ language }), [language])
+  const chapters = useMemo(() => listChapters(language), [language])
+  const chapterQuestions = useMemo(
+    () => loadQuestions({ language, chapter }),
+    [language, chapter],
+  )
   const chapterAnswered = useMemo(
     () => chapterQuestions.filter((q) => profile.answeredIds.includes(q.id)).length,
     [chapterQuestions, profile.answeredIds],
   )
   const visible = useMemo(() => {
     if (filter === 'wrong') {
-      // 错题本是全局复习视图，跨所有章节
-      return allQuestions.filter((q) => profile.wrongIds.includes(q.id))
+      // 错题本是全局复习视图，跨所有语言与章节
+      return loadQuestions().filter((q) => profile.wrongIds.includes(q.id))
     }
-    return loadQuestions({ chapter, ...(filter === 'all' ? {} : { type: filter }) })
-  }, [allQuestions, chapter, filter, profile.wrongIds])
+    return loadQuestions({ language, chapter, ...(filter === 'all' ? {} : { type: filter }) })
+  }, [language, chapter, filter, profile.wrongIds])
   const active = activeId ? getQuestionById(activeId) : undefined
+
+  /** 切换语言：同步到设置持久化，章节回退到该语言第一个章节，关闭题目详情 */
+  const changeLanguage = (next: ProgrammingLanguage) => {
+    if (next === language) return
+    setLanguage(next)
+    setSettingsLanguage(next)
+    const nextChapters = listChapters(next)
+    setChapter(nextChapters[0] ?? 'basics')
+    setFilter('all')
+    setActiveId(null)
+  }
+
+  /** 首次进入或语言无对应章节时，纠正到有效章节 */
+  useEffect(() => {
+    if (chapters.length > 0 && !chapters.includes(chapter)) {
+      setChapter(chapters[0])
+    }
+  }, [chapters, chapter])
 
   /**
    * 提交答案（PRD F04 + T2.6/T2.8）。
@@ -73,7 +116,6 @@ export default function LearningPage() {
   const handleSubmit = (correct: boolean) => {
     if (!activeId) return
     if (!correct) {
-      // 答错要看得到解析才谈得上「再试一次」，否则重试只能盲猜（PRD F04 要求答错即展示解析）
       markWrong(activeId)
       revealAnswer(activeId)
       toast.show('已加入错题本，看看解析再试一次', 'info')
@@ -85,7 +127,6 @@ export default function LearningPage() {
       return
     }
     awardCorrect(activeId)
-    // 先推进任务与连续天数，再取最新统计快照判定成就（避免用上一轮渲染的旧值）
     const updatedTask = advanceTask(intensity)
     const latestStreak = useProgressStore.getState().streak
     const latestAnswered = useProfileStore.getState().profile.answeredIds.length
@@ -114,7 +155,9 @@ export default function LearningPage() {
         </button>
 
         <div>
-          <span className="text-xs uppercase tracking-widest text-muted">{chapterLabel(active.chapter)} · {DIFFICULTY_LABEL[active.difficulty]}</span>
+          <span className="text-xs uppercase tracking-widest text-muted">
+            {LANGUAGE_LABEL[language]} · {chapterLabel(language, active.chapter)} · {DIFFICULTY_LABEL[active.difficulty]}
+          </span>
           <h1 className="mt-1 text-xl font-bold text-ink">{active.title}</h1>
         </div>
 
@@ -163,7 +206,34 @@ export default function LearningPage() {
       <div>
         <span className="text-xs uppercase tracking-widest text-muted">Learning</span>
         <h1 className="mt-1 text-2xl font-bold text-ink">学习</h1>
-        <p className="mt-1 text-sm text-muted">掌握 Python 基础 · 已答 {profile.answeredIds.length} / {allQuestions.length} 题</p>
+        <p className="mt-1 text-sm text-muted">
+          {LANGUAGE_LABEL[language]} · 已答 {profile.answeredIds.length} / {allQuestions.length} 题
+        </p>
+      </div>
+
+      {/* 语言切换 */}
+      <div>
+        <p className="mb-2 text-xs uppercase tracking-widest text-muted">学习语言</p>
+        <div role="group" aria-label="学习语言选择" className="flex flex-wrap gap-2">
+          {LANGUAGES.filter((l) => l.available).map((lang) => {
+            const selected = language === lang.value
+            return (
+              <button
+                key={lang.value}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => changeLanguage(lang.value)}
+                className={[
+                  'rounded-lg px-3 py-1.5 text-sm transition-colors',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                  selected ? 'bg-accent text-accent-ink font-medium' : 'bg-accent-soft text-muted hover:text-ink',
+                ].join(' ')}
+              >
+                {lang.label}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {/* 章节切换 */}
@@ -182,7 +252,7 @@ export default function LearningPage() {
                 chapter === c ? 'bg-accent text-accent-ink font-medium' : 'bg-accent-soft text-muted hover:text-ink',
               ].join(' ')}
             >
-              {chapterLabel(c)}
+              {chapterLabel(language, c)}
             </button>
           ))}
         </div>
@@ -191,7 +261,7 @@ export default function LearningPage() {
       {/* 当前章节进度概览 */}
       <GlassCard tone="subtle" className="p-5">
         <div className="mb-3 flex items-center justify-between text-sm">
-          <span className="font-medium text-ink">{chapterLabel(chapter)}</span>
+          <span className="font-medium text-ink">{chapterLabel(language, chapter)}</span>
           <span className="text-muted">{chapterAnswered} / {chapterQuestions.length}</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-accent-soft" role="progressbar" aria-valuenow={chapterAnswered} aria-valuemin={0} aria-valuemax={chapterQuestions.length}>

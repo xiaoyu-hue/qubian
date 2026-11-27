@@ -43,4 +43,15 @@ export const BOOKLETS: Booklet[] = [
     price: BOOKLET_PRICE,
     badge: '进阶',
   },
+  {
+    id: 'javascript-basics-vol1',
+    title: 'JavaScript 基础 · 第一辑',
+    subtitle: '变量、类型、函数与数组，15 道双答案精讲',
+    description:
+      '把 JavaScript 基础章节的题目按「专业版 / 大白话」双答案汇编成册。从 const/let、相等比较到函数、数组方法，适合有 Python 基础后横向拓展第二语言。',
+    chapter: 'basics',
+    language: 'javascript',
+    price: BOOKLET_PRICE,
+    badge: '入门',
+  },
 ]

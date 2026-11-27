@@ -197,4 +197,6 @@ export interface Settings {
   theme: ThemeMode
   taskIntensity: number
   onboardingDone: boolean
+  /** 当前学习语言（python / javascript），引导页选择并持久化 */
+  language: string
 }

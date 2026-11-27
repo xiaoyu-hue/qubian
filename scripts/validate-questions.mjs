@@ -12,7 +12,7 @@
  *   npm run lint                 # 已包含本脚本
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs'
-import { join, relative } from 'node:path'
+import { basename, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
@@ -153,6 +153,10 @@ for (const file of files) {
     continue
   }
 
+  // 目录语言核对：题目所在目录名应等于其 language 字段（顶层文件除外）
+  const langDir = basename(dirname(file))
+  const isLanguageDir = join(QUESTIONS_DIR, langDir) === dirname(file)
+
   questions.forEach((q, i) => {
     total++
     const at = `${rel}[${i}]`
@@ -163,6 +167,18 @@ for (const file of files) {
     for (const e of errs) fail(rel, e)
 
     if (!q || typeof q !== 'object') return
+
+    // 目录语言与字段一致（防止 python/ 目录里混入 language=javascript 的题目）
+    if (isLanguageDir && q.language !== langDir) {
+      fail(rel, `${at} language "${q.language}" 与所在语言目录 "${langDir}" 不一致`)
+    }
+    // id 前缀须与语言一致（python 用 py-，javascript 用 js-）
+    if (typeof q.id === 'string' && isLanguageDir) {
+      const expectedPrefix = langDir === 'javascript' ? 'js-' : 'py-'
+      if (!q.id.startsWith(expectedPrefix)) {
+        fail(rel, `${at} id "${q.id}" 应以 "${expectedPrefix}" 开头（语言 ${langDir}）`)
+      }
+    }
 
     // ID 全局唯一 + 格式
     if (typeof q.id === 'string') {

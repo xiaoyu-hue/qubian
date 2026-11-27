@@ -6,7 +6,8 @@
 import { lazy, Suspense, useState } from 'react'
 import type { PracticeQuestion } from '../../data/types'
 import { gradeCodeFromTests, type GradeResult, type TestRunResult } from '../../domain/grading'
-import { runPractice, type RunPhase } from '../../lib/pyodide'
+import { runCode, LANGUAGE_LABEL, type ProgrammingLanguage, type RunPhase } from '../../lib/runtime'
+import { isProgrammingLanguage } from '../../lib/runtime'
 import { useTheme } from '../../app/providers'
 import { GlassCard } from '../../components/ui/glass-card'
 import { Button } from '../../components/ui/button'
@@ -25,6 +26,8 @@ export interface PracticeCardProps {
 
 export function PracticeCard({ question, onSubmit, answered = false }: PracticeCardProps) {
   const { resolvedTheme } = useTheme()
+  const language: ProgrammingLanguage = isProgrammingLanguage(question.language) ? question.language : 'python'
+  const languageLabel = LANGUAGE_LABEL[language]
   const [code, setCode] = useState(question.starterCode ?? '')
   const [showReference, setShowReference] = useState(false)
   const [phase, setPhase] = useState<RunPhase | null>(null)
@@ -40,7 +43,7 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
     setResults(null)
     setEngineError(null)
     try {
-      const runResults = await runPractice(code, question.tests, {
+      const runResults = await runCode(question.language, code, question.tests, {
         onPhase: setPhase,
       })
       setResults(runResults)
@@ -76,16 +79,17 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
 
       <div className="mb-2 flex items-center justify-between gap-3">
         <span className="text-xs font-medium text-muted">在这里写代码</span>
-        <span className="text-[11px] text-muted">Python · 自动判题</span>
+        <span className="text-[11px] text-muted">{languageLabel} · 自动判题</span>
       </div>
       <Suspense fallback={<div className="h-48 animate-pulse rounded-xl border border-line bg-accent-soft/40" aria-label="编辑器加载中" />}>
         <CodeEditor
-          key={`${editorKey}-${resolvedTheme}`}
+          key={`${editorKey}-${resolvedTheme}-${language}`}
           value={code}
           onChange={setCode}
           readOnly={locked}
           dark={resolvedTheme === 'dark'}
-          ariaLabel="Python 代码编辑器"
+          language={language}
+          ariaLabel={`${languageLabel} 代码编辑器`}
         />
       </Suspense>
 
@@ -110,7 +114,11 @@ export function PracticeCard({ question, onSubmit, answered = false }: PracticeC
       {phase && (
         <p className="mt-4 flex items-center gap-2 text-sm text-muted" role="status">
           <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-          {phase === 'loading' ? '正在加载 Python 运行环境（首次约需十几秒）…' : '正在运行测试用例…'}
+          {phase === 'loading'
+            ? language === 'python'
+              ? '正在加载 Python 运行环境（首次约需十几秒）…'
+              : '正在启动 JavaScript 运行环境…'
+            : '正在运行测试用例…'}
         </p>
       )}
 
