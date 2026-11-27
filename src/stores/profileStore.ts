@@ -20,6 +20,7 @@ const DEFAULT_PROFILE: UserProfile = {
   answeredIds: [],
   revealedIds: [],
   purchasedBookIds: [],
+  readBookIds: [],
 }
 
 /** 读取档案并对每个字段做合法性校验，损坏值回退默认 */
@@ -33,6 +34,9 @@ function loadProfile(): UserProfile {
     : []
   const purchasedBookIds = Array.isArray(stored.purchasedBookIds)
     ? stored.purchasedBookIds.filter((id): id is string => typeof id === 'string')
+    : []
+  const readBookIds = Array.isArray(stored.readBookIds)
+    ? stored.readBookIds.filter((id): id is string => typeof id === 'string')
     : []
   const points =
     typeof stored.points === 'number' && Number.isFinite(stored.points) && stored.points >= 0
@@ -49,6 +53,7 @@ function loadProfile(): UserProfile {
     answeredIds,
     revealedIds,
     purchasedBookIds,
+    readBookIds,
   }
 }
 
@@ -65,6 +70,12 @@ interface ProfileState {
   purchaseBook: (bookId: string, price: number) => boolean
   /** 判断金币是否足够支付某价格 */
   canAfford: (price: number) => boolean
+  /**
+   * 标记小册子读完并发放返币。
+   * 前置条件：已购买；幂等：同一本只返一次币（防重复点击刷币）。
+   * 返回本次是否实际发放，供 UI 决定提示语。
+   */
+  markBookRead: (bookId: string) => boolean
   /** 清除数据后重置为初始档案 */
   resetProfile: () => void
 }
@@ -127,6 +138,22 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
   },
 
   canAfford: (price) => canAfford(get().profile.coins, price),
+
+  markBookRead: (bookId) => {
+    const current = get().profile
+    // 未购买不给返币；已返过则幂等返回 false
+    if (!current.purchasedBookIds.includes(bookId)) return false
+    if (current.readBookIds.includes(bookId)) return false
+    const coins = awardCoins(current.coins, COIN_REWARDS['book-read'])
+    const next: UserProfile = {
+      ...current,
+      coins,
+      readBookIds: [...current.readBookIds, bookId],
+    }
+    persist(next)
+    set({ profile: next })
+    return true
+  },
 
   resetProfile: () => {
     persist(DEFAULT_PROFILE)

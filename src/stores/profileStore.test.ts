@@ -92,6 +92,43 @@ describe('profileStore', () => {
     expect(useProfileStore.getState().profile.purchasedBookIds).toContain('book-basics')
   })
 
+  it('读完返币：已购买可领，未购买不发', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    // 未购买时点读完不发币
+    expect(useProfileStore.getState().markBookRead('book-basics')).toBe(false)
+    expect(useProfileStore.getState().profile.coins).toBe(0)
+
+    // 攒够 40 金币购买
+    for (let i = 0; i < 8; i += 1) useProfileStore.getState().awardCorrect(`q-${i}`)
+    useProfileStore.getState().purchaseBook('book-basics', 40)
+    expect(useProfileStore.getState().profile.coins).toBe(0)
+
+    // 读完返 10 金币
+    expect(useProfileStore.getState().markBookRead('book-basics')).toBe(true)
+    expect(useProfileStore.getState().profile.coins).toBe(10)
+    expect(useProfileStore.getState().profile.readBookIds).toContain('book-basics')
+  })
+
+  it('读完返币幂等：同一本重复领取不再发币', async () => {
+    const { useProfileStore } = await import('./profileStore')
+    for (let i = 0; i < 8; i += 1) useProfileStore.getState().awardCorrect(`q-${i}`)
+    useProfileStore.getState().purchaseBook('book-basics', 40)
+    expect(useProfileStore.getState().markBookRead('book-basics')).toBe(true)
+    expect(useProfileStore.getState().markBookRead('book-basics')).toBe(false)
+    expect(useProfileStore.getState().profile.coins).toBe(10)
+    expect(useProfileStore.getState().profile.readBookIds).toEqual(['book-basics'])
+  })
+
+  it('缺少 readBookIds 的旧数据能正常加载', async () => {
+    localStorage.setItem(
+      'qubian:v1:profile',
+      JSON.stringify({ version: 1, data: { coins: 5, points: 10, level: 1, answeredIds: [], purchasedBookIds: [] } }),
+    )
+    vi.resetModules()
+    const reloaded = await import('./profileStore')
+    expect(reloaded.useProfileStore.getState().profile.readBookIds).toEqual([])
+  })
+
   it('刷新不丢：重新导入后档案保持', async () => {
     const first = await import('./profileStore')
     first.useProfileStore.getState().awardCorrect('py-basics-001')

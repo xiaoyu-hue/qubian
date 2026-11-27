@@ -71,6 +71,59 @@ export interface PracticeQuestion extends QuestionBase {
 /** 题目联合类型：用 type 字段做判别（discriminated union） */
 export type Question = ChoiceQuestion | PracticeQuestion
 
+/* ---------- 书城 ---------- */
+
+/** 小册子元数据（正文由题库按章节汇编，不单独维护副本） */
+export interface Booklet {
+  id: string
+  title: string
+  subtitle: string
+  description: string
+  /** 正文来源的题库章节 id */
+  chapter: string
+  language: string
+  /** 解锁价格（金币），数值来源是 config/economy */
+  price: number
+  badge: string
+}
+
+/** 小册子中的一个阅读条目（由题目转换，保留双答案） */
+export interface BookletEntry {
+  id: string
+  title: string
+  stem: string
+  answer: Answer
+  kind: QuestionType
+}
+
+/** 小册子中的一个部分（如选择题、实操题） */
+export interface BookletSection {
+  title: string
+  entries: BookletEntry[]
+}
+
+/** 小册子完整内容：元数据 + 从题库汇编的分节正文 */
+export interface BookletContent {
+  booklet: Booklet
+  sections: BookletSection[]
+  entryCount: number
+}
+
+/** 版权分级：green 可内嵌正文；amber 只做导航（避免 SA 条款绑定产品） */
+export type ExternalBookTier = 'green' | 'amber'
+
+/** 外部书籍导航条目（只放链接卡片，不复制正文） */
+export interface ExternalBook {
+  id: string
+  title: string
+  author: string
+  description: string
+  url: string
+  license: string
+  licenseUrl: string
+  tier: ExternalBookTier
+}
+
 /* ---------- 主题 ---------- */
 
 export type ThemeMode = 'system' | 'light' | 'dark'
@@ -96,6 +149,8 @@ export interface UserProfile {
   /** 主动求助查看过解析的题号：仅解锁解析，不计入掌握、不发奖励 */
   revealedIds: string[]
   purchasedBookIds: string[]
+  /** 已读完并领取过返币的小册子 id：幂等，防止重复点击重复返币 */
+  readBookIds: string[]
 }
 
 /** 每日任务 */
