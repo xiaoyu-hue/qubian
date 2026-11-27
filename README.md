@@ -7,40 +7,12 @@
 纯前端 · 无需注册 · 数据只存在你自己的浏览器里 · 开源非商用
 
 [![Deploy](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml/badge.svg)](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml)
+[![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)](https://github.com/xiaoyu-hue/qubian/releases)
 [![Stars](https://img.shields.io/github/stars/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/stargazers)
-[![Forks](https://img.shields.io/github/forks/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/forks)
-[![Issues](https://img.shields.io/github/issues/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/issues)
-[![Contributors](https://img.shields.io/github/contributors/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/graphs/contributors)
-[![Last Commit](https://img.shields.io/github/last-commit/xiaoyu-hue/qubian?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/commits/main)
+[![Tests](https://img.shields.io/badge/tests-92%20passed-2E7D32?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/actions)
 [![License: Code](https://img.shields.io/badge/code-Apache--2.0-blue?style=for-the-badge)](LICENSE)
 [![License: Docs](https://img.shields.io/badge/docs-CC%20BY--SA%204.0-green?style=for-the-badge)](LICENSE-DOCS.txt)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
-
-</div>
-
-<div align="center">
-
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
-![Zustand](https://img.shields.io/badge/Zustand-5-7B3FA0)
-![Radix UI](https://img.shields.io/badge/Radix-UI-111827)
-![CodeMirror](https://img.shields.io/badge/CodeMirror-6-7A3E00)
-![Pyodide](https://img.shields.io/badge/Pyodide-314-3776AB?logo=python&logoColor=white)
-![Vitest](https://img.shields.io/badge/Vitest-5-6E9F18?logo=vitest&logoColor=white)
-![React Router](https://img.shields.io/badge/React--Router-7-CA4245)
-![HashRouter](https://img.shields.io/badge/routing-HashRouter-4B5563)
-![localStorage](https://img.shields.io/badge/storage-localStorage-4B5563)
-![ESLint-free](https://img.shields.io/badge/boundaries-checked-2E7D32)
-![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)
-![Tests](https://img.shields.io/badge/tests-92%20passed-2E7D32)
-![Platform](https://img.shields.io/badge/platform-Web%20%2F%20PWA-6B7280)
-![Responsive](https://img.shields.io/badge/responsive-phone%20%7C%20tablet%20%7C%20desktop-6B7280)
-![Theme](https://img.shields.io/badge/theme-light%20%7C%20dark%20%7C%20system-6B7280)
-![Node](https://img.shields.io/badge/Node-22-339933?logo=node.js&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-22272E?logo=githubpages&logoColor=white)
-![Open Source](https://img.shields.io/badge/open--source-yes-2E7D32?logo=opensecurityfoundation&logoColor=white)
 
 </div>
 
