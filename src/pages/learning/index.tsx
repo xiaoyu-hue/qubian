@@ -26,7 +26,15 @@ const FILTERS: { value: Filter; label: string }[] = [
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = { beginner: '入门', advanced: '进阶' }
 
+/** 章节标识 → 中文名；未登记的章节回退为原始标识 */
+const CHAPTER_LABEL: Record<string, string> = {
+  basics: 'Python 基础',
+  'control-flow': '控制流',
+}
+const chapterLabel = (id: string) => CHAPTER_LABEL[id] ?? id
+
 export default function LearningPage() {
+  const [chapter, setChapter] = useState<string>('basics')
   const [filter, setFilter] = useState<Filter>('all')
   const [activeId, setActiveId] = useState<string | null>(null)
   const toast = useToast()
@@ -41,12 +49,18 @@ export default function LearningPage() {
 
   const allQuestions = useMemo(() => loadQuestions(), [])
   const chapters = useMemo(() => listChapters(), [])
+  const chapterQuestions = useMemo(() => loadQuestions({ chapter }), [chapter])
+  const chapterAnswered = useMemo(
+    () => chapterQuestions.filter((q) => profile.answeredIds.includes(q.id)).length,
+    [chapterQuestions, profile.answeredIds],
+  )
   const visible = useMemo(() => {
     if (filter === 'wrong') {
+      // 错题本是全局复习视图，跨所有章节
       return allQuestions.filter((q) => profile.wrongIds.includes(q.id))
     }
-    return loadQuestions(filter === 'all' ? {} : { type: filter })
-  }, [allQuestions, filter, profile.wrongIds])
+    return loadQuestions({ chapter, ...(filter === 'all' ? {} : { type: filter }) })
+  }, [allQuestions, chapter, filter, profile.wrongIds])
   const active = activeId ? getQuestionById(activeId) : undefined
 
   /**
@@ -99,7 +113,7 @@ export default function LearningPage() {
         </button>
 
         <div>
-          <span className="text-xs uppercase tracking-widest text-muted">{active.chapter} · {DIFFICULTY_LABEL[active.difficulty]}</span>
+          <span className="text-xs uppercase tracking-widest text-muted">{chapterLabel(active.chapter)} · {DIFFICULTY_LABEL[active.difficulty]}</span>
           <h1 className="mt-1 text-xl font-bold text-ink">{active.title}</h1>
         </div>
 
@@ -151,16 +165,38 @@ export default function LearningPage() {
         <p className="mt-1 text-sm text-muted">掌握 Python 基础 · 已答 {profile.answeredIds.length} / {allQuestions.length} 题</p>
       </div>
 
-      {/* 章节进度概览 */}
+      {/* 章节切换 */}
+      <div>
+        <p className="mb-2 text-xs uppercase tracking-widest text-muted">章节</p>
+        <div role="group" aria-label="章节选择" className="flex flex-wrap gap-2">
+          {chapters.map((c) => (
+            <button
+              key={c}
+              type="button"
+              aria-pressed={chapter === c}
+              onClick={() => { setChapter(c); setFilter('all') }}
+              className={[
+                'rounded-lg px-3 py-1.5 text-sm transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                chapter === c ? 'bg-accent text-accent-ink font-medium' : 'bg-accent-soft text-muted hover:text-ink',
+              ].join(' ')}
+            >
+              {chapterLabel(c)}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 当前章节进度概览 */}
       <GlassCard tone="subtle" className="p-5">
         <div className="mb-3 flex items-center justify-between text-sm">
-          <span className="font-medium text-ink">{chapters[0] ?? '暂无章节'}</span>
-          <span className="text-muted">{profile.answeredIds.length} / {allQuestions.length}</span>
+          <span className="font-medium text-ink">{chapterLabel(chapter)}</span>
+          <span className="text-muted">{chapterAnswered} / {chapterQuestions.length}</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-accent-soft" role="progressbar" aria-valuenow={profile.answeredIds.length} aria-valuemin={0} aria-valuemax={allQuestions.length}>
+        <div className="h-2 overflow-hidden rounded-full bg-accent-soft" role="progressbar" aria-valuenow={chapterAnswered} aria-valuemin={0} aria-valuemax={chapterQuestions.length}>
           <div
             className="h-full rounded-full bg-accent transition-[width] duration-300"
-            style={{ width: `${allQuestions.length ? (profile.answeredIds.length / allQuestions.length) * 100 : 0}%` }}
+            style={{ width: `${chapterQuestions.length ? (chapterAnswered / chapterQuestions.length) * 100 : 0}%` }}
           />
         </div>
       </GlassCard>

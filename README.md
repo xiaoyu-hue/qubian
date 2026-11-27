@@ -34,7 +34,7 @@
 ![localStorage](https://img.shields.io/badge/storage-localStorage-4B5563)
 ![ESLint-free](https://img.shields.io/badge/boundaries-checked-2E7D32)
 ![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)
-![Tests](https://img.shields.io/badge/tests-87%20passed-2E7D32)
+![Tests](https://img.shields.io/badge/tests-92%20passed-2E7D32)
 ![Platform](https://img.shields.io/badge/platform-Web%20%2F%20PWA-6B7280)
 ![Responsive](https://img.shields.io/badge/responsive-phone%20%7C%20tablet%20%7C%20desktop-6B7280)
 ![Theme](https://img.shields.io/badge/theme-light%20%7C%20dark%20%7C%20system-6B7280)
@@ -149,7 +149,7 @@ npm run dev
 | `npm run dev` | 启动开发服务器，热更新 |
 | `npm run build` | 类型检查 + 生产构建，产物在 `dist/` |
 | `npm run preview` | 本地预览生产构建 |
-| `npm run test` | 运行全部单元测试（当前 87 项） |
+| `npm run test` | 运行全部单元测试（当前 92 项） |
 | `npm run lint` | 架构分层边界检查 + 题库结构校验 |
 
 ## 技术栈
@@ -196,7 +196,7 @@ src/
 
 ## 题库与内容
 
-首批题库位于 `src/data/questions/python/basics.json`，共 **25 题**（20 选择题 + 5 实操题），全部 AI 原创并标注来源与许可，双答案非空。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行零依赖校验脚本，检查结构、ID 唯一、答案非空、correctKey 合法与来源许可。
+题库按章节分文件存放于 `src/data/questions/python/`，共 **40 题**：`basics.json`（Python 基础 25 题）与 `control-flow.json`（控制流 15 题，10 选择 + 5 实操），全部 AI 原创并标注来源与许可，双答案非空。学习页可切换章节、按章节显示掌握进度。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行零依赖校验脚本，检查结构、ID 唯一、答案非空、correctKey 合法与来源许可。
 
 题库加载入口 `src/data/questions/python/index.ts` 提供 `loadQuestions(filter)` / `getQuestionById(id)` / `listChapters()`，支持按章节、难度、题型、标签筛选；数据损坏时抛 `QuestionBankError`，由上层显示错误态。
 
@@ -221,7 +221,7 @@ src/
 | 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库工具链待启动 | 部分完成 |
 | 阶段 3 | 第二语言、多语言判题评估、后端可行性评审 | 规划中，需重新评审 |
 
-当前为 **v1.0.0** 正式版本，87 项测试全通过，生产构建与 lint 通过；书城消费闭环与游戏化玩法均已通过浏览器端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
+当前为 **v1.0.0** 正式版本，92 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法与章节切换均已通过浏览器端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
 
 ## 许可证
 

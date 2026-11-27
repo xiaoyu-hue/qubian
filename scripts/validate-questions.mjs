@@ -118,8 +118,8 @@ function validateValue(value, schemaNode, schema, path, errs) {
   }
 }
 
-/** 校验 id 格式（与 schema pattern 一致，单独提示更友好） */
-const ID_PATTERN = /^[a-z]+-[a-z]+-\d{3,}$/
+/** 校验 id 格式（与 schema pattern 一致，单独提示更友好）；章节名可含连字符，如 py-control-flow-011 */
+const ID_PATTERN = /^[a-z]+(?:-[a-z]+)*-\d{3,}$/
 
 let schema
 try {

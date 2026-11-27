@@ -1,0 +1,369 @@
+[
+  {
+    "id": "py-control-flow-001",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "if 语句的作用",
+    "stem": "Python 中 if 语句的主要作用是？",
+    "answer": {
+      "professional": "if 语句用于条件分支：当布尔表达式为 True 时执行其缩进块，否则跳过（或走 else 分支）。它是实现「根据条件做不同事」的基本结构。",
+      "plain": "if 就是「如果」：如果某个条件成立，就做一件事；不成立就跳过。像出门前看天气——如果下雨就带伞，没下雨就不带。条件后面要加冒号，下面缩进的代码才是「符合条件才做」的事。"
+    },
+    "tags": ["条件判断", "if"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "根据条件决定是否执行一段代码" },
+      { "key": "B", "text": "把一段代码重复执行固定次数" },
+      { "key": "C", "text": "定义一个新函数" },
+      { "key": "D", "text": "把文字输出到屏幕" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-control-flow-002",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "if 后面的标点符号",
+    "stem": "在 Python 中，if 语句的条件后面必须跟哪个符号？",
+    "answer": {
+      "professional": "Python 的复合语句（if / for / while / def 等）都以冒号 : 结尾，冒号后接缩进的代码块。遗漏冒号会导致 SyntaxError。",
+      "plain": "if 写完条件后，末尾一定要加个冒号 :，就像说「如果……那么：」后面要顿一下。忘了写冒号，Python 会直接报错罢工。"
+    },
+    "tags": ["条件判断", "语法"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "分号 ;" },
+      { "key": "B", "text": "冒号 :" },
+      { "key": "C", "text": "逗号 ," },
+      { "key": "D", "text": "不需要任何符号" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-003",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "else 的执行时机",
+    "stem": "有代码：\nif x > 0:\n    print('正')\nelse:\n    print('非正')\n当 x = -3 时，输出是？",
+    "answer": {
+      "professional": "else 分支在 if 条件为 False 时执行。x = -3 不满足 x > 0，因此走 else，输出「非正」。if/else 是互斥的，只会执行其中一个分支。",
+      "plain": "else 就是「否则」：if 的条件不成立时，才轮到 else 出场。x 是 -3，不是正数，所以「正」那句被跳过，执行 else 里的「非正」。"
+    },
+    "tags": ["条件判断", "else"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "正" },
+      { "key": "B", "text": "非正" },
+      { "key": "C", "text": "正\n非正" },
+      { "key": "D", "text": "什么都不输出" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-004",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "逻辑与 and",
+    "stem": "表达式 (3 > 2) and (5 > 10) 的结果是？",
+    "answer": {
+      "professional": "and 是逻辑与：只有两边都为 True 才返回 True。3 > 2 为 True，但 5 > 10 为 False，因此整体为 False。and 具有短路特性，左边为 False 时不再计算右边。",
+      "plain": "and 就是「并且」，要求两边都成立才行。第一个条件「3 大于 2」是对的，但第二个「5 大于 10」是错的，两个里有一个错，整体就错了，所以结果是 False。"
+    },
+    "tags": ["逻辑运算", "and"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "True" },
+      { "key": "B", "text": "False" },
+      { "key": "C", "text": "3" },
+      { "key": "D", "text": "报错" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-005",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "逻辑或 or",
+    "stem": "表达式 (1 > 5) or (2 < 3) 的结果是？",
+    "answer": {
+      "professional": "or 是逻辑或：只要有一边为 True 就返回 True。1 > 5 为 False，但 2 < 3 为 True，因此整体为 True。or 同样短路：左边为 True 时不再计算右边。",
+      "plain": "or 就是「或者」，两边只要有一个对就行。第一个「1 大于 5」是错的，但第二个「2 小于 3」是对的，有一个对就够了，所以结果是 True。"
+    },
+    "tags": ["逻辑运算", "or"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "True" },
+      { "key": "B", "text": "False" },
+      { "key": "C", "text": "1" },
+      { "key": "D", "text": "报错" }
+    ],
+    "correctKey": "A"
+  },
+  {
+    "id": "py-control-flow-006",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "for 循环遍历列表",
+    "stem": "有代码：\nfor x in [10, 20, 30]:\n    print(x)\n一共会输出几行？",
+    "answer": {
+      "professional": "for 循环会依次把序列中的每个元素绑定给变量 x 并执行循环体。列表有 3 个元素，因此循环执行 3 次，输出 3 行：10、20、30。",
+      "plain": "for 循环就像挨个点名：列表里有几个人，就喊几次。这里列表装着 10、20、30 三个数，所以循环会把它们一个一个打印出来，一共 3 行。"
+    },
+    "tags": ["循环", "for"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "1 行" },
+      { "key": "B", "text": "2 行" },
+      { "key": "C", "text": "3 行" },
+      { "key": "D", "text": "30 行" }
+    ],
+    "correctKey": "C"
+  },
+  {
+    "id": "py-control-flow-007",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "beginner",
+    "title": "range(5) 产生什么",
+    "stem": "在 Python 中，list(range(5)) 的结果是？",
+    "answer": {
+      "professional": "range(n) 生成一个从 0 开始、到 n 结束（不含 n）的整数序列。range(5) 产生 0、1、2、3、4，用 list() 转成列表即 [0, 1, 2, 3, 4]。",
+      "plain": "range(5) 是个「造数字的工具」：它从 0 开始数，数到 5 之前停下（不含 5），所以是 0、1、2、3、4。用 list() 包一下就能看到这串数字。"
+    },
+    "tags": ["循环", "range"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "[1, 2, 3, 4, 5]" },
+      { "key": "B", "text": "[0, 1, 2, 3, 4]" },
+      { "key": "C", "text": "[0, 1, 2, 3, 4, 5]" },
+      { "key": "D", "text": "[5]" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-008",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "while 循环的条件",
+    "stem": "关于 while 循环，下列说法正确的是？",
+    "answer": {
+      "professional": "while 在条件为 True 时重复执行循环体，每次执行前重新判断条件；条件为 False 时退出。若条件永远为 True 且无 break，会造成无限循环。",
+      "plain": "while 就是「只要……就一直做」：只要条件还成立，就反复执行；条件不成立了才停。所以循环里通常要改变某个变量，让条件 eventually 变假，否则就停不下来了。"
+    },
+    "tags": ["循环", "while"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "while 循环固定执行 10 次" },
+      { "key": "B", "text": "条件为 True 时重复执行，条件为 False 时退出" },
+      { "key": "C", "text": "while 只能遍历列表" },
+      { "key": "D", "text": "while 循环永远不会停止" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-009",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "break 的作用",
+    "stem": "在循环中，break 语句的作用是？",
+    "answer": {
+      "professional": "break 用于立即终止并跳出当前所在的最近一层循环，不再执行循环体中剩余语句，也不再继续后续迭代。常与 if 配合用于「找到就提前退出」。",
+      "plain": "break 就是「紧急刹车」：循环中一旦碰到 break，整个循环立刻停下、跳出，剩下的次数都不跑了。比如在队伍里找一个人，找到了就 break，不用继续往下找。"
+    },
+    "tags": ["循环", "break"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "跳过本次循环，直接进入下一次" },
+      { "key": "B", "text": "立即跳出整个循环" },
+      { "key": "C", "text": "重新开始执行程序" },
+      { "key": "D", "text": "结束整个程序" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-010",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "choice",
+    "difficulty": "advanced",
+    "title": "continue 的作用",
+    "stem": "在循环中，continue 语句的作用是？",
+    "answer": {
+      "professional": "continue 用于跳过当前这次迭代中剩余的语句，直接开始下一次迭代。它不会终止整个循环，这与 break 不同。",
+      "plain": "continue 是「这次跳过」：碰到它，本轮循环剩下的代码不做了，直接冲到下一轮。和 break 的区别是——break 是彻底不干了，continue 只是这次跳过、下次照常。"
+    },
+    "tags": ["循环", "continue"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "options": [
+      { "key": "A", "text": "立即跳出整个循环" },
+      { "key": "B", "text": "跳过本次迭代剩余代码，进入下一次" },
+      { "key": "C", "text": "结束整个程序" },
+      { "key": "D", "text": "让循环条件永远为真" }
+    ],
+    "correctKey": "B"
+  },
+  {
+    "id": "py-control-flow-011",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "判断成绩等级",
+    "stem": "定义函数 grade(score)，score 为 0–100 的整数：≥90 返回 'A'，≥60 返回 'B'，否则返回 'C'。",
+    "answer": {
+      "professional": "用 if / elif / else 做多分支判断。注意条件顺序：先判断较高的阈值（≥90），再判断 ≥60，否则会被前面的分支抢先匹配。每个分支用 return 直接返回。",
+      "plain": "把分数分档就像过安检：先看够不够 90（给 A），不够再看够不够 60（给 B），都不够就给 C。顺序很重要——得先问要求高的，不然 95 分也会被「≥60」拦下来。"
+    },
+    "tags": ["条件判断", "if", "函数"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def grade(score):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def grade(score):\n    if score >= 90:\n        return 'A'\n    elif score >= 60:\n        return 'B'\n    return 'C'\n",
+    "tests": [
+      { "input": "grade(95)", "expectedOutput": "A", "hidden": false },
+      { "input": "grade(72)", "expectedOutput": "B", "hidden": false },
+      { "input": "grade(45)", "expectedOutput": "C", "hidden": true },
+      { "input": "grade(60)", "expectedOutput": "B", "hidden": true }
+    ],
+    "hints": [
+      "用 if / elif / else 分三档判断。",
+      "先判断 score >= 90，再判断 score >= 60，最后默认返回 'C'。"
+    ]
+  },
+  {
+    "id": "py-control-flow-012",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "求 1 到 n 的和",
+    "stem": "定义函数 sum_to(n)，返回 1 + 2 + ... + n 的和（n 为正整数）。例如 sum_to(3) 返回 6。",
+    "answer": {
+      "professional": "用 for 循环配合 range(1, n + 1) 累加：初始化 total = 0，每轮把循环变量加到 total 上，最后返回。注意 range 不含上界，所以要写 n + 1。",
+      "plain": "要算从 1 加到 n，就像拿个存钱罐：先放 0，然后 1、2、3……一个一个往里投，投到 n 为止，最后看看罐里多少。range(1, n+1) 就是生成 1 到 n 这串数。别忘了右边的 n+1——range 数到终点前会停下来。"
+    },
+    "tags": ["循环", "for", "range"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def sum_to(n):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def sum_to(n):\n    total = 0\n    for i in range(1, n + 1):\n        total += i\n    return total\n",
+    "tests": [
+      { "input": "sum_to(3)", "expectedOutput": "6", "hidden": false },
+      { "input": "sum_to(1)", "expectedOutput": "1", "hidden": false },
+      { "input": "sum_to(100)", "expectedOutput": "5050", "hidden": true }
+    ],
+    "hints": [
+      "用一个变量 total 从 0 开始累加。",
+      "for i in range(1, n + 1): total += i。"
+    ]
+  },
+  {
+    "id": "py-control-flow-013",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "practice",
+    "difficulty": "beginner",
+    "title": "统计偶数个数",
+    "stem": "定义函数 count_even(nums)，返回列表 nums 中偶数的个数。例如 count_even([1, 2, 3, 4]) 返回 2。",
+    "answer": {
+      "professional": "遍历列表，用 n % 2 == 0 判断偶数，满足条件时计数器加 1。这是「遍历 + 条件累加」的典型模式。",
+      "plain": "数一数列表里有几个偶数：挨个看每个数，如果它除以 2 没有余数（n % 2 == 0），就给它记一笔。全看完，记了几笔就是答案。"
+    },
+    "tags": ["循环", "条件判断", "列表"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def count_even(nums):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def count_even(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count += 1\n    return count\n",
+    "tests": [
+      { "input": "count_even([1, 2, 3, 4])", "expectedOutput": "2", "hidden": false },
+      { "input": "count_even([1, 3, 5])", "expectedOutput": "0", "hidden": false },
+      { "input": "count_even([])", "expectedOutput": "0", "hidden": true },
+      { "input": "count_even([0, -2, 7])", "expectedOutput": "2", "hidden": true }
+    ],
+    "hints": [
+      "遍历列表时，用 if 判断每个数是不是偶数。",
+      "用 n % 2 == 0 判断偶数，是就把计数加 1。"
+    ]
+  },
+  {
+    "id": "py-control-flow-014",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "找出列表最大值",
+    "stem": "定义函数 find_max(nums)，返回非空列表 nums 中的最大值，但不允许使用内置的 max() 函数。例如 find_max([3, 9, 2]) 返回 9。",
+    "answer": {
+      "professional": "用「打擂台」法：先把第一个元素设为当前最大值 best，再遍历其余元素，遇到比 best 大的就更新。遍历结束后 best 即为最大值。这是对遍历与比较的综合运用。",
+      "plain": "最大值可以「打擂台」：先让第一个数当擂主，然后后面的数一个个上来比——谁比擂主大，谁就当新擂主。全部比完，最后站着的擂主就是最大值。不让用 max()，我们就自己比。"
+    },
+    "tags": ["循环", "条件判断", "列表", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def find_max(nums):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def find_max(nums):\n    best = nums[0]\n    for n in nums[1:]:\n        if n > best:\n            best = n\n    return best\n",
+    "tests": [
+      { "input": "find_max([3, 9, 2])", "expectedOutput": "9", "hidden": false },
+      { "input": "find_max([5])", "expectedOutput": "5", "hidden": false },
+      { "input": "find_max([-8, -3, -10])", "expectedOutput": "-3", "hidden": true }
+    ],
+    "hints": [
+      "先假设第一个元素是最大值，再拿后面的和它比。",
+      "遇到更大的就更新变量，最后返回它。"
+    ]
+  },
+  {
+    "id": "py-control-flow-015",
+    "language": "python",
+    "chapter": "control-flow",
+    "type": "practice",
+    "difficulty": "advanced",
+    "title": "累加到超过阈值",
+    "stem": "定义函数 first_over(limit)，从 1 开始依次累加整数（1+2+3+…），返回第一个使累加和大于等于 limit 的整数。例如 limit=6 时，1+2+3=6，返回 3。",
+    "answer": {
+      "professional": "用 while 循环持续累加：初始化 total = 0、n = 1，每轮把 n 加到 total，若 total >= limit 则 return n，否则 n += 1 继续。这体现了 while 与条件退出的配合。",
+      "plain": "一点点往上加，问「加到几就够数了」：从 1 开始往存钱罐里放，放完看看够不够目标，够了就报刚才放的那个数；不够就下一个继续。因为不知道要加多少次，所以用 while「一直加，直到够」。记得每次把数字加 1，不然会一直加同一个数。"
+    },
+    "tags": ["循环", "while", "条件判断", "进阶"],
+    "source": { "type": "ai-generated", "license": "project-apache-2.0", "generatedAt": "2026-11-27" },
+    "version": 1,
+    "starterCode": "def first_over(limit):\n    # 在这里写代码\n    pass\n",
+    "referenceCode": "def first_over(limit):\n    total = 0\n    n = 1\n    while total < limit:\n        total += n\n        n += 1\n    return n - 1\n",
+    "tests": [
+      { "input": "first_over(6)", "expectedOutput": "3", "hidden": false },
+      { "input": "first_over(1)", "expectedOutput": "1", "hidden": false },
+      { "input": "first_over(10)", "expectedOutput": "4", "hidden": true }
+    ],
+    "hints": [
+      "用 while total < limit 控制循环。",
+      "每轮 total += n、n += 1；退出时返回的是 n - 1。"
+    ]
+  }
+]

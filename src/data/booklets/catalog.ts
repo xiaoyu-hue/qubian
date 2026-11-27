@@ -21,4 +21,15 @@ export const BOOKLETS: Booklet[] = [
     price: BOOKLET_PRICE,
     badge: '入门',
   },
+  {
+    id: 'python-control-flow-vol1',
+    title: '控制流 · 第一辑',
+    subtitle: '条件、循环与跳转，15 道双答案精讲',
+    description:
+      '把控制流章节的题目按「专业版 / 大白话」双答案汇编成册。从 if 判断到 for/while 循环，适合学完基础后系统攻克分支与迭代。',
+    chapter: 'control-flow',
+    language: 'python',
+    price: BOOKLET_PRICE,
+    badge: '进阶',
+  },
 ]

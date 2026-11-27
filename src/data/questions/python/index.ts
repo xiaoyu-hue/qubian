@@ -6,10 +6,12 @@
  */
 import type { Difficulty, Question, QuestionType } from '../../types'
 import basics from './basics.json'
+import controlFlow from './control-flow.json'
 
 /** 章节标识 → 题目数组的注册表；新增章节时在此登记即可 */
 const REGISTRY: Record<string, Question[]> = {
   basics: basics as Question[],
+  'control-flow': controlFlow as Question[],
 }
 
 /** 查询条件（各字段可选，组合为「与」关系） */
