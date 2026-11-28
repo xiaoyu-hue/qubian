@@ -100,6 +100,7 @@
 - 答题发奖幂等：答错可重试、主动求助与掌握状态分离，避免重复发币。
 - Pyodide 资源路径随 `base` 修正，避免 GitHub Pages 子路径部署下 404。
 
+[1.2.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.2.0
 [1.1.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.0.0
-[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.2.0...HEAD
