@@ -88,6 +88,15 @@ export default function HomePage() {
       <Button size="lg" onClick={() => navigate('/learning')} leading={<Icon name="study" size={18} />}>
         继续学习
       </Button>
+
+      <button
+        type="button"
+        onClick={() => navigate('/languages')}
+        className="mx-auto flex items-center gap-1.5 rounded-lg text-xs text-muted hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      >
+        <Icon name="compass" size={14} />
+        还不知道学哪门？看看编程语言百科
+      </button>
     </div>
   )
 }

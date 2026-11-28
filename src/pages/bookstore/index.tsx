@@ -3,6 +3,7 @@
  * 三端布局复用阶段 0.5 外壳，本页只做装配，不自定义导航。
  */
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { GlassCard } from '../../components/ui/glass-card'
 import { Icon } from '../../components/ui/icon'
 import { EmptyState } from '../../components/ui/empty-state'
@@ -38,6 +39,22 @@ export default function BookstorePage() {
         <h1 className="mt-1 text-2xl font-bold text-ink">书城</h1>
         <p className="mt-1 text-sm text-muted">用金币解锁小册子，读完还能返币；外部好书免费直达。</p>
       </div>
+
+      {/* 语言百科入口：六门语言的双版本介绍，独立路由 */}
+      <Link
+        to="/languages"
+        className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        aria-label="查看编程语言百科"
+      >
+        <GlassCard className="flex items-center gap-3 p-4 transition-transform duration-150 hover:-translate-y-0.5">
+          <Icon name="compass" size={22} className="shrink-0 text-accent" />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-ink">不知道学哪门语言？先看编程语言百科</p>
+            <p className="mt-0.5 text-xs text-muted">六门语言 · 是什么 / 发展史 / 优缺点，各有大白话版</p>
+          </div>
+          <Icon name="chevron" size={18} className="shrink-0 text-muted" />
+        </GlassCard>
+      </Link>
 
       {/* 板块一：我的小册子 */}
       <section aria-labelledby="booklets-heading">

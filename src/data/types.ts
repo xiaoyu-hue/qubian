@@ -128,6 +128,41 @@ export interface ExternalBook {
   category: ExternalBookCategory
 }
 
+/* ---------- 编程语言百科 ---------- */
+
+/** 语言介绍的五个固定板块 */
+export type LanguageSectionKey = 'what' | 'history' | 'pros' | 'cons' | 'audience'
+
+/** 单个板块：沿用产品双答案契约（专业版 + 大白话版） */
+export interface LanguageSection {
+  key: LanguageSectionKey
+  title: string
+  content: Answer
+}
+
+/** 一门编程语言的百科条目 */
+export interface LanguageIntro {
+  id: string
+  /** 英文正式名 */
+  name: string
+  /** 中文名 / 常见别称 */
+  alias: string
+  /** 一句话定位 */
+  tagline: string
+  /** 诞生年份（以首个公开版本或稳定版为准，见正文说明） */
+  born: number
+  /** 主要设计者 */
+  creator: string
+  /** 设计哲学关键词（展示用标签） */
+  keywords: string[]
+  /** 本站是否提供该语言课程 */
+  learnable: boolean
+  /** 主题色（CSS 颜色值，用于卡片图标与强调） */
+  color: string
+  /** 五个板块内容 */
+  sections: LanguageSection[]
+}
+
 /* ---------- 主题 ---------- */
 
 export type ThemeMode = 'system' | 'light' | 'dark'

@@ -9,7 +9,7 @@
 [![Deploy](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml/badge.svg)](https://github.com/xiaoyu-hue/qubian/actions/workflows/deploy.yml)
 [![Version](https://img.shields.io/github/v/release/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white&label=release)](https://github.com/xiaoyu-hue/qubian/releases)
 [![Stars](https://img.shields.io/github/stars/xiaoyu-hue/qubian?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xiaoyu-hue/qubian/stargazers)
-[![Tests](https://img.shields.io/badge/tests-110%20passed-2E7D32?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/actions)
+[![Tests](https://img.shields.io/badge/tests-116%20passed-2E7D32?style=for-the-badge)](https://github.com/xiaoyu-hue/qubian/actions)
 [![License: Code](https://img.shields.io/badge/code-Apache--2.0-blue?style=for-the-badge)](LICENSE)
 [![License: Docs](https://img.shields.io/badge/docs-CC%20BY--SA%204.0-green?style=for-the-badge)](LICENSE-DOCS.txt)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
@@ -85,6 +85,10 @@
 
 外部书只放书名、作者、简介、许可徽章，**不复制正文**；仅收录许可明确者，CC BY-SA / BY-NC-SA 归为「仅导航」，避免其「相同方式共享」条款绑定本项目许可。版权分级规则见 [03-技术决策记录](docs/03-技术决策记录ADR.md)。
 
+### 编程语言百科
+
+独立的知识板块（`#/languages`），为零基础用户解答「有哪些语言、该学哪门」。收录 Python、JavaScript、Java、C、Go、Rust 六门语言，每门按「是什么 / 发展史 / 优点 / 缺点 / 适合谁」五板块展开，沿用产品双答案契约——每个板块都有大白话版与专业版，详情页一个开关全局切换。标注「可学习」的语言可直接跳到本站课程。发展史中的年份与人物已交叉核实。
+
 ### 主题与适配
 
 浅色 / 深色 / 跟随系统三种模式，手动切换后刷新保持。布局按三档断点自适应：手机底部标签栏、平板侧边轨道、桌面固定侧栏；刘海屏与底部横条做了安全区适配。
@@ -121,7 +125,7 @@ npm run dev
 | `npm run dev` | 启动开发服务器，热更新 |
 | `npm run build` | 类型检查 + 生产构建，产物在 `dist/` |
 | `npm run preview` | 本地预览生产构建 |
-| `npm run test` | 运行全部单元测试（当前 110 项） |
+| `npm run test` | 运行全部单元测试（当前 116 项） |
 | `npm run lint` | 架构分层边界检查 + 题库结构校验 |
 
 ## 技术栈
@@ -200,9 +204,9 @@ src/
 | 阶段 0 / 0.5 | 工程骨架、三端自适应布局外壳、状态设计系统 | 已完成 |
 | 阶段 1 | MVP 闭环：引导 → 答题 → 双答案 → 金币 → 书城 → 本地存储 → 深浅主题 | 已完成，M3 达成 |
 | 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库工具链待启动 | 部分完成 |
-| 阶段 3 | 第二语言 JavaScript + 多语言执行层（已实施）；后端可行性评审待评估 | 部分完成 |
+| 阶段 3 | 第二语言 JavaScript + 多语言执行层（已实施）；编程语言百科（已实施）；后端可行性评审待评估 | 部分完成 |
 
-当前为 **v1.1.0** 正式版本，110 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法、章节切换与双语言判题均已通过自动化与端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
+当前为 **v1.2.0** 正式版本，116 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法、章节切换、双语言判题与编程语言百科均已通过自动化与端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。
 
 ## 许可证
 
