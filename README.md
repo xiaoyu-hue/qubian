@@ -226,9 +226,55 @@ Issue 与 Pull Request 均欢迎。提交代码前请遵循现有文档约定，
 
 ## 致谢
 
-外部书籍导航收录了社区开源作品，版权归各自作者所有，本站仅提供链接、不复制正文：
+趣编站在许多开源工作的肩膀上。以下按「运行依赖 / 内容来源 / 思路参考 / 平台」四类致谢，版权与许可归各自权利人所有。
 
-- [Hello 算法](https://github.com/krahets/hello-algo) — CC BY-NC-SA 4.0
-- [简明 Python 教程（A Byte of Python）](https://github.com/swaroopch/byte-of-python) — CC BY-SA 4.0
+### 一、运行依赖
 
-Pyodide、CodeMirror、Radix UI、React、Vite 等开源项目为本项目提供了基础能力，特此致谢。
+项目直接使用的开源库，各自保留原许可（多为 MIT），完整许可文本见各依赖的发布包：
+
+| 类别 | 项目 | 用途 |
+|---|---|---|
+| 框架 | [React](https://react.dev)、[React DOM](https://react.dev) | 界面渲染 |
+| 路由 | [React Router](https://reactrouter.com)（HashRouter） | 静态托管下的页面路由 |
+| 状态 | [Zustand](https://github.com/pmndrs/zustand) | 金币、进度、主题等全局状态 |
+| 语言与构建 | [TypeScript](https://www.typescriptlang.org)、[Vite](https://vite.dev)、[@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react) | 类型安全与快速构建 |
+| 样式 | [Tailwind CSS](https://tailwindcss.com)、[@tailwindcss/vite](https://github.com/tailwindlabs/tailwindcss) | 令牌化的样式系统 |
+| 代码编辑器 | [CodeMirror 6](https://codemirror.net)（含 Python / JavaScript 语言包与 One Dark 主题） | 实操题编辑与语法高亮 |
+| 浏览器内判题 | [Pyodide](https://pyodide.org) | 在浏览器里运行 Python，代码不出设备 |
+| 无障碍原语 | [Radix UI](https://www.radix-ui.com)（Dialog、Dropdown Menu、Toast） | 键盘与读屏交互 |
+| 测试 | [Vitest](https://vitest.dev) | 领域逻辑与状态层单元测试 |
+
+### 二、外部书籍（内容来源）
+
+书城「外部书籍导航」收录以下社区开源作品，本站仅提供链接、不复制正文；许可信息于 2026-11-27 逐条核实，来源见各条目的 LICENSE / README：
+
+**中文**
+
+- [Hello 算法](https://github.com/krahets/hello-algo) — 靳锦浩（krahets）等，CC BY-NC-SA 4.0
+- [简明 Python 教程（A Byte of Python）](https://github.com/swaroopch/byte-of-python) — Swaroop C H，CC BY-SA 4.0
+- [TypeScript 中文手册](https://github.com/jkchao/typescript-book-chinese) — 三毛（jkchao）等，MIT
+- [动手学深度学习（中文版）](https://github.com/d2l-ai/d2l-zh) — 李沐 等，Apache-2.0
+- [南瓜书 PumpkinBook](https://github.com/datawhalechina/pumpkin-book) — Datawhale，CC BY-NC-SA 4.0
+- [Happy-LLM：从零开始的大模型原理与实践教程](https://github.com/datawhalechina/happy-llm) — Datawhale，CC BY-NC-SA 4.0
+
+**英文 / 索引**
+
+- [Free Programming Books](https://github.com/EbookFoundation/free-programming-books) — Ebook Foundation，CC BY 4.0
+- [Advanced Go Programming Book](https://github.com/chai2010/advanced-go-programming-book) — Chai2010 等，BSD-2-Clause
+
+### 三、思路与结构参考
+
+以下项目提供了设计思路或结构参照，本项目未复制其代码，仅借鉴概念；许可按各自项目标注：
+
+- [PyQuest](https://github.com/colingng/pyquest)（MIT）：早期单文件刷题原型的参照，后改用 React 技术栈。
+- [Python-100-Exercises](https://github.com/bosens-China/Python-100-Exercises)（MIT）：题库参考实现的校验思路。
+- [synth_gen](https://github.com/facebookresearch/synth_gen)（MIT，Meta）：题库「生成 → 跑测试 → 自愈」流水线的原型。
+- [leet_study](https://github.com/wyw287/leet_study)：测试用例「区分度检查」的做法。
+- [glasscn](https://github.com/TimMikeladze/glasscn)（MIT）：液态玻璃设计变量与调色板的参考。
+- [lenscn](https://github.com/dushaobindoudou/lenscn)（MIT）：SVG 折射玻璃方案的备选参考。
+- [UIForge](https://github.com/TaewoooPark/UIForge)：组件库「克制派 / 效果派」品味地图，为「视觉库点到为止」提供判据。
+
+### 四、平台与服务
+
+- [GitHub Pages](https://pages.github.com) 与 [GitHub Actions](https://github.com/features/actions) 提供免费静态托管与自动部署，让项目零成本上线。
+- 感谢所有开源社区与贡献者，以及每一位提出建议的使用者。
