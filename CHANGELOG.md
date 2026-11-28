@@ -6,8 +6,14 @@
 
 > 尚未发布的改动汇总于此。发布时移入对应版本段落并标注日期。
 
+## [1.4.0] - 2026-11-28
+
+功能版本。补齐 PWA 离线能力、设置页检查更新与题库质量验证器，均不改动判题与数据架构，按版本编号规则归为 1.x.0。
+
 ### Added
 
+- **PWA 离线能力**：新增 `manifest.webmanifest`、192/512 双尺寸图标，以及自研 Service Worker（`public/sw.js`，零依赖）——预缓存应用外壳（首页 / manifest / 图标），导航网络优先、静态资源缓存优先，Pyodide 大文件不缓存以免占用手机空间；缓存名带版本号，发版自动清理旧缓存。支持「添加到主屏幕」与离线打开，兑现 README 公开承诺。
+- **检查更新**：设置页新增「检查更新」卡片，调用 GitHub 公开 API 查最新 Release，与当前版本做语义化比较，覆盖检查中 / 已是最新 / 发现新版 / 网络失败四态。版本号由 `vite.config.ts` 从 `package.json` 注入，前端不写死。
 - **题库质量验证器**：新增 `scripts/verify-questions.mjs`（零依赖、离线），对实操题做三层校验——参考实现跑通全部测试、起始代码不得直接通过（防送分）、注入同签名烂代码须被全部拦下（防弱测试）。用系统 `python3` 子进程复现 Pyodide 判题口径，`new Function` 复现 JS 口径，与线上完全一致。接入 `npm run verify:questions` 与 `npm run lint`；当前 20 道实操题 / 80 项检查全绿，并以故意改坏参考实现了反向有效性验证。
 - **README 致谢补全**：按「运行依赖 / 内容来源 / 思路参考 / 平台」四类重写致谢，覆盖 9 类运行依赖、8 本外部书籍、7 个思路参考项目与托管平台，全部以实际依赖与文档记录为准。
 
@@ -122,8 +128,9 @@
 - 答题发奖幂等：答错可重试、主动求助与掌握状态分离，避免重复发币。
 - Pyodide 资源路径随 `base` 修正，避免 GitHub Pages 子路径部署下 404。
 
+[1.4.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.4.0
 [1.3.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.3.0
 [1.2.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.2.0
 [1.1.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.0.0
-[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.4.0...HEAD

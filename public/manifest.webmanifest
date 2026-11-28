@@ -1,0 +1,35 @@
+{
+  "name": "趣编 QuBian · 游戏化编程练习场",
+  "short_name": "趣编",
+  "description": "每道题都有专业版和大白话版两种答案，用金币把做题、解锁、阅读串成闭环。",
+  "id": "/qubian/",
+  "start_url": "/qubian/",
+  "scope": "/qubian/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f5f7",
+  "theme_color": "#0f766e",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["education", "utilities"],
+  "icons": [
+    {
+      "src": "/qubian/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/qubian/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/qubian/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

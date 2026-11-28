@@ -8,6 +8,7 @@ import { useSettingsStore } from '../../stores/settingsStore'
 import { useProfileStore } from '../../stores/profileStore'
 import { useProgressStore } from '../../stores/progressStore'
 import { clearAllStored } from '../../data/repositories/storage'
+import { checkForUpdate, type UpdateState } from '../../lib/update-check'
 
 /** 每日强度档位（PRD F01：3 / 5 / 10 题，默认 5） */
 const INTENSITY_OPTIONS = [
@@ -23,6 +24,12 @@ export default function SettingsPage() {
   const resetProfile = useProfileStore((state) => state.resetProfile)
   const resetProgress = useProgressStore((state) => state.resetProgress)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [updateState, setUpdateState] = useState<UpdateState>({ status: 'idle' })
+
+  const runUpdateCheck = async () => {
+    setUpdateState({ status: 'checking' })
+    setUpdateState(await checkForUpdate(__APP_VERSION__))
+  }
 
   const clearData = () => {
     // 先清空仓储，再重置各 Store 的内存态；引导标记一并复位，下次打开重新引导
@@ -63,6 +70,48 @@ export default function SettingsPage() {
             onChange={setIntensity}
             ariaLabel="每日学习强度"
           />
+        </GlassCard>
+
+        <GlassCard className="p-5">
+          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div>
+              <h2 className="text-sm font-semibold text-ink">检查更新</h2>
+              <p className="mt-1 text-xs text-muted">
+                当前版本 v{__APP_VERSION__}
+                {updateState.status === 'up-to-date' && ` · 已是最新版本`}
+                {updateState.status === 'available' && ` · 发现新版本 v${updateState.latest}`}
+                {updateState.status === 'error' && ` · ${updateState.message}`}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              {updateState.status === 'available' && (
+                <a
+                  href={updateState.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full bg-accent px-4 py-2 text-xs font-medium text-accent-ink transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  前往更新
+                </a>
+              )}
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={runUpdateCheck}
+                disabled={updateState.status === 'checking'}
+              >
+                {updateState.status === 'checking' ? '检查中…' : '检查更新'}
+              </Button>
+            </div>
+          </div>
+          {updateState.status === 'idle' && (
+            <p className="mt-3 text-[11px] text-muted">向 GitHub 查询最新公开发布版本，需要联网。</p>
+          )}
+          {updateState.status === 'available' && (
+            <p className="mt-3 text-[11px] text-muted">
+              新版本已发布，点击「前往更新」查看发布说明；线上站点通常已自动部署最新版本。
+            </p>
+          )}
         </GlassCard>
 
         <GlassCard className="p-5">
