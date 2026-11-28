@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent } from 'react'
+import { useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
 
 interface Option<T extends string | number> {
   value: T
@@ -15,8 +15,8 @@ interface SegmentedControlProps<T extends string | number> {
 }
 
 /**
- * 分段档位选择器：用于设置页「每日强度」等少量离散选项。
- * 视觉与 ThemeSwitch 一致（青碧选中态 + focus-visible 焦点框）。
+ * 分段档位选择器：用于设置页「每日强度」、双答案切换等少量离散选项。
+ * 液态玻璃胶囊：整条是玻璃药丸槽，选中项用滑动的实心药丸指示。
  * 无障碍：radio 语义 + 方向键流转 + roving tabindex（选中项可 Tab 进入，
  * 进入后方向键在选项间移动，符合 ARIA radiogroup 规范）。
  */
@@ -28,6 +28,14 @@ export function SegmentedControl<T extends string | number>({
   className = '',
 }: SegmentedControlProps<T>) {
   const refs = useRef<(HTMLButtonElement | null)[]>([])
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(null)
+
+  // 选中药丸跟随选中项：位置由真实 DOM 尺寸算出，兼容标签长短不一与字体加载
+  useLayoutEffect(() => {
+    const index = options.findIndex((option) => option.value === value)
+    const el = refs.current[index]
+    if (el) setPill({ left: el.offsetLeft, width: el.offsetWidth })
+  }, [options, value])
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     let next = index
@@ -49,10 +57,17 @@ export function SegmentedControl<T extends string | number>({
 
   return (
     <div
-      className={`inline-flex gap-0.5 rounded-lg bg-accent-soft p-0.5 ${className}`}
+      className={`glass-pill inline-flex gap-0.5 p-1 ${className}`}
       role="radiogroup"
       aria-label={ariaLabel}
     >
+      {pill && (
+        <span
+          aria-hidden="true"
+          className="glass-pill--active pointer-events-none absolute top-1 bottom-1 rounded-full transition-[left,width] duration-300 ease-out"
+          style={{ left: pill.left, width: pill.width }}
+        />
+      )}
       {options.map((option, index) => {
         const selected = option.value === value
         return (
@@ -68,9 +83,9 @@ export function SegmentedControl<T extends string | number>({
             onClick={() => onChange(option.value)}
             onKeyDown={(event) => handleKeyDown(event, index)}
             className={[
-              'whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
+              'relative z-10 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-              selected ? 'bg-accent text-accent-ink' : 'text-muted hover:text-ink',
+              selected ? 'text-accent-ink' : 'text-muted hover:text-ink',
             ].join(' ')}
           >
             {option.label}

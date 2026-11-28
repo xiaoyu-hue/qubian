@@ -58,6 +58,15 @@
   /* 骨架屏底色与微光（状态设计系统） */
   --skeleton-base: rgba(120, 120, 125, 0.12);
   --skeleton-sheen: rgba(120, 120, 125, 0.22);
+
+  /* 胶囊玻璃（高频交互控件）：浅色 */
+  --pill-glint: rgba(255, 255, 255, 0.8);
+  --pill-glow: rgba(255, 255, 255, 0.6);
+  --pill-shadow: 0 6px 18px rgba(28, 32, 38, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --pill-shadow-hover: 0 12px 28px rgba(15, 118, 110, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --pill-nav-bg: rgba(255, 255, 255, 0.5);
+  --pill-nav-bg-active: #0f766e;
+  --accent-soft-hover: rgba(15, 118, 110, 0.18);
 }
 
 /* ---------- 深色：跟随系统（未手动指定主题时） ---------- */
@@ -79,6 +88,15 @@
     --glass-border: rgba(255, 255, 255, 0.14);
     --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.38);
     --glow: rgba(45, 212, 191, 0.12);
+
+    /* 胶囊玻璃：深色 */
+    --pill-glint: rgba(255, 255, 255, 0.26);
+    --pill-glow: rgba(255, 255, 255, 0.16);
+    --pill-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --pill-shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(94, 234, 212, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    --pill-nav-bg: rgba(255, 255, 255, 0.08);
+    --pill-nav-bg-active: #5eead4;
+    --accent-soft-hover: rgba(94, 234, 212, 0.2);
   }
 }
 
@@ -102,6 +120,15 @@
   --glow: rgba(45, 212, 191, 0.12);
   --skeleton-base: rgba(255, 255, 255, 0.07);
   --skeleton-sheen: rgba(255, 255, 255, 0.14);
+
+  /* 胶囊玻璃：深色（手动强制，与跟随系统值一致） */
+  --pill-glint: rgba(255, 255, 255, 0.26);
+  --pill-glow: rgba(255, 255, 255, 0.16);
+  --pill-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --pill-shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(94, 234, 212, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --pill-nav-bg: rgba(255, 255, 255, 0.08);
+  --pill-nav-bg-active: #5eead4;
+  --accent-soft-hover: rgba(94, 234, 212, 0.2);
 }
 
 /* ============================================================

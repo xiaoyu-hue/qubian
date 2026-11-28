@@ -1,4 +1,5 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, type ButtonHTMLAttributes, type MouseEvent, type ReactNode } from 'react'
+import { useGlow } from '../../lib/use-glow'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 export type ButtonSize = 'sm' | 'md' | 'lg'
@@ -13,22 +14,23 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leading?: ReactNode
 }
 
+/** 胶囊玻璃变体（形态与质感在 glass.css 定义，此处只做类名映射） */
 const variantClass: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-accent-ink hover:bg-accent-hover',
-  secondary: 'bg-accent-soft text-accent hover:bg-accent/20',
-  ghost: 'text-muted hover:bg-accent-soft hover:text-ink',
-  danger: 'bg-error text-accent-ink hover:opacity-90',
+  primary: 'glass-pill--primary',
+  secondary: 'glass-pill--secondary',
+  ghost: 'glass-pill--ghost',
+  danger: 'glass-pill--danger',
 }
 
 const sizeClass: Record<ButtonSize, string> = {
-  sm: 'px-3 py-1.5 text-xs',
+  sm: 'px-3.5 py-1.5 text-xs',
   md: 'px-4 py-2.5 text-sm',
   lg: 'px-5 py-3 text-base',
 }
 
 /**
  * 统一按钮：集中处理焦点、禁用、按下、加载四态，避免各页面重复写类名。
- * 焦点框对键盘可见、对鼠标点击不显示（focus-visible）。
+ * 液态玻璃胶囊：高光跟随鼠标、按下弹性回弹；焦点框对键盘可见、对鼠标点击不显示。
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
@@ -38,24 +40,29 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     leading,
     disabled,
     className = '',
+    onMouseMove,
     children,
     type = 'button',
     ...rest
   },
   ref,
 ) {
+  const glow = useGlow<HTMLButtonElement>()
+  const handleMouseMove = (event: MouseEvent<HTMLButtonElement>) => {
+    glow(event)
+    onMouseMove?.(event)
+  }
+
   return (
     <button
       ref={ref}
       type={type}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
+      onMouseMove={handleMouseMove}
       className={[
-        'inline-flex items-center justify-center gap-2 rounded-lg font-medium',
-        'transition-[background-color,transform,opacity] duration-150',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
-        'active:scale-[0.98]',
-        'disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100',
+        'glass-pill inline-flex items-center justify-center gap-2 font-medium',
+        'disabled:cursor-not-allowed disabled:opacity-45',
         variantClass[variant],
         sizeClass[size],
         className,
@@ -66,13 +73,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     >
       {loading ? (
         <span
-          className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"
+          className="relative z-10 h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent"
           aria-hidden="true"
         />
       ) : (
         leading
       )}
-      {children}
+      <span className="relative z-10">{children}</span>
     </button>
   )
 })

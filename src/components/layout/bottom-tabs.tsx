@@ -20,20 +20,26 @@ export function BottomTabs() {
               end={item.to === '/'}
               className={({ isActive }) =>
                 [
-                  'flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-xl',
-                  'text-[11px] font-medium transition-colors',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                  'flex min-h-[56px] flex-col items-center justify-center gap-1 rounded-2xl',
+                  'text-[11px] font-medium',
                   isActive ? 'text-accent' : 'text-muted hover:text-ink',
                 ].join(' ')
               }
             >
               {({ isActive }) => (
                 <>
-                  <Icon
-                    name={item.icon}
-                    size={22}
-                    strokeWidth={isActive ? 2.2 : 1.75}
-                  />
+                  <span
+                    className={[
+                      'glass-pill glass-pill--light flex h-8 w-12 items-center justify-center',
+                      isActive ? 'glass-pill--active' : '',
+                    ].join(' ')}
+                  >
+                    <Icon
+                      name={item.icon}
+                      size={20}
+                      strokeWidth={isActive ? 2.2 : 1.75}
+                    />
+                  </span>
                   <span>{item.label}</span>
                 </>
               )}

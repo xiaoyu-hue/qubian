@@ -38,12 +38,11 @@ export function SideNav() {
             title={item.label}
             className={({ isActive }) =>
               [
-                'flex h-12 items-center justify-center gap-3 rounded-xl lg:justify-start lg:px-3',
-                'text-sm transition-colors',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                'glass-pill glass-pill--light flex h-12 items-center justify-center gap-3 lg:justify-start lg:px-3',
+                'text-sm',
                 isActive
-                  ? 'bg-accent text-accent-ink font-medium'
-                  : 'text-muted hover:bg-accent-soft hover:text-ink',
+                  ? 'glass-pill--active font-medium'
+                  : 'text-muted hover:text-ink',
               ].join(' ')
             }
           >
@@ -75,11 +74,10 @@ export function SideNav() {
               aria-pressed={theme === option.value}
               onClick={() => setTheme(option.value)}
               className={[
-                'flex h-9 w-9 items-center justify-center rounded-lg text-xs font-medium transition-colors lg:h-8 lg:flex-1',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                'glass-pill glass-pill--light flex h-9 w-9 items-center justify-center text-xs font-medium lg:h-8 lg:w-auto lg:flex-1',
                 theme === option.value
-                  ? 'bg-accent text-accent-ink'
-                  : 'text-muted hover:bg-accent-soft hover:text-ink',
+                  ? 'glass-pill--active'
+                  : 'text-muted hover:text-ink',
               ].join(' ')}
             >
               <span className="lg:hidden">{option.short}</span>

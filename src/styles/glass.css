@@ -41,3 +41,162 @@
     -webkit-backdrop-filter: blur(12px) saturate(130%);
   }
 }
+
+/* ============================================================
+   液态玻璃胶囊：高频交互控件（图标按钮、分段控件、药丸切换）
+   - 全圆角胶囊 + 玻璃底 + 顶部弧形高光
+   - 鼠标跟随高光：组件写入 --glow-x / --glow-y（默认 50%）
+   - 悬停浮起、按下用弹性曲线回弹（明显灵动档）
+   - 触摸设备无 hover，高光停在顶部，不影响触感
+   ============================================================ */
+.glass-pill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 999px;
+  background: var(--surface);
+  backdrop-filter: blur(18px) saturate(155%);
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--pill-shadow);
+  /* 弹性曲线：按下收缩、松开回弹带轻微过冲 */
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.28s ease, background-color 0.28s ease, color 0.2s ease;
+  transform: translateZ(0);
+}
+
+/* 顶部弧形高光：一条随鼠标移动的柔和反光（不是彩色发光） */
+.glass-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    130px circle at var(--glow-x, 50%) var(--glow-y, 12%),
+    var(--pill-glow),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* 内侧顶边高光：模拟玻璃上沿折射 */
+.glass-pill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 var(--pill-glint);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .glass-pill:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: var(--pill-shadow-hover);
+  }
+  .glass-pill:hover::before {
+    opacity: 1;
+  }
+}
+
+.glass-pill:active {
+  transform: scale(0.93);
+  transition-duration: 0.1s;
+}
+
+/* 键盘焦点：胶囊形状用 outline，不套方角 ring */
+.glass-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 选中态：胶囊内实心药丸（读 --pill-nav-bg-active / accent） */
+.glass-pill--active {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 6px 18px var(--glow), inset 0 1px 0 var(--pill-glint);
+}
+
+/* 胶囊按钮四变体：保留原语义色，只换形态与玻璃质感 */
+.glass-pill--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.glass-pill--primary:hover {
+  background: var(--accent-hover);
+}
+.glass-pill--secondary {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.glass-pill--secondary:hover {
+  background: var(--accent-soft-hover);
+}
+.glass-pill--ghost {
+  background: transparent;
+  color: var(--ink-muted);
+}
+.glass-pill--ghost:hover {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.glass-pill--danger {
+  background: var(--error);
+  color: #fff;
+}
+.glass-pill--danger:hover {
+  filter: brightness(1.08);
+}
+
+/* 禁用态不回弹 */
+.glass-pill:disabled:active {
+  transform: none;
+}
+
+/* 轻量胶囊：用于玻璃容器内部的导航项，不叠加 backdrop-filter。
+   沿用胶囊的圆角、高光弧、悬停浮起与回弹，但底色透明或纯色。 */
+.glass-pill--light {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+.glass-pill--light::after {
+  box-shadow: none;
+}
+@media (hover: hover) {
+  .glass-pill--light:hover {
+    box-shadow: 0 4px 14px rgba(28, 32, 38, 0.1);
+    background: var(--accent-soft);
+  }
+}
+.glass-pill--light.glass-pill--active {
+  background: var(--accent);
+}
+
+
+/* 移动端：降模糊与位移，保留回弹手感 */
+@media (max-width: 640px) {
+  .glass-pill {
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+  @media (hover: hover) {
+    .glass-pill:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+  }
+}
+
+/* 减少动态效果：取消位移与回弹，仅保留颜色反馈 */
+@media (prefers-reduced-motion: reduce) {
+  .glass-pill,
+  .glass-pill:hover,
+  .glass-pill:active {
+    transform: none;
+  }
+}
