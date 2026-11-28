@@ -126,7 +126,9 @@ npm run dev
 | `npm run build` | 类型检查 + 生产构建，产物在 `dist/` |
 | `npm run preview` | 本地预览生产构建 |
 | `npm run test` | 运行全部单元测试（当前 116 项） |
-| `npm run lint` | 架构分层边界检查 + 题库结构校验 |
+| `npm run validate:questions` | 题库结构校验（Schema / ID 唯一 / 双答案） |
+| `npm run verify:questions` | 实操题质量校验（参考实现 / 防送分 / 防弱测试） |
+| `npm run lint` | 架构边界 + 题库结构 + 实操题质量，三项合跑 |
 
 ## 技术栈
 
@@ -181,7 +183,7 @@ src/
 | Python | `python/data-structures.json`（数据结构） | 15 |
 | JavaScript | `javascript/basics.json`（基础） | 15 |
 
-全部 AI 原创并标注来源与许可，双答案非空；实操题附参考实现与隐藏测试。学习页可切换语言与章节、按章节显示掌握进度。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行零依赖校验脚本，检查结构、ID 唯一、答案非空、correctKey 合法、来源许可，并核对题目目录语言、`language` 字段与 id 前缀一致。
+全部 AI 原创并标注来源与许可，双答案非空；实操题附参考实现与隐藏测试。学习页可切换语言与章节、按章节显示掌握进度。结构契约 `schema.json` 采用 JSON Schema Draft 2020-12，`npm run lint` 会执行两套零依赖校验脚本：一套检查结构、ID 唯一、答案非空、correctKey 合法、来源许可，并核对题目目录语言、`language` 字段与 id 前缀一致；另一套对实操题做三层质量校验（参考实现跑通全部测试、起始代码不得直接通过、注入烂代码须被全部拦下），复现线上双语言判题口径。当前 20 道实操题 / 80 项检查全绿。
 
 统一加载入口 `src/data/questions/index.ts` 提供 `loadQuestions(filter)` / `getQuestionById(id)` / `listChapters(language?)` / `listLanguages()`，支持按语言、章节、难度、题型、标签筛选；数据损坏时抛 `QuestionBankError`，由上层显示错误态。`python/index.ts` 保留为「只看 Python」的兼容入口。
 
@@ -203,7 +205,7 @@ src/
 |---|---|---|
 | 阶段 0 / 0.5 | 工程骨架、三端自适应布局外壳、状态设计系统 | 已完成 |
 | 阶段 1 | MVP 闭环：引导 → 答题 → 双答案 → 金币 → 书城 → 本地存储 → 深浅主题 | 已完成，M3 达成 |
-| 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库工具链待启动 | 部分完成 |
+| 阶段 2 | Pyodide 自动判题、成就、连续打卡、错题复习（均已完成）；题库质量验证器已落地，批量生成工具链待 API Key 决策 | 部分完成 |
 | 阶段 3 | 第二语言 JavaScript + 多语言执行层（已实施）；编程语言百科（已实施）；后端可行性评审待评估 | 部分完成 |
 
 当前为 **v1.3.0** 正式版本，116 项测试全通过，生产构建与 lint 通过；书城消费闭环、游戏化玩法、章节切换、双语言判题、编程语言百科与液态玻璃胶囊控件均已通过自动化与端到端验证，详见 [06-实施计划](docs/06-实施计划.md) 第 8 章。版本号三段含义见 [贡献指南 · 版本编号规则](CONTRIBUTING.md#版本编号规则)。

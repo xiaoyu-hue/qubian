@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "validate:questions": "node scripts/validate-questions.mjs",
-    "lint": "node scripts/check-boundaries.mjs && node scripts/validate-questions.mjs"
+    "verify:questions": "node scripts/verify-questions.mjs",
+    "lint": "node scripts/check-boundaries.mjs && node scripts/validate-questions.mjs && node scripts/verify-questions.mjs"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.5",
