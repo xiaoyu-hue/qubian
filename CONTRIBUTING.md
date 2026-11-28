@@ -39,7 +39,7 @@ npm run lint     # 分层边界 + 题库结构校验
 
 ## 贡献题库
 
-题库位于 `src/data/questions/python/`，契约见 `schema.json`（JSON Schema Draft 2020-12）与 [05-题库数据规范](docs/05-题库数据规范.md)。新增题目须满足：
+题库按「语言 → 章节」两级目录存放于 `src/data/questions/`（当前为 `python/`、`javascript/`），契约见 `schema.json`（JSON Schema Draft 2020-12）与 [05-题库数据规范](docs/05-题库数据规范.md)。新增题目须满足：
 
 - 字段齐全，`id` 全局唯一；
 - `answer.professional` 与 `answer.plain` 均非空，两种深度都要写清楚；
@@ -68,7 +68,16 @@ npm run lint     # 分层边界 + 题库结构校验
 
 判断口径：问自己"老用户升级后，原有的数据和用法会不会出问题"。会 → 主版本；不会但多了新能力 → 次版本；只是变好或修好 → 修订号。拿不准时按更保守的高段位处理。
 
-每次发布同步更新 [CHANGELOG.md](CHANGELOG.md)：把 `[Unreleased]` 的改动移入对应版本段并标注日期，再打上 `v主.次.修订` 标签、创建 Release。当前首个正式版本为 `v1.0.0`。
+**发布清单**（每次发布按顺序执行，缺一不可）：
+
+1. 更新 [CHANGELOG.md](CHANGELOG.md)：把 `[Unreleased]` 的改动移入对应版本段、标注日期，并补齐该版本的 Release 链接与 `[Unreleased]` 的 compare 基准（见文末链接定义）。
+2. 在 `main` 最新提交上打附注标签 `v主.次.修订`，并推送到远端。
+3. 创建对应的 GitHub Release，发布说明直接取 CHANGELOG 该版本段的内容。
+4. 核验：Release 列表、标签指向的提交与 CHANGELOG / README 中的版本号三者一致。
+
+> 这四步是一个完整的「发布」动作。只改文档版本号、不打标签不建 Release，在 GitHub 上不会被视为一次发布——1.1.0 曾因此漏发，后按此清单补齐。
+
+当前最新版本为 `v1.2.0`。
 
 ## 许可
 
