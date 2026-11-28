@@ -6,6 +6,10 @@
 
 > 尚未发布的改动汇总于此。发布时移入对应版本段落并标注日期。
 
+## [1.3.0] - 2026-11-28
+
+功能版本。统一升级按钮、切换与导航控件为液态玻璃胶囊形态，不改动判题与数据架构，按版本编号规则归为 1.x.0。
+
 ### Added
 
 - **液态玻璃胶囊控件**：主按钮、分段切换、主题三态切换、底部与侧边导航图标统一升级为胶囊形态——玻璃底、顶部弧形高光、鼠标跟随柔光、悬停上浮、按下弹性回弹。纯 CSS + 一个轻量鼠标跟随 hook，不引入新依赖；深色独立调参，移动端降模糊，系统「减少动态效果」时自动降为静态。
@@ -109,7 +113,8 @@
 - 答题发奖幂等：答错可重试、主动求助与掌握状态分离，避免重复发币。
 - Pyodide 资源路径随 `base` 修正，避免 GitHub Pages 子路径部署下 404。
 
+[1.3.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.3.0
 [1.2.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.2.0
 [1.1.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xiaoyu-hue/qubian/releases/tag/v1.0.0
-[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/xiaoyu-hue/qubian/compare/v1.3.0...HEAD
